@@ -11,5 +11,13 @@ namespace ElectionsProgram.Entities
     /// </summary>
     internal class Mediaresource
     {
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+
+        public Mediaresource(string name) 
+        {
+            Name = name;
+        }
     }
 }
