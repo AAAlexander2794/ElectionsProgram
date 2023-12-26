@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ElectionsProgram.Entities
 {
-    internal class Talon
+    public class Talon
     {
         public int Id { get; set; }
 

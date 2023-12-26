@@ -9,7 +9,7 @@ namespace ElectionsProgram.Entities
     /// <summary>
     /// Кандидат на выборы
     /// </summary>
-    internal class Candidate : IClient
+    public class Candidate : IClient
     {
         public int Id { get; set; }
 
@@ -31,10 +31,16 @@ namespace ElectionsProgram.Entities
 
         List<Talon> IClient.Talons { get => Talons; }
 
+        #region Конструкторы
+
         public Candidate(CandidateView candidateView) 
         {
             View = candidateView;
             Фамилия_И_О = $"{View.Surname} {View.Name[0]} {View.Patronimyc[0]}";
         }
+
+        public Candidate() { }
+
+        #endregion Конструкторы
     }
 }

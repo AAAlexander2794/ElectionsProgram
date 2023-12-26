@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ElectionsProgram.Entities
 {
-    internal class BroadcastNominalView
+    public class BroadcastNominalView
     {
         /// <summary>
         /// Название медиаресурса
@@ -38,6 +38,8 @@ namespace ElectionsProgram.Entities
         /// </summary>
         public string Description { get; set; }
 
+        #region Конструкторы
+
         public BroadcastNominalView(string mediaresourceName, string talonNumber, string date, string time, string durationNominal, string description = "")
         {
             MediaresourceName = mediaresourceName;
@@ -47,5 +49,9 @@ namespace ElectionsProgram.Entities
             DurationNominal = durationNominal;
             Description = description;
         }
+
+        public BroadcastNominalView() { }
+
+        #endregion Конструкторы
     }
 }

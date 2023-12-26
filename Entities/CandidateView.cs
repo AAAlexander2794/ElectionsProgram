@@ -9,7 +9,7 @@ namespace ElectionsProgram.Entities
     /// <summary>
     /// Кандидат в представлении для таблицы
     /// </summary>
-    internal class CandidateView
+    public class CandidateView
     {
         /// <summary>
         /// Имя
@@ -28,10 +28,16 @@ namespace ElectionsProgram.Entities
 
         public string? Description { get; set; }
 
+        #region Конструкторы
+
         public CandidateView(string name, string surname) 
         {
             Name = name;
             Surname = surname;
         }
+
+        public CandidateView() { }
+
+        #endregion Конструкторы
     }
 }

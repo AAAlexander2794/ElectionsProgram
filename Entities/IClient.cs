@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ElectionsProgram.Entities
 {
-    internal interface IClient
+    public interface IClient
     {
         public string Name { get; }
 

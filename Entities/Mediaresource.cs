@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,15 +11,26 @@ namespace ElectionsProgram.Entities
     /// <summary>
     /// Медиаресурс (канал)
     /// </summary>
-    internal class Mediaresource
+    public class Mediaresource : INotifyPropertyChanged
     {
-        public string Name { get; set; }
+        public MediaresourceView View { get; set; }
 
-        public string Description { get; set; }
+        #region Конструкторы
 
-        public Mediaresource(string name) 
+        public Mediaresource(MediaresourceView mediaresourceView) 
         {
-            Name = name;
+            View = mediaresourceView;
+        }
+
+        public Mediaresource() { }
+
+        #endregion Конструкторы
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

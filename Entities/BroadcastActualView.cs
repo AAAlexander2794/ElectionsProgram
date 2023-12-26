@@ -9,7 +9,7 @@ namespace ElectionsProgram.Entities
     /// <summary>
     /// Запись вещания по факту выхода в эфир в текстовом виде.
     /// </summary>
-    internal class BroadcastActualView
+    public class BroadcastActualView
     {
         public string MediaresourceName { get; set; }
 
@@ -45,6 +45,8 @@ namespace ElectionsProgram.Entities
         /// </summary>
         public string Caption { get; set; }
 
+        #region Конструкторы
+
         public BroadcastActualView(
             string mediaresourceName, 
             string talonNumber, 
@@ -64,5 +66,9 @@ namespace ElectionsProgram.Entities
             Caption = caption;
             Description = description;
         }
+
+        public BroadcastActualView() { }
+
+        #endregion Конструкторы
     }
 }

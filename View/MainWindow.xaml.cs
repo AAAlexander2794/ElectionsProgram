@@ -20,7 +20,7 @@ namespace ElectionsProgram.View
     /// </summary>
     public partial class MainWindow : Window
     {
-        ElectionsBase _electionsBase = new ElectionsBase();
+        ViewModel.ViewModel _electionsBase = new ViewModel.ViewModel();
 
         public MainWindow()
         {
@@ -30,7 +30,7 @@ namespace ElectionsProgram.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            _electionsBase.Description = "New text";
+            _electionsBase.Mediaresources[0].View.Название_полное = "Новое полное название";
             MessageBox.Show($"{_electionsBase.Mediaresources.Count}");
         }
     }
