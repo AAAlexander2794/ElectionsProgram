@@ -92,7 +92,7 @@ namespace ElectionsProgram.ViewModels
         #region Комманды
 
         public SaveDBCommand SaveCommand { get; }
-        public LoadCommand LoadCommand { get; }
+        public LoadDBCommand LoadCommand { get; }
         public LoadDefaultDataCommand LoadDefaultDataCommand { get; }
         public SavePartiesToExcelCommand SavePartiesToExcelCommand { get; }
 
@@ -104,7 +104,7 @@ namespace ElectionsProgram.ViewModels
         {
             // Инициализируем команды
             SaveCommand = new SaveDBCommand(this);
-            LoadCommand = new LoadCommand(this);
+            LoadCommand = new LoadDBCommand(this);
             LoadDefaultDataCommand = new LoadDefaultDataCommand(this);
             SavePartiesToExcelCommand = new SavePartiesToExcelCommand(this);
         }

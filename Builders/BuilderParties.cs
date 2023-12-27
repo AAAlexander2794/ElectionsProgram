@@ -1,9 +1,11 @@
 ﻿using ElectionsProgram.Entities;
-using ElectionsProgram.Maps;
+using ElectionsProgram.Processors;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,30 +17,68 @@ namespace ElectionsProgram.Builders
     /// </summary>
     internal static class BuilderParties
     {
-        public static List<Party> BuildParties(DataTable dataTable)
+        
+        public static List<Party> GetParties(DataTable dt)
         {
-            List<Party> parties = new List<Party>();
-            // По строкам
-            for (int i = 0; i < dataTable.Rows.Count - 1; i++)
+            List<Party> ls = new List<Party>();
+
+            try
             {
-                // Создаем текстовое представление
-                PartyView partyView = new PartyView();
-                // Создаем партию с текстовым представлением (пока пустым)
-                Party party = new Party(partyView);
-                // По столбцам
-                for (int j = 0; j < dataTable.Columns.Count - 1; j++)
+                var list = dt.ToList<PartyView>();
+
+                
+
+                foreach (var item in list)
                 {
-                    
+                    ls.Add(new Party(item));
                 }
+
+                
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
 
+            return ls;
+
+            // Все имена столбцов
+            var columnNames = dt.Columns.Cast<DataColumn>().Select(c => c.ColumnName).ToList();
             //
-            return parties;
-        }
+            //dto so all properties should be public
+            var dtoProperties = typeof(Party).GetProperties();
+            //
+            foreach (DataRow row in dt.Rows)
+            {
+                // create  a new DTO object
+                var item = new Party();
 
-        private static void GetFieldByName()
-        {
+                // for each property of the dto
+                foreach (var property in dtoProperties)
+                {
+                    var objPropName = property.Name;
 
+                    
+                    //var dbPropName = PartyView.Map.FirstOrDefault(property.Name);
+
+                    //if (columnNames.Contains(dbPropName))
+                    //{
+                    //    if (row[dbPropName] != DBNull.Value)
+                    //    {
+                    //        // set the value
+                    //        property.SetValue(item, row[dbPropName], null);
+                    //    }
+                    //}
+                }
+
+                // add the DTO to the list
+                ls.Add(item);
+            }
+            return ls;
         }
+       
     }
+
+    
+
 }

@@ -10,11 +10,11 @@ using System.Windows.Input;
 
 namespace ElectionsProgram.Commands
 {
-    public class LoadCommand : ICommand
+    public class LoadDBCommand : ICommand
     {
         private ViewModels.ViewModel _base;
 
-        public LoadCommand(ViewModels.ViewModel @base) 
+        public LoadDBCommand(ViewModels.ViewModel @base) 
         {
             _base = @base;
         }
