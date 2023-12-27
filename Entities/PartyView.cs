@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace ElectionsProgram.Entities
@@ -38,6 +39,20 @@ namespace ElectionsProgram.Entities
         /// Отметка о том, явилась ли партия (представитель) на жеребьевку
         /// </summary>
         public string Явка { get; set; }
+
+        #region Номера талонов
+
+        public string Талон_Россия_1 { get; set; }
+
+        public string Талон_Россия_24 { get; set; }
+
+        public string Талон_Маяк { get; set; }
+
+        public string Талон_Радио_России { get; set; }
+
+        public string Талон_Вести_ФМ { get; set; }
+
+        #endregion
 
         public string Договор_Номер { get; set; }
 

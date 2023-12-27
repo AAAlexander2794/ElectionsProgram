@@ -11,7 +11,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using ElectionsProgram.ViewModel;
+using ElectionsProgram.Builders;
+using ElectionsProgram.Processors;
+using ElectionsProgram.ViewModels;
 
 namespace ElectionsProgram.View
 {
@@ -20,18 +22,23 @@ namespace ElectionsProgram.View
     /// </summary>
     public partial class MainWindow : Window
     {
-        ViewModel.ViewModel _electionsBase = new ViewModel.ViewModel();
+        ViewModels.ViewModel _viewModel = new ViewModels.ViewModel();
 
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = _electionsBase;
+            DataContext = _viewModel;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            _electionsBase.Mediaresources[0].View.Название_полное = "Новое полное название";
-            MessageBox.Show($"{_electionsBase.Mediaresources.Count}");
+            if (_viewModel.Mediaresources.Count > 0)
+            {
+                _viewModel.Mediaresources[0].View.Название_полное = "Новое полное название";
+            }
+            _viewModel.Test = ProcessorExcel.ReadExcelSheet(@"Настройки/Партии/Партии.xlsx");
+            BuilderParties.BuildParties(_viewModel.Test);
+            MessageBox.Show($"{_viewModel.Mediaresources.Count}");
         }
     }
 }

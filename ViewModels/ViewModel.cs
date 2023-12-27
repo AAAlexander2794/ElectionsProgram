@@ -4,19 +4,38 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ElectionsProgram.ViewModel
+namespace ElectionsProgram.ViewModels
 {
     /// <summary>
     /// 
     /// </summary>
     public class ViewModel : INotifyPropertyChanged
     {
+        // Test
+        private DataTable _test =
+            new DataTable();
+        /// <summary>
+        /// Test
+        /// </summary>
+        public DataTable Test
+        {
+            get => _test;
+            set
+            {
+                _test = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #region Списки
+
         private ObservableCollection<Mediaresource> _mediaresources = 
             new ObservableCollection<Mediaresource>();
         /// <summary>
@@ -32,7 +51,7 @@ namespace ElectionsProgram.ViewModel
 
         private Mediaresource _currentMediaresource;
         /// <summary>
-        /// 
+        /// Текущий медиаресурс
         /// </summary>
         public Mediaresource CurrentMediaresource { get => _currentMediaresource; 
             set
@@ -68,21 +87,29 @@ namespace ElectionsProgram.ViewModel
             }
         }
 
+        #endregion Списки
+
         #region Комманды
 
-        public SaveCommand SaveCommand { get; }
+        public SaveDBCommand SaveCommand { get; }
         public LoadCommand LoadCommand { get; }
         public LoadDefaultDataCommand LoadDefaultDataCommand { get; }
+        public SavePartiesToExcelCommand SavePartiesToExcelCommand { get; }
 
         #endregion Комманды
+
+        #region Конструкторы
 
         public ViewModel()
         {
             // Инициализируем команды
-            SaveCommand = new SaveCommand(this);
+            SaveCommand = new SaveDBCommand(this);
             LoadCommand = new LoadCommand(this);
             LoadDefaultDataCommand = new LoadDefaultDataCommand(this);
+            SavePartiesToExcelCommand = new SavePartiesToExcelCommand(this);
         }
+
+        #endregion Конструкторы
 
         #region Методы
 

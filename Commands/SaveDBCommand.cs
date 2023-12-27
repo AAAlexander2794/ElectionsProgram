@@ -1,5 +1,5 @@
 ﻿using ElectionsProgram.Processors;
-using ElectionsProgram.ViewModel;
+using ElectionsProgram.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,13 +12,13 @@ using System.Xml.Serialization;
 
 namespace ElectionsProgram.Commands
 {
-    public class SaveCommand : ICommand
+    public class SaveDBCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
 
-        private ViewModel.ViewModel _base;
+        private ViewModels.ViewModel _base;
 
-        public SaveCommand(ViewModel.ViewModel electionsBase) 
+        public SaveDBCommand(ViewModels.ViewModel electionsBase) 
         {
             _base = electionsBase;
         }

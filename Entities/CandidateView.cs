@@ -26,6 +26,20 @@ namespace ElectionsProgram.Entities
         /// </summary>
         public string Patronimyc { get; set; } = string.Empty;
 
+        #region Номера талонов
+
+        public string Талон_Россия_1 { get; set; }
+
+        public string Талон_Россия_24 { get; set; }
+
+        public string Талон_Маяк { get; set; }
+
+        public string Талон_Радио_России { get; set; }
+
+        public string Талон_Вести_ФМ { get; set; }
+
+        #endregion Номера талонов
+
         public string? Description { get; set; }
 
         #region Конструкторы

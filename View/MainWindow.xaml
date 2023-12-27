@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ElectionsProgram.View"
-        xmlns:k="clr-namespace:ElectionsProgram.ViewModel"
+        xmlns:k="clr-namespace:ElectionsProgram.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         d:DataContext="{d:DesignInstance {x:Type k:ViewModel}}">
@@ -17,9 +17,10 @@
             <Button Content="Button" Click="Button_Click" Height="25" Width="90" Margin="5"/>
             <Button Content="Сохранить" Command="{Binding SaveCommand}" Height="25" Width="90" Margin="5"/>
             <Button Content="Загрузить" Command="{Binding LoadCommand}" Height="25" Width="90" Margin="5"/>
-            <Button Content="Тестовые данные" Command="{Binding LoadDefaultDataCommand}" Height="25" Width="90" Margin="5"/>
+            <Button Content="Базовые данные" Command="{Binding LoadDefaultDataCommand}" Height="25" Width="100" Margin="5"/>
+            <Button Content="TestParties" Command="{Binding SavePartiesToExcelCommand}" Height="25" Width="100" Margin="5"/>
         </StackPanel>
-        
+
         <TabControl Grid.Row="1">
             <TabItem Header="Медиаресурсы">
                 <Grid Background="#FFE5E5E5">
@@ -39,28 +40,43 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListView>
-
-                    <!--<ContentControl Content="{Binding Mediaresources[0]}">
-                        <ContentControl.ContentTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Название_условное}"></TextBlock>
-                            </DataTemplate>
-                        </ContentControl.ContentTemplate>
-                    </ContentControl>-->
                 </Grid>
             </TabItem>
             <TabItem Header="Партии">
                 <Grid Background="#FFE5E5E5">
-                    <DataGrid ItemsSource="{Binding Parties}"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="250"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="45"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <ListView Grid.Row="1" ItemsSource="{Binding Parties}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Path=View.Название_условное}" />
+                                    <TextBlock Text="{Binding Path=View.Постановление}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListView>
                 </Grid>
+
             </TabItem>
             <TabItem Header="Кандидаты">
                 <Grid Background="#FFE5E5E5">
                     <DataGrid ItemsSource="{Binding Candidates}"/>
                 </Grid>
             </TabItem>
+            <TabItem Header="Test">
+                <Grid Background="#FFE5E5E5">
+                    <DataGrid ItemsSource="{Binding Test}"/>
+                </Grid>
+            </TabItem>
         </TabControl>
-        
+
 
     </Grid>
 </Window>

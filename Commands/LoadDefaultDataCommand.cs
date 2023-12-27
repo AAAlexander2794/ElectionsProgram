@@ -8,11 +8,14 @@ using System.Windows.Input;
 
 namespace ElectionsProgram.Commands
 {
+    /// <summary>
+    /// Команда заполнения базовыми данными
+    /// </summary>
     public class LoadDefaultDataCommand : ICommand
     {
-        private ViewModel.ViewModel _base;
+        private ViewModels.ViewModel _base;
 
-        public LoadDefaultDataCommand(ViewModel.ViewModel @base)
+        public LoadDefaultDataCommand(ViewModels.ViewModel @base)
         {
             _base = @base;
         }
@@ -27,11 +30,26 @@ namespace ElectionsProgram.Commands
         public void Execute(object? parameter)
         {
             // Создаем базовые медиаресурсы
-            MediaresourceView media1 = new MediaresourceView("Россия-1") { Название_полное = "Full name" };
-            MediaresourceView media2 = new MediaresourceView("Россия-24");
-            MediaresourceView media3 = new MediaresourceView("Маяк");
-            MediaresourceView media4 = new MediaresourceView("Вести ФМ");
-            MediaresourceView media5 = new MediaresourceView("Радио России");
+            MediaresourceView media1 = new MediaresourceView("Россия-1") 
+            { 
+                Название_полное = "Телеканал \"Российский Информационный Канал \"Россия-24\" (Россия-24)\""
+            };
+            MediaresourceView media2 = new MediaresourceView("Россия-24") 
+            { 
+                Название_полное = "Телеканал \"Телеканал \"Россия\" (Россия-1)\"" 
+            };
+            MediaresourceView media3 = new MediaresourceView("Маяк")
+            {
+                Название_полное = "Радиоканал \"Маяк\""
+            };
+            MediaresourceView media4 = new MediaresourceView("Вести ФМ")
+            {
+                Название_полное = "Радиоканал \"Вести ФМ\""
+            };
+            MediaresourceView media5 = new MediaresourceView("Радио России") 
+            { 
+                Название_полное = "Радиоканал \"Радио России\"" 
+            };
             _base.Mediaresources.Add(new Mediaresource(media1));
             _base.Mediaresources.Add(new Mediaresource(media2));
             _base.Mediaresources.Add(new Mediaresource(media3));

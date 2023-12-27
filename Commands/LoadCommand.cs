@@ -1,5 +1,5 @@
 ﻿using ElectionsProgram.Processors;
-using ElectionsProgram.ViewModel;
+using ElectionsProgram.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +12,9 @@ namespace ElectionsProgram.Commands
 {
     public class LoadCommand : ICommand
     {
-        private ViewModel.ViewModel _base;
+        private ViewModels.ViewModel _base;
 
-        public LoadCommand(ViewModel.ViewModel @base) 
+        public LoadCommand(ViewModels.ViewModel @base) 
         {
             _base = @base;
         }
