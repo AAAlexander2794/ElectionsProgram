@@ -16,7 +16,7 @@ namespace ElectionsProgram.Processors
     /// <summary>
     /// Отвечает за чтение/запись файлов
     /// </summary>
-    public static class ProcessorIO
+    public static class ProcessorXML
     {
         //public static DataTable LoadDataFromExcel(string path = "")
         //{

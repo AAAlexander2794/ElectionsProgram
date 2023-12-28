@@ -30,7 +30,7 @@ namespace ElectionsProgram.Commands.Temp
         {
             try
             {
-                var newBase = ProcessorIO.LoadDBFromXml("data", "electionBase.xml");
+                var newBase = ProcessorXML.LoadDBFromXml("data", "electionBase.xml");
                 _base.Load(newBase);
                 MessageBox.Show("Данные загружены.");
             }

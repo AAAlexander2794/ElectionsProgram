@@ -42,39 +42,7 @@ namespace ElectionsProgram.Builders
 
             return ls;
 
-            // Все имена столбцов
-            var columnNames = dt.Columns.Cast<DataColumn>().Select(c => c.ColumnName).ToList();
-            //
-            //dto so all properties should be public
-            var dtoProperties = typeof(Party).GetProperties();
-            //
-            foreach (DataRow row in dt.Rows)
-            {
-                // create  a new DTO object
-                var item = new Party();
-
-                // for each property of the dto
-                foreach (var property in dtoProperties)
-                {
-                    var objPropName = property.Name;
-
-                    
-                    //var dbPropName = PartyView.Map.FirstOrDefault(property.Name);
-
-                    //if (columnNames.Contains(dbPropName))
-                    //{
-                    //    if (row[dbPropName] != DBNull.Value)
-                    //    {
-                    //        // set the value
-                    //        property.SetValue(item, row[dbPropName], null);
-                    //    }
-                    //}
-                }
-
-                // add the DTO to the list
-                ls.Add(item);
-            }
-            return ls;
+            
         }
        
     }

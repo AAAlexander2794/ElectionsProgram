@@ -37,7 +37,7 @@ namespace ElectionsProgram.View
                 _viewModel.Mediaresources[0].View.Название_полное = "Новое полное название";
             }
             //_viewModel.Test = ProcessorExcel.ReadExcelSheet(@"Настройки/Партии/Партии.xlsx");
-            _viewModel.Test = ProcessorExcel.LoadFromExcel(@"Настройки/_database/Партии.xlsx", "");
+            _viewModel.Test = ProcessorExcel.LoadFromExcel(@"Настройки/_database/Партии.xlsx");
             _viewModel.Parties = new System.Collections.ObjectModel.ObservableCollection<Entities.Party>(BuilderParties.GetParties(_viewModel.Test));
             MessageBox.Show("Done");
             //MessageBox.Show($"{_viewModel.Mediaresources.Count}");

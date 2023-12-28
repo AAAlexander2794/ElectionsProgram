@@ -18,7 +18,7 @@
             <Button Content="Сохранить" Command="{Binding SaveCommand}" Height="25" Width="90" Margin="5"/>
             <Button Content="Загрузить" Command="{Binding LoadCommand}" Height="25" Width="90" Margin="5"/>
             <Button Content="Базовые данные" Command="{Binding LoadDefaultDataCommand}" Height="25" Width="100" Margin="5"/>
-            <Button Content="TestParties" Command="{Binding SavePartiesToExcelCommand}" Height="25" Width="100" Margin="5"/>
+            <Button Content="TestParties" Command="{Binding LoadPartiesCommand}" Height="25" Width="100" Margin="5"/>
         </StackPanel>
 
         <TabControl Grid.Row="1">

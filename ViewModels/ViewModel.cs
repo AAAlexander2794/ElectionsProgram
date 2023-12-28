@@ -96,6 +96,8 @@ namespace ElectionsProgram.ViewModels
         public LoadDBCommand LoadCommand { get; }
         public LoadDefaultDataCommand LoadDefaultDataCommand { get; }
         public SavePartiesToExcelCommand SavePartiesToExcelCommand { get; }
+        //
+        public LoadPartiesCommand LoadPartiesCommand { get; }
 
         #endregion Комманды
 
@@ -108,6 +110,8 @@ namespace ElectionsProgram.ViewModels
             LoadCommand = new LoadDBCommand(this);
             LoadDefaultDataCommand = new LoadDefaultDataCommand(this);
             SavePartiesToExcelCommand = new SavePartiesToExcelCommand(this);
+            //
+            LoadPartiesCommand = new LoadPartiesCommand(this);
         }
 
         #endregion Конструкторы

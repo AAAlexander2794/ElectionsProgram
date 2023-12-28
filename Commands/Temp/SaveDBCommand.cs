@@ -32,7 +32,7 @@ namespace ElectionsProgram.Commands.Temp
         {
             try
             {
-                ProcessorIO.SaveDBToXml(_base, "data", "electionBase.xml");
+                ProcessorXML.SaveDBToXml(_base, "data", "electionBase.xml");
                 MessageBox.Show("Данные сохранены.");
             }
             catch (Exception ex)
