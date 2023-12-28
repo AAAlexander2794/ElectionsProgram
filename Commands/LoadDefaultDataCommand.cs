@@ -57,8 +57,8 @@ namespace ElectionsProgram.Commands
             _base.Mediaresources.Add(new Mediaresource(media5));
             //
             _base.CurrentMediaresource = _base.Mediaresources[0];
-            // Создаем дополнительную "партию", обозначающую отсутствие партии
-            _base.Parties.Add(new Party(new PartyView("Самовыдвижение")));
+            //// Создаем дополнительную "партию", обозначающую отсутствие партии
+            //_base.Parties.Add(new Party(new PartyView("Самовыдвижение")));
         }
     }
 }

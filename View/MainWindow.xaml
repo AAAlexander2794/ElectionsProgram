@@ -58,6 +58,28 @@
                                 <StackPanel>
                                     <TextBlock Text="{Binding Path=View.Название_условное}" />
                                     <TextBlock Text="{Binding Path=View.Постановление}"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <StackPanel>
+                                            <TextBlock Text="Россия-1"/>
+                                            <TextBlock Text="{Binding Path=View.Талон_Россия_1}"/>
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <TextBlock Text="Россия-24"/>
+                                            <TextBlock Text="{Binding Path=View.Талон_Россия_24}"/>
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <TextBlock Text="Маяк"/>
+                                            <TextBlock Text="{Binding Path=View.Талон_Маяк}"/>
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <TextBlock Text="Радио России"/>
+                                            <TextBlock Text="{Binding Path=View.Талон_Радио_России}"/>
+                                        </StackPanel>
+                                        <StackPanel>
+                                            <TextBlock Text="Вести ФМ"/>
+                                            <TextBlock Text="{Binding Path=View.Талон_Вести_ФМ}"/>
+                                        </StackPanel>
+                                    </StackPanel>
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

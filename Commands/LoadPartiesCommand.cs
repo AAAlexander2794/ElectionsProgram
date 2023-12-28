@@ -38,7 +38,7 @@ namespace ElectionsProgram.Commands
             var list = BuilderParties.GetParties(dt);
             // Добавляем список партий в VM
             _vm.Parties = new System.Collections.ObjectModel.ObservableCollection<Entities.Party>(list);
-            // Добавляем партию "Самовыдвижение", если ее нет
+            // Добавляем партию "Самовыдвижение", если ее нет (28.12.23: а нужна ли вообще?)
             if (_vm.Parties.FirstOrDefault(p => p.View.Название_полное == "Самовыдвижение") == null)
             {
                 _vm.Parties.Add(new Party(new PartyView()
