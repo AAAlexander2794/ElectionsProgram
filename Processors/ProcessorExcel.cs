@@ -8,391 +8,488 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Win32;
 
 namespace ElectionsProgram.Processors
 {
     internal static class ProcessorExcel
     {
         /// <summary>
-        /// Чтение листа Экселя
+        /// Запись <see cref="DataTable"/> в Excel.
         /// </summary>
-        /// <param name="filename"></param>
-        /// <param name="firstRowIsHeader"></param>
-        /// <param name="sheetNumber">Номер листа</param>
-        /// <returns></returns>
-        public static DataTable ReadExcelSheet(string filename, bool firstRowIsHeader = true, int sheetNumber = 0)
+        /// <param name="dataTable"></param>
+        /// <param name="path"></param>
+        /// <param name="sheetName"></param>
+        /// <remarks>
+        /// Использует пакет ClosedXML.
+        /// </remarks>
+        public static void SaveToExcel(DataTable dataTable, string path = "", string sheetName = "Данные")
         {
-            DataTable dt = new DataTable();
-            try
+            // Создаем новую книгу
+            XLWorkbook wb = new XLWorkbook();
+            // Добавляем к книге лист с данными
+            wb.Worksheets.Add(dataTable, sheetName);
+            // Диалоговое окно записи файла
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            // Если путь не был задан, используем путь к приложению
+            if (path == "")
             {
-                using (SpreadsheetDocument doc = SpreadsheetDocument.Open(filename, false))
-                {
-                    //Read the first Sheets 
-                    Sheet sheet = doc.WorkbookPart.Workbook.Sheets.ChildElements[sheetNumber] as Sheet;
-                    Worksheet worksheet = (doc.WorkbookPart.GetPartById(sheet.Id.Value) as WorksheetPart).Worksheet;
-                    IEnumerable<Row> rows = worksheet.GetFirstChild<SheetData>().Descendants<Row>();
-                    int counter = 0;
-                    foreach (Row row in rows)
-                    {
-                        counter = counter + 1;
-                        // Счетчик столбцов
-                        int columnNumber = 0;
-                        //Read the first row as header
-                        if (counter == 1)
-                        {
-                            var j = 1;
-                            foreach (Cell cell in row.Descendants<Cell>())
-                            {
-                                var colunmName = firstRowIsHeader ? GetCellValue(doc, cell) : "Field" + j++;
-                                dt.Columns.Add(colunmName);
-                                columnNumber++;
-                            }
-                        }
-                        else
-                        {
-                            dt.Rows.Add();
-                            // Почти полностью рабочий вариант (пропускает пустые ячейки)
-                            int i = 0;
-                            foreach (Cell cell in row.Descendants<Cell>())
-                            {
-                                dt.Rows[dt.Rows.Count - 1][i] = GetCellValue(doc, cell);
-                                i++;
-                            }
-
-                            //// Нерабочий вариант
-                            //var cells = row.Descendants<Cell>().ToList();
-                            //for (int j = 0; j <= columnNumber; j++)
-                            //{
-                            //    dt.Rows[dt.Rows.Count - 1][j] = GetCellValue(doc, cells[j]);
-                            //}
-                        }
-                    }
-                }
+                saveFileDialog.InitialDirectory = AppContext.BaseDirectory;
             }
-            catch (Exception ex)
+            if (saveFileDialog.ShowDialog() == true)
             {
-                throw new Exception($"ReadExcelSheet\r\n{ex.Message}");
+                wb.SaveAs(saveFileDialog.FileName);
             }
-            return dt;
-        }
-
-        public static DataTable ReadExcelSheetClosedXML(string filename, int sheetNumber = 1, bool firstRowIsHeader = true)
-        {
-            //
-            var workbook = new XLWorkbook(filename);
-            var ws = workbook.Worksheet(sheetNumber);
-            return ReadExcelSheetClosedXML(ws, firstRowIsHeader);
-        }
-
-        public static DataTable ReadExcelSheetClosedXML(string filename, string sheetName, bool firstRowIsHeader = true)
-        {
-            //
-            var workbook = new XLWorkbook(filename);
-            var ws = workbook.Worksheet(sheetName);
-            return ReadExcelSheetClosedXML(ws, firstRowIsHeader);
-        }
-
-        public static DataTable ReadExcelSheetClosedXML(IXLWorksheet ws, bool firstRowIsHeader = true)
-        {
-            DataTable dt = new DataTable();
-            // Счетчик количества столбцов
-            int count = 0;
-            //
-            if (firstRowIsHeader)
-            {
-                //
-                var rowHead = ws.Row(1);
-                var cells = rowHead.Cells();
-                foreach (var cell in cells)
-                {
-                    if (cell.IsEmpty()) break;
-                    // Создаем столбец
-                    dt.Columns.Add(cell.GetValue<string>());
-                    count++;
-                }
-            }
-            //
-            foreach (var row in ws.Rows())
-            {
-                // Первую пропускаем
-                if (row == ws.Row(1)) continue;
-                // На первой пустой строке прекращаем
-                if (row.IsEmpty()) break;
-                //
-                dt.Rows.Add();
-                int i = 0;
-                //
-                foreach (var cell in row.Cells())
-                {
-                    // Если ячеек больше, чем заголовков, прекращаем
-                    if (i >= count) break;
-                    dt.Rows[dt.Rows.Count - 1][i] = cell.Value;
-                    i++;
-                }
-            }
-            //
-            return dt;
         }
 
         /// <summary>
-        /// Из интернета, ругается, что метод не найден
+        /// Загружаем данные с листа Excel.
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="worksheet"></param>
+        /// <param name="filePath"></param>
+        /// <param name="sheetNumber"></param>
         /// <returns></returns>
-        public static DataTable GetDataFromExcel(string path, dynamic worksheet)
+        /// <remarks>
+        /// Использует пакет ClosedXML.
+        /// </remarks>
+        public static DataTable LoadFromExcel(string filePath, int sheetNumber = 1)
         {
-            //Save the uploaded Excel file.
 
-
-            DataTable dt = new DataTable();
-            //Open the Excel file using ClosedXML.
-            using (XLWorkbook workBook = new XLWorkbook(path))
+            // Open the Excel file using ClosedXML.
+            // Keep in mind the Excel file cannot be open when trying to read it
+            using (XLWorkbook workBook = new XLWorkbook(filePath))
             {
-                //Read the first Sheet from Excel file.
-                IXLWorksheet workSheet = workBook.Worksheet(worksheet);
-
-                //Create a new DataTable.
-
-                //Loop through the Worksheet rows.
+                // Чтение листа Excel
+                IXLWorksheet workSheet = workBook.Worksheet(sheetNumber);
+                //
+                DataTable dt = new DataTable();
+                // Флаг первой строки (для заголовков)
                 bool firstRow = true;
+                // Номер первого и последнего столбца с данными
+                int firstColumn = 0;
+                int lastColumn = 0;
+                //
                 foreach (IXLRow row in workSheet.Rows())
                 {
-                    //Use the first row to add columns to DataTable.
+                    // В первой строке заголовки столбцов для DataTable.
                     if (firstRow)
                     {
-                        foreach (IXLCell cell in row.Cells())
+                        // Определяем первую и последнюю ячейку по заголовкам
+                        firstColumn = row.FirstCellUsed().Address.ColumnNumber;
+                        lastColumn = row.LastCellUsed().Address.ColumnNumber;
+                        // Начинаем с первой использованной ячейки, заканчиваем последней использованной.
+                        foreach (IXLCell cell in row.Cells(firstColumn, lastColumn))
                         {
-                            if (!string.IsNullOrEmpty(cell.Value.ToString()))
-                            {
-                                dt.Columns.Add(cell.Value.ToString());
-                            }
-                            else
-                            {
-                                break;
-                            }
+                            dt.Columns.Add(cell.Value.ToString());
                         }
                         firstRow = false;
+                        
                     }
                     else
                     {
+                        // Добавляем строку в DataTable.
+                        dt.Rows.Add();
                         int i = 0;
-                        DataRow toInsert = dt.NewRow();
-                        foreach (IXLCell cell in row.Cells(1, dt.Columns.Count))
+                        // Читаем те же столбцы, что и для заголовков
+                        foreach (IXLCell cell in row.Cells(firstColumn, lastColumn))
                         {
-                            try
-                            {
-                                toInsert[i] = cell.Value.ToString();
-                            }
-                            catch (Exception ex)
-                            {
-
-                            }
+                            dt.Rows[dt.Rows.Count - 1][i] = cell.Value.ToString();
                             i++;
                         }
-                        dt.Rows.Add(toInsert);
                     }
                 }
+
                 return dt;
             }
         }
 
-        /// <summary>
-        /// Чтение ячейки листа, используется в <see cref="ReadExcelSheet(string, bool, int)"/>.
-        /// </summary>
-        /// <param name="doc"></param>
-        /// <param name="cell"></param>
-        /// <returns></returns>
-        private static string GetCellValue(SpreadsheetDocument doc, Cell cell)
-        {
-            if (cell.CellValue == null) return "";
-            string value = cell.CellValue.InnerText;
-            if (cell.DataType != null && cell.DataType.Value == CellValues.SharedString)
-            {
-                return doc.WorkbookPart.SharedStringTablePart.SharedStringTable.ChildElements.GetItem(int.Parse(value)).InnerText;
-            }
-            return value;
-        }
+        #region Ненужные методы через OpenXML и прочее
 
-        public static void CreateSpreadsheetWorkbook(string filepath)
-        {
-            // Create a spreadsheet document by supplying the filepath.
-            // By default, AutoSave = true, Editable = true, and Type = xlsx.
-            SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.
-                Create(filepath, SpreadsheetDocumentType.Workbook);
+        ///// <summary>
+        ///// Чтение листа Экселя
+        ///// </summary>
+        ///// <param name="filename"></param>
+        ///// <param name="firstRowIsHeader"></param>
+        ///// <param name="sheetNumber">Номер листа</param>
+        ///// <returns></returns>
+        //public static DataTable ReadExcelSheet(string filename, bool firstRowIsHeader = true, int sheetNumber = 0)
+        //{
+        //    DataTable dt = new DataTable();
+        //    try
+        //    {
+        //        using (SpreadsheetDocument doc = SpreadsheetDocument.Open(filename, false))
+        //        {
+        //            //Read the first Sheets 
+        //            Sheet sheet = doc.WorkbookPart.Workbook.Sheets.ChildElements[sheetNumber] as Sheet;
+        //            Worksheet worksheet = (doc.WorkbookPart.GetPartById(sheet.Id.Value) as WorksheetPart).Worksheet;
+        //            IEnumerable<Row> rows = worksheet.GetFirstChild<SheetData>().Descendants<Row>();
+        //            int counter = 0;
+        //            foreach (Row row in rows)
+        //            {
+        //                counter = counter + 1;
+        //                // Счетчик столбцов
+        //                int columnNumber = 0;
+        //                //Read the first row as header
+        //                if (counter == 1)
+        //                {
+        //                    var j = 1;
+        //                    foreach (Cell cell in row.Descendants<Cell>())
+        //                    {
+        //                        var colunmName = firstRowIsHeader ? GetCellValue(doc, cell) : "Field" + j++;
+        //                        dt.Columns.Add(colunmName);
+        //                        columnNumber++;
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    dt.Rows.Add();
+        //                    // Почти полностью рабочий вариант (пропускает пустые ячейки)
+        //                    int i = 0;
+        //                    foreach (Cell cell in row.Descendants<Cell>())
+        //                    {
+        //                        dt.Rows[dt.Rows.Count - 1][i] = GetCellValue(doc, cell);
+        //                        i++;
+        //                    }
 
-            // Add a WorkbookPart to the document.
-            WorkbookPart workbookpart = spreadsheetDocument.AddWorkbookPart();
-            workbookpart.Workbook = new Workbook();
+        //                    //// Нерабочий вариант
+        //                    //var cells = row.Descendants<Cell>().ToList();
+        //                    //for (int j = 0; j <= columnNumber; j++)
+        //                    //{
+        //                    //    dt.Rows[dt.Rows.Count - 1][j] = GetCellValue(doc, cells[j]);
+        //                    //}
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new Exception($"ReadExcelSheet\r\n{ex.Message}");
+        //    }
+        //    return dt;
+        //}
 
-            // Add a WorksheetPart to the WorkbookPart.
-            WorksheetPart worksheetPart = workbookpart.AddNewPart<WorksheetPart>();
-            worksheetPart.Worksheet = new Worksheet(new SheetData());
+        //public static DataTable ReadExcelSheetClosedXML(string filename, int sheetNumber = 1, bool firstRowIsHeader = true)
+        //{
+        //    //
+        //    var workbook = new XLWorkbook(filename);
+        //    var ws = workbook.Worksheet(sheetNumber);
+        //    return ReadExcelSheetClosedXML(ws, firstRowIsHeader);
+        //}
 
-            // Add Sheets to the Workbook.
-            Sheets sheets = spreadsheetDocument.WorkbookPart.Workbook.
-                AppendChild<Sheets>(new Sheets());
+        //public static DataTable ReadExcelSheetClosedXML(string filename, string sheetName, bool firstRowIsHeader = true)
+        //{
+        //    //
+        //    var workbook = new XLWorkbook(filename);
+        //    var ws = workbook.Worksheet(sheetName);
+        //    return ReadExcelSheetClosedXML(ws, firstRowIsHeader);
+        //}
 
-            // Append a new worksheet and associate it with the workbook.
-            Sheet sheet = new Sheet()
-            {
-                Id = spreadsheetDocument.WorkbookPart.
-                GetIdOfPart(worksheetPart),
-                SheetId = 1,
-                Name = "mySheet"
-            };
-            sheets.Append(sheet);
+        //public static DataTable ReadExcelSheetClosedXML(IXLWorksheet ws, bool firstRowIsHeader = true)
+        //{
+        //    DataTable dt = new DataTable();
+        //    // Счетчик количества столбцов
+        //    int count = 0;
+        //    //
+        //    if (firstRowIsHeader)
+        //    {
+        //        //
+        //        var rowHead = ws.Row(1);
+        //        var cells = rowHead.Cells();
+        //        foreach (var cell in cells)
+        //        {
+        //            if (cell.IsEmpty()) break;
+        //            // Создаем столбец
+        //            dt.Columns.Add(cell.GetValue<string>());
+        //            count++;
+        //        }
+        //    }
+        //    //
+        //    foreach (var row in ws.Rows())
+        //    {
+        //        // Первую пропускаем
+        //        if (row == ws.Row(1)) continue;
+        //        // На первой пустой строке прекращаем
+        //        if (row.IsEmpty()) break;
+        //        //
+        //        dt.Rows.Add();
+        //        int i = 0;
+        //        //
+        //        foreach (var cell in row.Cells())
+        //        {
+        //            // Если ячеек больше, чем заголовков, прекращаем
+        //            if (i >= count) break;
+        //            dt.Rows[dt.Rows.Count - 1][i] = cell.Value;
+        //            i++;
+        //        }
+        //    }
+        //    //
+        //    return dt;
+        //}
 
-            workbookpart.Workbook.Save();
+        #endregion Ненужные методы через OpenXML и прочее
 
-            // Close the document.
-            spreadsheetDocument.Close();
-        }
+        #region Мусор?
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="docName"></param>
-        /// <param name="text"></param>
-        public static void InsertText(string docName, string text)
-        {
-            // Open the document for editing.
-            using (SpreadsheetDocument spreadSheet = SpreadsheetDocument.Open(docName, true))
-            {
-                // Get the SharedStringTablePart. If it does not exist, create a new one.
-                SharedStringTablePart shareStringPart;
-                if (spreadSheet.WorkbookPart.GetPartsOfType<SharedStringTablePart>().Count() > 0)
-                {
-                    shareStringPart = spreadSheet.WorkbookPart.GetPartsOfType<SharedStringTablePart>().First();
-                }
-                else
-                {
-                    shareStringPart = spreadSheet.WorkbookPart.AddNewPart<SharedStringTablePart>();
-                }
+        ///// <summary>
+        ///// Из интернета, ругается, что метод не найден
+        ///// </summary>
+        ///// <param name="path"></param>
+        ///// <param name="worksheet"></param>
+        ///// <returns></returns>
+        //public static DataTable GetDataFromExcel(string path, dynamic worksheet)
+        //{
+        //    //Save the uploaded Excel file.
 
-                // Insert the text into the SharedStringTablePart.
-                int index = InsertSharedStringItem(text, shareStringPart);
 
-                // Insert a new worksheet.
-                WorksheetPart worksheetPart = InsertWorksheet(spreadSheet.WorkbookPart);
+        //    DataTable dt = new DataTable();
+        //    //Open the Excel file using ClosedXML.
+        //    using (XLWorkbook workBook = new XLWorkbook(path))
+        //    {
+        //        //Read the first Sheet from Excel file.
+        //        IXLWorksheet workSheet = workBook.Worksheet(worksheet);
 
-                // Insert cell A1 into the new worksheet.
-                Cell cell = InsertCellInWorksheet("A", 1, worksheetPart);
+        //        //Create a new DataTable.
 
-                // Set the value of cell A1.
-                cell.CellValue = new CellValue(index.ToString());
-                cell.DataType = new EnumValue<CellValues>(CellValues.SharedString);
+        //        //Loop through the Worksheet rows.
+        //        bool firstRow = true;
+        //        foreach (IXLRow row in workSheet.Rows())
+        //        {
+        //            //Use the first row to add columns to DataTable.
+        //            if (firstRow)
+        //            {
+        //                foreach (IXLCell cell in row.Cells())
+        //                {
+        //                    if (!string.IsNullOrEmpty(cell.Value.ToString()))
+        //                    {
+        //                        dt.Columns.Add(cell.Value.ToString());
+        //                    }
+        //                    else
+        //                    {
+        //                        break;
+        //                    }
+        //                }
+        //                firstRow = false;
+        //            }
+        //            else
+        //            {
+        //                int i = 0;
+        //                DataRow toInsert = dt.NewRow();
+        //                foreach (IXLCell cell in row.Cells(1, dt.Columns.Count))
+        //                {
+        //                    try
+        //                    {
+        //                        toInsert[i] = cell.Value.ToString();
+        //                    }
+        //                    catch (Exception ex)
+        //                    {
 
-                // Save the new worksheet.
-                worksheetPart.Worksheet.Save();
-            }
-        }
+        //                    }
+        //                    i++;
+        //                }
+        //                dt.Rows.Add(toInsert);
+        //            }
+        //        }
+        //        return dt;
+        //    }
+        //}
 
-        // Given text and a SharedStringTablePart, creates a SharedStringItem with the specified text 
-        // and inserts it into the SharedStringTablePart. If the item already exists, returns its index.
-        private static int InsertSharedStringItem(string text, SharedStringTablePart shareStringPart)
-        {
-            // If the part does not contain a SharedStringTable, create one.
-            if (shareStringPart.SharedStringTable == null)
-            {
-                shareStringPart.SharedStringTable = new SharedStringTable();
-            }
+        ///// <summary>
+        ///// Чтение ячейки листа, используется в <see cref="ReadExcelSheet(string, bool, int)"/>.
+        ///// </summary>
+        ///// <param name="doc"></param>
+        ///// <param name="cell"></param>
+        ///// <returns></returns>
+        //private static string GetCellValue(SpreadsheetDocument doc, Cell cell)
+        //{
+        //    if (cell.CellValue == null) return "";
+        //    string value = cell.CellValue.InnerText;
+        //    if (cell.DataType != null && cell.DataType.Value == CellValues.SharedString)
+        //    {
+        //        return doc.WorkbookPart.SharedStringTablePart.SharedStringTable.ChildElements.GetItem(int.Parse(value)).InnerText;
+        //    }
+        //    return value;
+        //}
 
-            int i = 0;
+        //public static void CreateSpreadsheetWorkbook(string filepath)
+        //{
+        //    // Create a spreadsheet document by supplying the filepath.
+        //    // By default, AutoSave = true, Editable = true, and Type = xlsx.
+        //    SpreadsheetDocument spreadsheetDocument = SpreadsheetDocument.
+        //        Create(filepath, SpreadsheetDocumentType.Workbook);
 
-            // Iterate through all the items in the SharedStringTable. If the text already exists, return its index.
-            foreach (SharedStringItem item in shareStringPart.SharedStringTable.Elements<SharedStringItem>())
-            {
-                if (item.InnerText == text)
-                {
-                    return i;
-                }
+        //    // Add a WorkbookPart to the document.
+        //    WorkbookPart workbookpart = spreadsheetDocument.AddWorkbookPart();
+        //    workbookpart.Workbook = new Workbook();
 
-                i++;
-            }
+        //    // Add a WorksheetPart to the WorkbookPart.
+        //    WorksheetPart worksheetPart = workbookpart.AddNewPart<WorksheetPart>();
+        //    worksheetPart.Worksheet = new Worksheet(new SheetData());
 
-            // The text does not exist in the part. Create the SharedStringItem and return its index.
-            shareStringPart.SharedStringTable.AppendChild(new SharedStringItem(new DocumentFormat.OpenXml.Spreadsheet.Text(text)));
-            shareStringPart.SharedStringTable.Save();
+        //    // Add Sheets to the Workbook.
+        //    Sheets sheets = spreadsheetDocument.WorkbookPart.Workbook.
+        //        AppendChild<Sheets>(new Sheets());
 
-            return i;
-        }
+        //    // Append a new worksheet and associate it with the workbook.
+        //    Sheet sheet = new Sheet()
+        //    {
+        //        Id = spreadsheetDocument.WorkbookPart.
+        //        GetIdOfPart(worksheetPart),
+        //        SheetId = 1,
+        //        Name = "mySheet"
+        //    };
+        //    sheets.Append(sheet);
 
-        // Given a WorkbookPart, inserts a new worksheet.
-        private static WorksheetPart InsertWorksheet(WorkbookPart workbookPart)
-        {
-            // Add a new worksheet part to the workbook.
-            WorksheetPart newWorksheetPart = workbookPart.AddNewPart<WorksheetPart>();
-            newWorksheetPart.Worksheet = new Worksheet(new SheetData());
-            newWorksheetPart.Worksheet.Save();
+        //    workbookpart.Workbook.Save();
 
-            Sheets sheets = workbookPart.Workbook.GetFirstChild<Sheets>();
-            string relationshipId = workbookPart.GetIdOfPart(newWorksheetPart);
+        //    // Close the document.
+        //    spreadsheetDocument.Close();
+        //}
 
-            // Get a unique ID for the new sheet.
-            uint sheetId = 1;
-            if (sheets.Elements<Sheet>().Count() > 0)
-            {
-                sheetId = sheets.Elements<Sheet>().Select(s => s.SheetId.Value).Max() + 1;
-            }
+        ///// <summary>
+        ///// 
+        ///// </summary>
+        ///// <param name="docName"></param>
+        ///// <param name="text"></param>
+        //public static void InsertText(string docName, string text)
+        //{
+        //    // Open the document for editing.
+        //    using (SpreadsheetDocument spreadSheet = SpreadsheetDocument.Open(docName, true))
+        //    {
+        //        // Get the SharedStringTablePart. If it does not exist, create a new one.
+        //        SharedStringTablePart shareStringPart;
+        //        if (spreadSheet.WorkbookPart.GetPartsOfType<SharedStringTablePart>().Count() > 0)
+        //        {
+        //            shareStringPart = spreadSheet.WorkbookPart.GetPartsOfType<SharedStringTablePart>().First();
+        //        }
+        //        else
+        //        {
+        //            shareStringPart = spreadSheet.WorkbookPart.AddNewPart<SharedStringTablePart>();
+        //        }
 
-            string sheetName = "Sheet" + sheetId;
+        //        // Insert the text into the SharedStringTablePart.
+        //        int index = InsertSharedStringItem(text, shareStringPart);
 
-            // Append the new worksheet and associate it with the workbook.
-            Sheet sheet = new Sheet() { Id = relationshipId, SheetId = sheetId, Name = sheetName };
-            sheets.Append(sheet);
-            workbookPart.Workbook.Save();
+        //        // Insert a new worksheet.
+        //        WorksheetPart worksheetPart = InsertWorksheet(spreadSheet.WorkbookPart);
 
-            return newWorksheetPart;
-        }
+        //        // Insert cell A1 into the new worksheet.
+        //        Cell cell = InsertCellInWorksheet("A", 1, worksheetPart);
 
-        // Given a column name, a row index, and a WorksheetPart, inserts a cell into the worksheet. 
-        // If the cell already exists, returns it. 
-        private static Cell InsertCellInWorksheet(string columnName, uint rowIndex, WorksheetPart worksheetPart)
-        {
-            Worksheet worksheet = worksheetPart.Worksheet;
-            SheetData sheetData = worksheet.GetFirstChild<SheetData>();
-            string cellReference = columnName + rowIndex;
+        //        // Set the value of cell A1.
+        //        cell.CellValue = new CellValue(index.ToString());
+        //        cell.DataType = new EnumValue<CellValues>(CellValues.SharedString);
 
-            // If the worksheet does not contain a row with the specified row index, insert one.
-            Row row;
-            if (sheetData.Elements<Row>().Where(r => r.RowIndex == rowIndex).Count() != 0)
-            {
-                row = sheetData.Elements<Row>().Where(r => r.RowIndex == rowIndex).First();
-            }
-            else
-            {
-                row = new Row() { RowIndex = rowIndex };
-                sheetData.Append(row);
-            }
+        //        // Save the new worksheet.
+        //        worksheetPart.Worksheet.Save();
+        //    }
+        //}
 
-            // If there is not a cell with the specified column name, insert one.  
-            if (row.Elements<Cell>().Where(c => c.CellReference.Value == columnName + rowIndex).Count() > 0)
-            {
-                return row.Elements<Cell>().Where(c => c.CellReference.Value == cellReference).First();
-            }
-            else
-            {
-                // Cells must be in sequential order according to CellReference. Determine where to insert the new cell.
-                Cell refCell = null;
-                foreach (Cell cell in row.Elements<Cell>())
-                {
-                    if (cell.CellReference.Value.Length == cellReference.Length)
-                    {
-                        if (string.Compare(cell.CellReference.Value, cellReference, true) > 0)
-                        {
-                            refCell = cell;
-                            break;
-                        }
-                    }
-                }
+        //// Given text and a SharedStringTablePart, creates a SharedStringItem with the specified text 
+        //// and inserts it into the SharedStringTablePart. If the item already exists, returns its index.
+        //private static int InsertSharedStringItem(string text, SharedStringTablePart shareStringPart)
+        //{
+        //    // If the part does not contain a SharedStringTable, create one.
+        //    if (shareStringPart.SharedStringTable == null)
+        //    {
+        //        shareStringPart.SharedStringTable = new SharedStringTable();
+        //    }
 
-                Cell newCell = new Cell() { CellReference = cellReference };
-                row.InsertBefore(newCell, refCell);
+        //    int i = 0;
 
-                worksheet.Save();
-                return newCell;
-            }
-        }
+        //    // Iterate through all the items in the SharedStringTable. If the text already exists, return its index.
+        //    foreach (SharedStringItem item in shareStringPart.SharedStringTable.Elements<SharedStringItem>())
+        //    {
+        //        if (item.InnerText == text)
+        //        {
+        //            return i;
+        //        }
+
+        //        i++;
+        //    }
+
+        //    // The text does not exist in the part. Create the SharedStringItem and return its index.
+        //    shareStringPart.SharedStringTable.AppendChild(new SharedStringItem(new DocumentFormat.OpenXml.Spreadsheet.Text(text)));
+        //    shareStringPart.SharedStringTable.Save();
+
+        //    return i;
+        //}
+
+        //// Given a WorkbookPart, inserts a new worksheet.
+        //private static WorksheetPart InsertWorksheet(WorkbookPart workbookPart)
+        //{
+        //    // Add a new worksheet part to the workbook.
+        //    WorksheetPart newWorksheetPart = workbookPart.AddNewPart<WorksheetPart>();
+        //    newWorksheetPart.Worksheet = new Worksheet(new SheetData());
+        //    newWorksheetPart.Worksheet.Save();
+
+        //    Sheets sheets = workbookPart.Workbook.GetFirstChild<Sheets>();
+        //    string relationshipId = workbookPart.GetIdOfPart(newWorksheetPart);
+
+        //    // Get a unique ID for the new sheet.
+        //    uint sheetId = 1;
+        //    if (sheets.Elements<Sheet>().Count() > 0)
+        //    {
+        //        sheetId = sheets.Elements<Sheet>().Select(s => s.SheetId.Value).Max() + 1;
+        //    }
+
+        //    string sheetName = "Sheet" + sheetId;
+
+        //    // Append the new worksheet and associate it with the workbook.
+        //    Sheet sheet = new Sheet() { Id = relationshipId, SheetId = sheetId, Name = sheetName };
+        //    sheets.Append(sheet);
+        //    workbookPart.Workbook.Save();
+
+        //    return newWorksheetPart;
+        //}
+
+        //// Given a column name, a row index, and a WorksheetPart, inserts a cell into the worksheet. 
+        //// If the cell already exists, returns it. 
+        //private static Cell InsertCellInWorksheet(string columnName, uint rowIndex, WorksheetPart worksheetPart)
+        //{
+        //    Worksheet worksheet = worksheetPart.Worksheet;
+        //    SheetData sheetData = worksheet.GetFirstChild<SheetData>();
+        //    string cellReference = columnName + rowIndex;
+
+        //    // If the worksheet does not contain a row with the specified row index, insert one.
+        //    Row row;
+        //    if (sheetData.Elements<Row>().Where(r => r.RowIndex == rowIndex).Count() != 0)
+        //    {
+        //        row = sheetData.Elements<Row>().Where(r => r.RowIndex == rowIndex).First();
+        //    }
+        //    else
+        //    {
+        //        row = new Row() { RowIndex = rowIndex };
+        //        sheetData.Append(row);
+        //    }
+
+        //    // If there is not a cell with the specified column name, insert one.  
+        //    if (row.Elements<Cell>().Where(c => c.CellReference.Value == columnName + rowIndex).Count() > 0)
+        //    {
+        //        return row.Elements<Cell>().Where(c => c.CellReference.Value == cellReference).First();
+        //    }
+        //    else
+        //    {
+        //        // Cells must be in sequential order according to CellReference. Determine where to insert the new cell.
+        //        Cell refCell = null;
+        //        foreach (Cell cell in row.Elements<Cell>())
+        //        {
+        //            if (cell.CellReference.Value.Length == cellReference.Length)
+        //            {
+        //                if (string.Compare(cell.CellReference.Value, cellReference, true) > 0)
+        //                {
+        //                    refCell = cell;
+        //                    break;
+        //                }
+        //            }
+        //        }
+
+        //        Cell newCell = new Cell() { CellReference = cellReference };
+        //        row.InsertBefore(newCell, refCell);
+
+        //        worksheet.Save();
+        //        return newCell;
+        //    }
+        //}
+
+        #endregion Мусор?
     }
 }

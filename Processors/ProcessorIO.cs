@@ -18,6 +18,31 @@ namespace ElectionsProgram.Processors
     /// </summary>
     public static class ProcessorIO
     {
+        //public static DataTable LoadDataFromExcel(string path = "")
+        //{
+        //    DataTable dataTable = new DataTable();
+
+        //}
+
+        //public static void SaveToExcel(DataTable dataTable, string path = "")
+        //{
+        //    // Запись в файл Excel
+        //    XLWorkbook wb = new XLWorkbook();
+        //    wb.Worksheets.Add(dataTable, "Отчет");
+        //    SaveFileDialog saveFileDialog = new SaveFileDialog();
+        //    // Если путь не был задан, используем путь к приложению
+        //    if (path == "")
+        //    {
+        //        saveFileDialog.InitialDirectory = AppContext.BaseDirectory;
+        //    }
+        //    if (saveFileDialog.ShowDialog() == true)
+        //    {
+        //        wb.SaveAs(saveFileDialog.FileName);
+        //    }
+        //}
+
+        #region Взаимодействие с XML
+
         public static void SaveDBToXml(ViewModels.ViewModel electionsBase, string filePath, string fileName)
         {
             // Создаем директорию, если ее не было
@@ -41,21 +66,6 @@ namespace ElectionsProgram.Processors
             return _base;
         }
 
-        public static void SaveToExcel(DataTable dataTable, string path = "")
-        {
-            // Запись в файл Excel
-            XLWorkbook wb = new XLWorkbook();
-            wb.Worksheets.Add(dataTable, "Отчет");
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            // Если путь не был задан, используем путь к приложению
-            if (path == "")
-            {
-                saveFileDialog.InitialDirectory = AppContext.BaseDirectory;
-            }
-            if (saveFileDialog.ShowDialog() == true)
-            {
-                wb.SaveAs(saveFileDialog.FileName);
-            }
-        }
+        #endregion Взаимодействие с XML
     }
 }

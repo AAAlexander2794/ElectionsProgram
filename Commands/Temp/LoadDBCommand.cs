@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 
-namespace ElectionsProgram.Commands
+namespace ElectionsProgram.Commands.Temp
 {
     public class LoadDBCommand : ICommand
     {
-        private ViewModels.ViewModel _base;
+        private ViewModel _base;
 
-        public LoadDBCommand(ViewModels.ViewModel @base) 
+        public LoadDBCommand(ViewModel @base)
         {
             _base = @base;
         }

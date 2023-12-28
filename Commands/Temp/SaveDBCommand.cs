@@ -10,15 +10,15 @@ using System.Windows;
 using System.Windows.Input;
 using System.Xml.Serialization;
 
-namespace ElectionsProgram.Commands
+namespace ElectionsProgram.Commands.Temp
 {
     public class SaveDBCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
 
-        private ViewModels.ViewModel _base;
+        private ViewModel _base;
 
-        public SaveDBCommand(ViewModels.ViewModel electionsBase) 
+        public SaveDBCommand(ViewModel electionsBase)
         {
             _base = electionsBase;
         }
@@ -37,7 +37,8 @@ namespace ElectionsProgram.Commands
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                throw new Exception(ex.Message);
+                //MessageBox.Show(ex.Message);
             }
         }
     }

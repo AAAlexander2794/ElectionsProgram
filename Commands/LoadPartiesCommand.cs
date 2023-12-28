@@ -1,7 +1,4 @@
-﻿using ClosedXML.Excel;
-using ElectionsProgram.Processors;
-using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,11 +7,11 @@ using System.Windows.Input;
 
 namespace ElectionsProgram.Commands
 {
-    public class SavePartiesToExcelCommand : ICommand
+    internal class LoadPartiesCommand : ICommand
     {
         private ViewModels.ViewModel _vm;
 
-        public SavePartiesToExcelCommand(ViewModels.ViewModel viewModel)
+        public LoadPartiesCommand(ViewModels.ViewModel viewModel)
         {
             _vm = viewModel;
         }
@@ -23,13 +20,12 @@ namespace ElectionsProgram.Commands
 
         public bool CanExecute(object? parameter)
         {
-            return true;
+            throw new NotImplementedException();
         }
 
         public void Execute(object? parameter)
         {
-            ProcessorExcel.SaveToExcel(_vm.Test);
-            
+            throw new NotImplementedException();
         }
     }
 }
