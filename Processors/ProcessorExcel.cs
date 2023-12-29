@@ -51,9 +51,21 @@ namespace ElectionsProgram.Processors
         /// <remarks>
         /// Использует пакет ClosedXML.
         /// </remarks>
-        public static DataTable LoadFromExcel(string filePath, int sheetNumber = 1)
+        public static DataTable LoadFromExcel(string filePath = "", int sheetNumber = 1)
         {
-
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (filePath == "")
+            {
+                openFileDialog.InitialDirectory = AppContext.BaseDirectory;
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    filePath = openFileDialog.FileName;
+                }
+                else
+                {
+                    throw new Exception("Не указан путь к файлу Excel.");
+                }
+            }
             // Open the Excel file using ClosedXML.
             // Keep in mind the Excel file cannot be open when trying to read it
             using (XLWorkbook workBook = new XLWorkbook(filePath))

@@ -38,7 +38,7 @@ namespace ElectionsProgram.View
             }
             //_viewModel.Test = ProcessorExcel.ReadExcelSheet(@"Настройки/Партии/Партии.xlsx");
             _viewModel.Test = ProcessorExcel.LoadFromExcel(@"Настройки/_database/Партии.xlsx");
-            _viewModel.Parties = new System.Collections.ObjectModel.ObservableCollection<Entities.Party>(BuilderParties.GetParties(_viewModel.Test));
+            _viewModel.Parties = new System.Collections.ObjectModel.ObservableCollection<Entities.Party>(PartiesBuilder.GetParties(_viewModel.Test));
             MessageBox.Show("Done");
             //MessageBox.Show($"{_viewModel.Mediaresources.Count}");
         }

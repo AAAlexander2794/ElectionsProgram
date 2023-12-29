@@ -35,7 +35,9 @@ namespace ElectionsProgram.ViewModels
             }
         }
 
-        #region Списки
+        #region Коллекции
+
+        #region Медиаресурсы
 
         private ObservableCollection<Mediaresource> _mediaresources = 
             new ObservableCollection<Mediaresource>();
@@ -61,6 +63,8 @@ namespace ElectionsProgram.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        #endregion Медиаресурсы
 
         private ObservableCollection<Party> _parties = 
             new ObservableCollection<Party>();
@@ -88,7 +92,7 @@ namespace ElectionsProgram.ViewModels
             }
         }
 
-        #endregion Списки
+        #endregion Коллекции
 
         #region Комманды
 

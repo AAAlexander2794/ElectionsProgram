@@ -33,9 +33,10 @@ namespace ElectionsProgram.Commands
         public void Execute(object? parameter)
         {
             // Читаем Excel
-            DataTable dt = ProcessorExcel.LoadFromExcel(@"Настройки/_database/Партии.xlsx");
+            //DataTable dt = ProcessorExcel.LoadFromExcel(@"Настройки/_database/Партии.xlsx");
+            DataTable dt = ProcessorExcel.LoadFromExcel();
             // Формируем список партий из DataTable
-            var list = BuilderParties.GetParties(dt);
+            var list = PartiesBuilder.GetParties(dt);
             // Добавляем список партий в VM
             _vm.Parties = new System.Collections.ObjectModel.ObservableCollection<Entities.Party>(list);
             // Добавляем партию "Самовыдвижение", если ее нет (28.12.23: а нужна ли вообще?)

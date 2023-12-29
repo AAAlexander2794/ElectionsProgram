@@ -15,7 +15,7 @@ namespace ElectionsProgram.Builders
     /// <summary>
     /// Набор методов для работы с партиями.
     /// </summary>
-    internal static class BuilderParties
+    internal static class PartiesBuilder
     {
         
         public static List<Party> GetParties(DataTable dt)
