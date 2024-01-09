@@ -9,7 +9,7 @@ namespace ElectionsProgram.Entities
     /// <summary>
     /// Запись вещания по факту выхода в эфир в текстовом виде.
     /// </summary>
-    public class BroadcastActualView
+    public class PlaylistRecordView
     {
         public string MediaresourceName { get; set; }
 
@@ -47,7 +47,7 @@ namespace ElectionsProgram.Entities
 
         #region Конструкторы
 
-        public BroadcastActualView(
+        public PlaylistRecordView(
             string mediaresourceName, 
             string talonNumber, 
             string date, 
@@ -67,7 +67,7 @@ namespace ElectionsProgram.Entities
             Description = description;
         }
 
-        public BroadcastActualView() { }
+        public PlaylistRecordView() { }
 
         #endregion Конструкторы
     }

@@ -18,7 +18,6 @@
             <Button Content="Сохранить" Command="{Binding SaveCommand}" Height="25" Width="90" Margin="5"/>
             <Button Content="Загрузить" Command="{Binding LoadCommand}" Height="25" Width="90" Margin="5"/>
             <Button Content="Базовые данные" Command="{Binding LoadDefaultDataCommand}" Height="25" Width="100" Margin="5"/>
-            <Button Content="TestParties" Command="{Binding LoadPartiesCommand}" Height="25" Width="100" Margin="5"/>
         </StackPanel>
 
         <TabControl Grid.Row="1">
@@ -44,46 +43,171 @@
             </TabItem>
             <TabItem Header="Партии">
                 <Grid Background="#FFE5E5E5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="250"/>
-                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="45"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <ListView Grid.Row="1" ItemsSource="{Binding Parties}">
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel>
-                                    <TextBlock Text="{Binding Path=View.Название_условное}" />
-                                    <TextBlock Text="{Binding Path=View.Постановление}"/>
-                                    <StackPanel Orientation="Horizontal">
-                                        <StackPanel>
-                                            <TextBlock Text="Россия-1"/>
-                                            <TextBlock Text="{Binding Path=View.Талон_Россия_1}"/>
-                                        </StackPanel>
-                                        <StackPanel>
-                                            <TextBlock Text="Россия-24"/>
-                                            <TextBlock Text="{Binding Path=View.Талон_Россия_24}"/>
-                                        </StackPanel>
-                                        <StackPanel>
-                                            <TextBlock Text="Маяк"/>
-                                            <TextBlock Text="{Binding Path=View.Талон_Маяк}"/>
-                                        </StackPanel>
-                                        <StackPanel>
-                                            <TextBlock Text="Радио России"/>
-                                            <TextBlock Text="{Binding Path=View.Талон_Радио_России}"/>
-                                        </StackPanel>
-                                        <StackPanel>
-                                            <TextBlock Text="Вести ФМ"/>
-                                            <TextBlock Text="{Binding Path=View.Талон_Вести_ФМ}"/>
-                                        </StackPanel>
-                                    </StackPanel>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-                    </ListView>
+                    <StackPanel Grid.Row="0" Orientation="Horizontal">
+                        <Button Content="Загрузить партии" Command="{Binding LoadPartiesCommand}" Width="110" Margin="5"/>
+                        <Button Content="Загрузить талоны партий" Command="{Binding LoadPartiesTalonsCommand}" Width="150" Margin="5"/>
+                    </StackPanel>
+                    <TabControl Grid.Row="1">
+                        <TabItem Header="Список партий">
+                            <Grid Background="#FFE5E5E5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="500"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="45"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <ListView Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Parties}" d:ItemsSource="{d:SampleData ItemCount=5}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Path=View.Название_условное}" />
+                                                <TextBlock Text="{Binding Path=View.Постановление}"/>
+                                                <StackPanel Orientation="Horizontal">
+                                                    <StackPanel>
+                                                        <TextBlock Text="Россия-1"/>
+                                                        <TextBlock Text="{Binding Path=View.Талон_Россия_1}"/>
+                                                    </StackPanel>
+                                                    <StackPanel>
+                                                        <TextBlock Text="Россия-24"/>
+                                                        <TextBlock Text="{Binding Path=View.Талон_Россия_24}"/>
+                                                    </StackPanel>
+                                                    <StackPanel>
+                                                        <TextBlock Text="Маяк"/>
+                                                        <TextBlock Text="{Binding Path=View.Талон_Маяк}"/>
+                                                    </StackPanel>
+                                                    <StackPanel>
+                                                        <TextBlock Text="Радио России"/>
+                                                        <TextBlock Text="{Binding Path=View.Талон_Радио_России}"/>
+                                                    </StackPanel>
+                                                    <StackPanel>
+                                                        <TextBlock Text="Вести ФМ"/>
+                                                        <TextBlock Text="{Binding Path=View.Талон_Вести_ФМ}"/>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListView>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Талоны Россия-1">
+                            <Grid Background="#FFE5E5E5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="500"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="45"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <ListView Grid.Row="1" Grid.Column="0" ItemsSource="{Binding PartiesTalons_Россия_1}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Path=Number}" />
+                                                <TextBlock Text="{Binding Path=MediaresourceName}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListView>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Талоны Россия-24">
+                            <Grid Background="#FFE5E5E5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="500"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="45"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <ListView Grid.Row="1" Grid.Column="0" ItemsSource="{Binding PartiesTalons_Россия_24}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Path=Number}" />
+                                                <TextBlock Text="{Binding Path=MediaresourceName}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListView>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Талоны Маяк">
+                            <Grid Background="#FFE5E5E5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="500"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="45"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <ListView Grid.Row="1" Grid.Column="0" ItemsSource="{Binding PartiesTalons_Маяк}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Path=Number}" />
+                                                <TextBlock Text="{Binding Path=MediaresourceName}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListView>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Талоны Вести ФМ">
+                            <Grid Background="#FFE5E5E5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="500"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="45"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <ListView Grid.Row="1" Grid.Column="0" ItemsSource="{Binding PartiesTalons_Вести_ФМ}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Path=Number}" />
+                                                <TextBlock Text="{Binding Path=MediaresourceName}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListView>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Header="Талоны Радио России">
+                            <Grid Background="#FFE5E5E5">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="500"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="45"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <ListView Grid.Row="1" Grid.Column="0" ItemsSource="{Binding PartiesTalons_Радио_России}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Path=Number}" />
+                                                <TextBlock Text="{Binding Path=MediaresourceName}"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListView>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+
                 </Grid>
 
             </TabItem>

@@ -37,7 +37,7 @@ namespace ElectionsProgram.ViewModels
 
         #region Коллекции
 
-        #region Медиаресурсы
+        #region Коллекции медиаресурсов
 
         private ObservableCollection<Mediaresource> _mediaresources = 
             new ObservableCollection<Mediaresource>();
@@ -64,7 +64,9 @@ namespace ElectionsProgram.ViewModels
             }
         }
 
-        #endregion Медиаресурсы
+        #endregion Коллекции медиаресурсов
+
+        #region Коллекции партий
 
         private ObservableCollection<Party> _parties = 
             new ObservableCollection<Party>();
@@ -78,7 +80,95 @@ namespace ElectionsProgram.ViewModels
                 OnPropertyChanged();
             }
         }
-            
+
+        private Party _currentParty;
+        /// <summary>
+        /// Текущая партия (выбранная)
+        /// </summary>
+        public Party CurrentParty { get => _currentParty;
+            set
+            {
+                _currentParty = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #region Талоны для партий
+
+        private ObservableCollection<Talon> _partiesTalons_Россия_1 = new ObservableCollection<Talon>();
+        /// <summary>
+        /// Талоны 
+        /// </summary>
+        public ObservableCollection<Talon> PartiesTalons_Россия_1 { get => _partiesTalons_Россия_1;
+            set
+            {
+                _partiesTalons_Россия_1 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<Talon> _partiesTalons_Россия_24 = new ObservableCollection<Talon>();
+        /// <summary>
+        /// Талоны 
+        /// </summary>
+        public ObservableCollection<Talon> PartiesTalons_Россия_24
+        {
+            get => _partiesTalons_Россия_24;
+            set
+            {
+                _partiesTalons_Россия_24 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<Talon> _partiesTalons_Маяк = new ObservableCollection<Talon>();
+        /// <summary>
+        /// Талоны 
+        /// </summary>
+        public ObservableCollection<Talon> PartiesTalons_Маяк
+        {
+            get => _partiesTalons_Маяк;
+            set
+            {
+                _partiesTalons_Маяк = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<Talon> _partiesTalons_Вести_ФМ = new ObservableCollection<Talon>();
+        /// <summary>
+        /// Талоны 
+        /// </summary>
+        public ObservableCollection<Talon> PartiesTalons_Вести_ФМ
+        {
+            get => _partiesTalons_Вести_ФМ;
+            set
+            {
+                _partiesTalons_Вести_ФМ = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<Talon> _partiesTalons_Радио_России = new ObservableCollection<Talon>();
+        /// <summary>
+        /// Талоны 
+        /// </summary>
+        public ObservableCollection<Talon> PartiesTalons_Радио_России
+        {
+            get => _partiesTalons_Радио_России;
+            set
+            {
+                _partiesTalons_Радио_России = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion Талоны для партий
+
+        #endregion Коллекции партий
+
+        #region Коллекции кандидатов
+
         private ObservableCollection<Candidate> _candidates = 
             new ObservableCollection<Candidate>();
         /// <summary>
@@ -92,6 +182,94 @@ namespace ElectionsProgram.ViewModels
             }
         }
 
+        private Candidate _currentCandidate;
+        /// <summary>
+        /// Текущий кандидат (выбранный)
+        /// </summary>
+        public Candidate CurrentCandidate { get => _currentCandidate;
+            set
+            {
+                _currentCandidate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #region Талоны для кандидатов
+
+        private ObservableCollection<Talon> _candidatesTalons_Россия_1 = new ObservableCollection<Talon>();
+        /// <summary>
+        /// Талоны 
+        /// </summary>
+        public ObservableCollection<Talon> CandidatesTalons_Россия_1
+        {
+            get => _candidatesTalons_Россия_1;
+            set
+            {
+                _candidatesTalons_Россия_1 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<Talon> _candidatesTalons_Россия_24 = new ObservableCollection<Talon>();
+        /// <summary>
+        /// Талоны 
+        /// </summary>
+        public ObservableCollection<Talon> CandidatesTalons_Россия_24
+        {
+            get => _candidatesTalons_Россия_24;
+            set
+            {
+                _candidatesTalons_Россия_24 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<Talon> _candidatesTalons_Маяк = new ObservableCollection<Talon>();
+        /// <summary>
+        /// Талоны 
+        /// </summary>
+        public ObservableCollection<Talon> CandidatesTalons_Маяк
+        {
+            get => _candidatesTalons_Маяк;
+            set
+            {
+                _candidatesTalons_Маяк = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<Talon> _candidatesTalons_Вести_ФМ = new ObservableCollection<Talon>();
+        /// <summary>
+        /// Талоны 
+        /// </summary>
+        public ObservableCollection<Talon> CandidatesTalons_Вести_ФМ
+        {
+            get => _candidatesTalons_Вести_ФМ;
+            set
+            {
+                _candidatesTalons_Вести_ФМ = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<Talon> _candidatesTalons_Радио_России = new ObservableCollection<Talon>();
+        /// <summary>
+        /// Талоны 
+        /// </summary>
+        public ObservableCollection<Talon> CandidatesTalons_Радио_России
+        {
+            get => _candidatesTalons_Радио_России;
+            set
+            {
+                _candidatesTalons_Радио_России = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion Талоны для кандидатов
+
+        #endregion Коллекции кандидатов
+
         #endregion Коллекции
 
         #region Комманды
@@ -102,6 +280,7 @@ namespace ElectionsProgram.ViewModels
         public SavePartiesToExcelCommand SavePartiesToExcelCommand { get; }
         //
         public LoadPartiesCommand LoadPartiesCommand { get; }
+        public LoadPartiesTalonsCommand LoadPartiesTalonsCommand { get; }
 
         #endregion Комманды
 
@@ -116,6 +295,7 @@ namespace ElectionsProgram.ViewModels
             SavePartiesToExcelCommand = new SavePartiesToExcelCommand(this);
             //
             LoadPartiesCommand = new LoadPartiesCommand(this);
+            LoadPartiesTalonsCommand = new LoadPartiesTalonsCommand(this);
         }
 
         #endregion Конструкторы

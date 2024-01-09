@@ -12,18 +12,18 @@ namespace ElectionsProgram.Entities
     /// <remarks>
     /// Из таких записей состоит <see cref="Talon"/>.
     /// </remarks>
-    public class BroadcastNominal
+    public class TalonRecord
     {
-        public BroadcastNominalView View { get; set; }
+        public TalonRecordView View { get; set; }
 
         #region Конструкторы
 
-        public BroadcastNominal(BroadcastNominalView view)
+        public TalonRecord(TalonRecordView view)
         {
             View = view;
         }
 
-        public BroadcastNominal() { }
+        public TalonRecord() { }
 
         #endregion Конструкторы
     }

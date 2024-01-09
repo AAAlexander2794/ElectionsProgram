@@ -17,23 +17,26 @@ namespace ElectionsProgram.Builders
         /// <param name="dt"></param>
         /// <param name="mediaResource"></param>
         /// <returns></returns>
-        public static List<BroadcastNominalView> ParseBroadcastNominalViews(DataTable dt, string mediaResource)
+        public static List<Talon> ParseBroadcastNominalViews(DataTable dt, string mediaResource)
         {
-            var result = new List<BroadcastNominalView>();
+            var talons = new List<Talon>();
             // В одной ячейке все строки одного талона
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 try
                 {
-                    var talonId = dt.Rows[i].Field<string>(0);
+                    var talonId = dt.Rows[i].Field<string>(0).Trim();
                     // Ячейка со строками одного талона парсится в список строк одного талона
                     var talonRecords = ParseTalonString(talonId, mediaResource, dt.Rows[i].Field<string>(1));
-                    // Все записи добавляем к результату
+                    // Создаем талон
+                    Talon talon = new Talon(mediaResource, talonId);
+                    // Все записи добавляем к талону
                     foreach (var talonRecord in talonRecords)
                     {
-                        result.Add(talonRecord);
+                        talon.BroadcastsNominal.Add(new TalonRecord(talonRecord));
                     }
-
+                    // Добавляем сформированный талон к результату
+                    talons.Add(talon);
                 }
                 catch (Exception ex)
                 {
@@ -41,7 +44,7 @@ namespace ElectionsProgram.Builders
                 }
 
             }
-            return result;
+            return talons;
         }
 
         /// <summary>
@@ -51,9 +54,9 @@ namespace ElectionsProgram.Builders
         /// <param name="mediaResource"></param>
         /// <param name="talonString">Текст из ячейки со всеми записями одного талона</param>
         /// <returns>Строки одного талона указанного медиаресурса.</returns>
-        private static List<BroadcastNominalView> ParseTalonString(string id, string mediaResource, string talonString)
+        private static List<TalonRecordView> ParseTalonString(string id, string mediaResource, string talonString)
         {
-            var result = new List<BroadcastNominalView>();
+            var result = new List<TalonRecordView>();
             //
             char[] delimitersRow = { '\n', '\r' };
             string[] rows = talonString.Split(delimitersRow);
@@ -77,7 +80,7 @@ namespace ElectionsProgram.Builders
                 //
                 try
                 {
-                    result.Add(new BroadcastNominalView()
+                    result.Add(new TalonRecordView()
                     {
                         TalonNumber = id,
                         MediaresourceName = mediaResource,
@@ -93,4 +96,4 @@ namespace ElectionsProgram.Builders
         }
     }
 }
-}
+

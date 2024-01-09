@@ -9,18 +9,18 @@ namespace ElectionsProgram.Entities
     /// <summary>
     /// Запись вещания по факту выхода в эфир.
     /// </summary>
-    public class BroadcastActual
+    public class PlaylistRecord
     {
-        public BroadcastActualView View { get; set; }
+        public PlaylistRecordView View { get; set; }
 
         #region Конструкторы
 
-        public BroadcastActual(BroadcastActualView view)
+        public PlaylistRecord(PlaylistRecordView view)
         {
             View = view;
         }
 
-        public BroadcastActual() { }
+        public PlaylistRecord() { }
 
         #endregion Конструкторы
     }
