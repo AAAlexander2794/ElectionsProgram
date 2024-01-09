@@ -71,23 +71,23 @@
                                                 <StackPanel Orientation="Horizontal">
                                                     <StackPanel>
                                                         <TextBlock Text="Россия-1"/>
-                                                        <TextBlock Text="{Binding Path=View.Талон_Россия_1}"/>
+                                                        <TextBlock Text="{Binding Path=Талон_Россия_1.Number}"/>
                                                     </StackPanel>
                                                     <StackPanel>
                                                         <TextBlock Text="Россия-24"/>
-                                                        <TextBlock Text="{Binding Path=View.Талон_Россия_24}"/>
+                                                        <TextBlock Text="{Binding Path=Талон_Россия_24.Number}"/>
                                                     </StackPanel>
                                                     <StackPanel>
                                                         <TextBlock Text="Маяк"/>
-                                                        <TextBlock Text="{Binding Path=View.Талон_Маяк}"/>
-                                                    </StackPanel>
-                                                    <StackPanel>
-                                                        <TextBlock Text="Радио России"/>
-                                                        <TextBlock Text="{Binding Path=View.Талон_Радио_России}"/>
+                                                        <TextBlock Text="{Binding Path=Талон_Маяк.Number}"/>
                                                     </StackPanel>
                                                     <StackPanel>
                                                         <TextBlock Text="Вести ФМ"/>
-                                                        <TextBlock Text="{Binding Path=View.Талон_Вести_ФМ}"/>
+                                                        <TextBlock Text="{Binding Path=Талон_Вести_ФМ.Number}"/>
+                                                    </StackPanel>
+                                                    <StackPanel>
+                                                        <TextBlock Text="Радио России"/>
+                                                        <TextBlock Text="{Binding Path=Талон_Радио_России.Number}"/>
                                                     </StackPanel>
                                                 </StackPanel>
                                             </StackPanel>

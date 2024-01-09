@@ -1,5 +1,4 @@
 ﻿using ElectionsProgram.Commands;
-using ElectionsProgram.Commands.Temp;
 using ElectionsProgram.Entities;
 using System;
 using System.Collections.Generic;
@@ -274,13 +273,13 @@ namespace ElectionsProgram.ViewModels
 
         #region Комманды
 
-        public SaveDBCommand SaveCommand { get; }
-        public LoadDBCommand LoadCommand { get; }
-        public LoadDefaultDataCommand LoadDefaultDataCommand { get; }
-        public SavePartiesToExcelCommand SavePartiesToExcelCommand { get; }
-        //
+        // 
+        public LoadMediaresourcesCommand LoadDefaultDataCommand { get; }
+        // Команды для партий
         public LoadPartiesCommand LoadPartiesCommand { get; }
         public LoadPartiesTalonsCommand LoadPartiesTalonsCommand { get; }
+        public SavePartiesToExcelCommand SavePartiesToExcelCommand { get; }
+        //
 
         #endregion Комманды
 
@@ -289,13 +288,12 @@ namespace ElectionsProgram.ViewModels
         public ViewModel()
         {
             // Инициализируем команды
-            SaveCommand = new SaveDBCommand(this);
-            LoadCommand = new LoadDBCommand(this);
-            LoadDefaultDataCommand = new LoadDefaultDataCommand(this);
-            SavePartiesToExcelCommand = new SavePartiesToExcelCommand(this);
-            //
+            
+            LoadDefaultDataCommand = new LoadMediaresourcesCommand(this);
+            // Команды для партий
             LoadPartiesCommand = new LoadPartiesCommand(this);
             LoadPartiesTalonsCommand = new LoadPartiesTalonsCommand(this);
+            SavePartiesToExcelCommand = new SavePartiesToExcelCommand(this);
         }
 
         #endregion Конструкторы

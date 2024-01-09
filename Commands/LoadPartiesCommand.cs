@@ -5,6 +5,7 @@ using ElectionsProgram.Processors;
 using ElectionsProgram.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -14,11 +15,14 @@ using System.Windows.Input;
 
 namespace ElectionsProgram.Commands
 {
+    /// <summary>
+    /// Загружает партии из Excel и добавляет к ним талоны, если те загружены и присвоены партиям.
+    /// </summary>
     public class LoadPartiesCommand : ICommand
     {
-        private ViewModels.ViewModel _vm;
+        private ViewModel _vm;
 
-        public LoadPartiesCommand(ViewModels.ViewModel viewModel)
+        public LoadPartiesCommand(ViewModel viewModel)
         {
             _vm = viewModel;
         }
@@ -32,34 +36,38 @@ namespace ElectionsProgram.Commands
 
         public void Execute(object? parameter)
         {
-            DataTable dt;
             try
             {
                 // Читаем Excel
-                dt = ProcessorExcel.LoadFromExcel(@"Настройки/Партии/Партии.xlsx");
-                //dt = ProcessorExcel.LoadFromExcel();
+                DataTable dt = ProcessorExcel.LoadFromExcel(@"Настройки/Партии/Партии.xlsx");
+                // Формируем список представления партии (PartyView) из DataTable
+                var partyViews = dt.ToList<PartyView>();
+                // Создаем пустой список партий
+                List<Party> parties = new List<Party>();
+                //
+                foreach (var item in partyViews)
+                {
+                    // Создаем партию на основе представления
+                    var party = new Party(item);
+                    // Добавляем к партии имеющиеся талоны (должны быть уже загружены)
+                    party.Талон_Россия_1 = _vm.PartiesTalons_Россия_1.FirstOrDefault(t => t.Number == party.View.Талон_Россия_1);
+                    party.Талон_Россия_24 = _vm.PartiesTalons_Россия_24.FirstOrDefault(t => t.Number == party.View.Талон_Россия_24);
+                    party.Талон_Маяк = _vm.PartiesTalons_Маяк.FirstOrDefault(t => t.Number == party.View.Талон_Маяк);
+                    party.Талон_Вести_ФМ = _vm.PartiesTalons_Вести_ФМ.FirstOrDefault(t => t.Number == party.View.Талон_Вести_ФМ);
+                    party.Талон_Радио_России = _vm.PartiesTalons_Радио_России.FirstOrDefault(t => t.Number == party.View.Талон_Радио_России);
+                    // Добавляем партию в список
+                    parties.Add(party);
+                }
+                // Добавляем список партий в VM
+                _vm.Parties = new ObservableCollection<Party>(parties);
+                // 
+                MessageBox.Show($"Партии загружены.\n" +
+                    $"Количество: {_vm.Parties.Count}.");
             }
-            catch(Exception ex) 
+            catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
-                return;
+                MessageBox.Show($"Ошибка загрузки партий.\n{ex.Message}");
             }
-            // Формируем список партий из DataTable
-            var list = PartiesBuilder.GetParties(dt);
-            // Добавляем список партий в VM
-            _vm.Parties = new System.Collections.ObjectModel.ObservableCollection<Entities.Party>(list);
-            //// Добавляем партию "Самовыдвижение", если ее нет (28.12.23: а нужна ли вообще?)
-            //if (_vm.Parties.FirstOrDefault(p => p.View.Название_полное == "Самовыдвижение") == null)
-            //{
-            //    _vm.Parties.Add(new Party(new PartyView()
-            //    {
-            //        Название_полное = "Самовыдвижение",
-            //        Название_краткое = "Самовыдвижение",
-            //        Название_условное = "Самовыдвижение"
-            //    }));
-            //}
-            // 
-            MessageBox.Show(_vm.Parties.Count.ToString());
         }
     }
 }

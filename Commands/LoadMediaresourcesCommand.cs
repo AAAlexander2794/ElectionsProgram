@@ -9,13 +9,13 @@ using System.Windows.Input;
 namespace ElectionsProgram.Commands
 {
     /// <summary>
-    /// Команда заполнения базовыми данными
+    /// Загружает медиаресурсы
     /// </summary>
-    public class LoadDefaultDataCommand : ICommand
+    public class LoadMediaresourcesCommand : ICommand
     {
         private ViewModels.ViewModel _base;
 
-        public LoadDefaultDataCommand(ViewModels.ViewModel @base)
+        public LoadMediaresourcesCommand(ViewModels.ViewModel @base)
         {
             _base = @base;
         }
@@ -57,8 +57,6 @@ namespace ElectionsProgram.Commands
             _base.Mediaresources.Add(new Mediaresource(media5));
             //
             _base.CurrentMediaresource = _base.Mediaresources[0];
-            //// Создаем дополнительную "партию", обозначающую отсутствие партии
-            //_base.Parties.Add(new Party(new PartyView("Самовыдвижение")));
         }
     }
 }

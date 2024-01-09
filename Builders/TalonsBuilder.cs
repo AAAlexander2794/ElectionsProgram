@@ -17,7 +17,7 @@ namespace ElectionsProgram.Builders
         /// <param name="dt"></param>
         /// <param name="mediaResource"></param>
         /// <returns></returns>
-        public static List<Talon> ParseBroadcastNominalViews(DataTable dt, string mediaResource)
+        public static List<Talon> ParseTalonsVariantBase(DataTable dt, string mediaResource)
         {
             var talons = new List<Talon>();
             // В одной ячейке все строки одного талона
@@ -40,7 +40,7 @@ namespace ElectionsProgram.Builders
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception($"Ошибка\r\n{ex.Message}\r\n(ParseBroadcastNominalViews)");
+                    throw new Exception($"Ошибка\r\n{ex.Message}\r\n(Парсинг талонов)");
                 }
 
             }
