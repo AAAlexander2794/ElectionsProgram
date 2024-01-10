@@ -51,11 +51,11 @@ namespace ElectionsProgram.ViewModels
             }
         }
 
-        private Mediaresource _currentMediaresource;
+        private Mediaresource? _currentMediaresource;
         /// <summary>
         /// Текущий медиаресурс
         /// </summary>
-        public Mediaresource CurrentMediaresource { get => _currentMediaresource; 
+        public Mediaresource? CurrentMediaresource { get => _currentMediaresource; 
             set
             {
                 _currentMediaresource = value;
@@ -80,11 +80,11 @@ namespace ElectionsProgram.ViewModels
             }
         }
 
-        private Party _currentParty;
+        private Party? _currentParty;
         /// <summary>
         /// Текущая партия (выбранная)
         /// </summary>
-        public Party CurrentParty { get => _currentParty;
+        public Party? CurrentParty { get => _currentParty;
             set
             {
                 _currentParty = value;
@@ -181,11 +181,11 @@ namespace ElectionsProgram.ViewModels
             }
         }
 
-        private Candidate _currentCandidate;
+        private Candidate? _currentCandidate;
         /// <summary>
         /// Текущий кандидат (выбранный)
         /// </summary>
-        public Candidate CurrentCandidate { get => _currentCandidate;
+        public Candidate? CurrentCandidate { get => _currentCandidate;
             set
             {
                 _currentCandidate = value;
@@ -279,7 +279,9 @@ namespace ElectionsProgram.ViewModels
         public LoadPartiesCommand LoadPartiesCommand { get; }
         public LoadPartiesTalonsCommand LoadPartiesTalonsCommand { get; }
         public SavePartiesToExcelCommand SavePartiesToExcelCommand { get; }
-        //
+        // Команды для кандидатов
+        public LoadCandidatesCommand LoadCandidatesCommand { get; }
+        public LoadCandidatesTalonsCommand LoadCandidatesTalonsCommand { get; }
 
         #endregion Комманды
 
@@ -294,6 +296,9 @@ namespace ElectionsProgram.ViewModels
             LoadPartiesCommand = new LoadPartiesCommand(this);
             LoadPartiesTalonsCommand = new LoadPartiesTalonsCommand(this);
             SavePartiesToExcelCommand = new SavePartiesToExcelCommand(this);
+            // Команды для кандидатов
+            LoadCandidatesCommand = new LoadCandidatesCommand(this);
+            LoadCandidatesTalonsCommand = new LoadCandidatesTalonsCommand(this);
         }
 
         #endregion Конструкторы

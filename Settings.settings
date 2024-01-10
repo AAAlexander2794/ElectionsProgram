@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ElectionsProgram" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Path_Партии_Талоны_бесплатные" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Настройки\Партии\Талоны бесплатные\</Value>
+    </Setting>
+    <Setting Name="Path_Кандидаты_Талоны_бесплатные" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Настройки\Кандидаты\Талоны бесплатные\</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

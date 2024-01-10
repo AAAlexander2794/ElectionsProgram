@@ -31,15 +31,15 @@ namespace ElectionsProgram.Entities
 
         #region Талоны
 
-        public Talon Талон_Россия_1 { get; set; }
+        public Talon? Талон_Россия_1 { get; set; }
 
-        public Talon Талон_Россия_24 { get; set; }
+        public Talon? Талон_Россия_24 { get; set; }
 
-        public Talon Талон_Маяк { get; set; }
+        public Talon? Талон_Маяк { get; set; }
 
-        public Talon Талон_Радио_России { get; set; }
+        public Talon? Талон_Радио_России { get; set; }
 
-        public Talon Талон_Вести_ФМ { get; set; }
+        public Talon? Талон_Вести_ФМ { get; set; }
 
         #endregion Талоны
 
