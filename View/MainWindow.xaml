@@ -32,7 +32,8 @@
                         <RowDefinition/>
                     </Grid.RowDefinitions>
                     <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
-                        <Button Content="Загрузить настройки протоколов" Width="200" Margin="5" Command="{Binding LoadProtocolSettingsCommand}"/>    
+                        <Button Content="Загрузить настройки протоколов" Width="200" Margin="5" Command="{Binding LoadProtocolSettingsCommand}"/>
+                        <Button Content="Создать протоколы партий" Width="200" Margin="5" Command="{Binding CreateProtocolsPartiesCommand}"/>
                     </StackPanel>
                     
                     <ListView Grid.Row="1" Grid.Column="0">

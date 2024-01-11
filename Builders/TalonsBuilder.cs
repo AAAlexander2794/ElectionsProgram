@@ -24,34 +24,26 @@ namespace ElectionsProgram.Builders
             // В одной ячейке все строки одного талона
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                try
+                var talonId = dt.Rows[i].Field<string>(0).Trim();
+                // Ячейка со строками одного талона парсится в список строк одного талона
+                var talonRecords = ParseTalonString(talonId, mediaResource, dt.Rows[i].Field<string>(1));
+                // Создаем талон
+                Talon talon = new Talon(mediaResource, talonId);
+                // Все записи добавляем к талону
+                foreach (var talonRecord in talonRecords)
                 {
-                    var talonId = dt.Rows[i].Field<string>(0).Trim();
-                    // Ячейка со строками одного талона парсится в список строк одного талона
-                    var talonRecords = ParseTalonString(talonId, mediaResource, dt.Rows[i].Field<string>(1));
-                    // Создаем талон
-                    Talon talon = new Talon(mediaResource, talonId);
-                    // Все записи добавляем к талону
-                    foreach (var talonRecord in talonRecords)
-                    {
-                        talon.BroadcastsNominal.Add(new TalonRecord(talonRecord));
-                    }
-                    // Если есть общие для всех талонов записи
-                    if (dataTableCommon != null && dataTableCommon.Rows.Count > 0)
-                    {
-                        foreach (var talonRecord in ParseTalonString("", mediaResource, dataTableCommon.Rows[0].Field<string>(1)))
-                        {
-                            talon.BroadcastsCommon.Add(new TalonRecord(talonRecord));
-                        }
-                    }
-                    // Добавляем сформированный талон к результату
-                    talons.Add(talon);
+                    talon.TalonRecords.Add(new TalonRecord(talonRecord));
                 }
-                catch (Exception ex)
+                // Если есть общие для всех талонов записи
+                if (dataTableCommon != null && dataTableCommon.Rows.Count > 0)
                 {
-                    throw new Exception($"Ошибка\r\n{ex.Message}\r\n(Парсинг талонов)");
+                    foreach (var talonRecord in ParseTalonString("", mediaResource, dataTableCommon.Rows[0].Field<string>(1)))
+                    {
+                        talon.CommonRecords.Add(new TalonRecord(talonRecord));
+                    }
                 }
-
+                // Добавляем сформированный талон к результату
+                talons.Add(talon);
             }
             return talons;
         }

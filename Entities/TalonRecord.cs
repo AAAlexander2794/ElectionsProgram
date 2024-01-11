@@ -1,4 +1,5 @@
 ﻿using DocumentFormat.OpenXml.EMMA;
+using DocumentFormat.OpenXml.Spreadsheet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace ElectionsProgram.Entities
         /// <summary>
         /// Номер талона
         /// </summary>
-        public int TalonNumber { get; set; }
+        public string TalonNumber { get; set; }
 
         /// <summary>
         /// Дата
@@ -54,7 +55,7 @@ namespace ElectionsProgram.Entities
             View = view;
             MediaresourceName = view.MediaresourceName;
             // Номер талона
-            TalonNumber = int.Parse(view.TalonNumber);
+            TalonNumber = view.TalonNumber;
             // Если хронометраж в формате "0:00:00"
             if (View.DurationNominal.Length == 7)
             {
@@ -81,5 +82,14 @@ namespace ElectionsProgram.Entities
         public TalonRecord() { }
 
         #endregion Конструкторы
+
+        /// <summary>
+        /// Вывод информации в текстовую строку для протокола.
+        /// </summary>
+        /// <returns></returns>
+        public string ToProtocolString()
+        {
+            return $"{Date} {Time} {DurationNominal} {Description}";
+        }
     }
 }

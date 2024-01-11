@@ -269,7 +269,8 @@ namespace ElectionsProgram.ViewModels
 
         #endregion Коллекции кандидатов
 
-        private SettingsForProtocols _protocolSettings;
+        private SettingsForProtocols _protocolSettings = 
+            new SettingsForProtocols(new SettingsForProtocolsView());
         /// <summary>
         /// Настройки для создания протоколов жеребьевки.
         /// </summary>
@@ -296,6 +297,7 @@ namespace ElectionsProgram.ViewModels
         public LoadCandidatesTalonsCommand LoadCandidatesTalonsCommand { get; }
         //
         public LoadProtocolSettingsCommand LoadProtocolSettingsCommand { get; }
+        public CreateProtocolsPartiesCommand CreateProtocolsPartiesCommand { get; }
 
         #endregion Комманды
 
@@ -315,6 +317,7 @@ namespace ElectionsProgram.ViewModels
             LoadCandidatesTalonsCommand = new LoadCandidatesTalonsCommand(this);
             //
             LoadProtocolSettingsCommand = new LoadProtocolSettingsCommand(this);
+            CreateProtocolsPartiesCommand = new CreateProtocolsPartiesCommand(this);
         }
 
         #endregion Конструкторы

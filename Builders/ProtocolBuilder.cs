@@ -26,15 +26,14 @@ namespace ElectionsProgram.Builders
         public static void CreateProtocolsParties(List<Party> parties, SettingsForProtocols settingsForProtocols)
         {
             var _folderPath = $"Документы/Протоколы/{DateTime.Now.ToString().Replace(":", "_")}\\";
-            var _templatePath = Settings.Default.Protocols_TemplateFilePath_Parties;
-            var _protocolsFilePath = Settings.Default.Protocols_FilePath;
+            var _templatePath = $"Настройки/Протоколы/Приложение 1.dotx";
             //
             List<WordDocument> protocols = new List<WordDocument>();
             // По каждой партии
             foreach (var party in parties)
             {
-                try
-                {
+                //try
+                //{
                     // Если не отмечено на печать, пропускаем
                     if (party.View.На_печать == "") continue;
                     // Формируем путь к документу
@@ -42,16 +41,16 @@ namespace ElectionsProgram.Builders
                     // Создает путь для документов, если вдруг каких-то папок нет
                     Directory.CreateDirectory(resultPath);
                     // По каждому СМИ
-                    protocols.Add(CreateProtocol(party, settingsForProtocols, _templatePath, resultPath, "Маяк"));
-                    protocols.Add(CreateProtocol(party, settingsForProtocols, _templatePath, resultPath, "Вести ФМ"));
-                    protocols.Add(CreateProtocol(party, settingsForProtocols, _templatePath, resultPath, "Радио России"));
-                    protocols.Add(CreateProtocol(party, settingsForProtocols, _templatePath, resultPath, "Россия 1"));
-                    protocols.Add(CreateProtocol(party, settingsForProtocols, _templatePath, resultPath, "Россия 24"));
-                }
-                catch
-                {
-                    throw new Exception($"Ошибка с {party.View.Название_условное}");
-                }
+                    CreateProtocol(party, settingsForProtocols, _templatePath, resultPath, "Маяк");
+                    CreateProtocol(party, settingsForProtocols, _templatePath, resultPath, "Вести ФМ");
+                    CreateProtocol(party, settingsForProtocols, _templatePath, resultPath, "Радио России");
+                    CreateProtocol(party, settingsForProtocols, _templatePath, resultPath, "Россия 1");
+                    CreateProtocol(party, settingsForProtocols, _templatePath, resultPath, "Россия 24");
+                //}
+                //catch
+                //{
+                //    throw new Exception($"Ошибка с {party.View.Название_условное}");
+                //}
             }
             return;
         }
@@ -90,27 +89,27 @@ namespace ElectionsProgram.Builders
                 case "Маяк":
                     fieldMedia = settings.View.Название_СМИ_Маяк;
                     fileName = "Маяк.docx";
-                    table = CreateTableParty(party.Талон_Маяк, partyName, personName, "00:23:45");
+                    table = CreateTableParty(party.Талон_Маяк, partyName, personName);
                     break;
                 case "Вести ФМ":
                     fieldMedia = settings.View.Название_СМИ_Вести_ФМ;
                     fileName = "Вести ФМ.docx";
-                    table = CreateTableParty(party.Талон_Вести_ФМ, partyName, personName, "00:11:00");
+                    table = CreateTableParty(party.Талон_Вести_ФМ, partyName, personName);
                     break;
                 case "Радио России":
                     fieldMedia = settings.View.Название_СМИ_Радио_России;
                     fileName = "Радио России.docx";
-                    table = CreateTableParty(party.Талон_Радио_России, partyName, personName, "00:23:45");
+                    table = CreateTableParty(party.Талон_Радио_России, partyName, personName);
                     break;
                 case "Россия 1":
                     fieldMedia = settings.View.Название_СМИ_Россия_1;
                     fileName = "Россия 1.docx";
-                    table = CreateTableParty(party.Талон_Россия_1, partyName, personName, "00:23:45");
+                    table = CreateTableParty(party.Талон_Россия_1, partyName, personName);
                     break;
                 case "Россия 24":
                     fieldMedia = settings.View.Название_СМИ_Россия_24;
                     fileName = "Россия 24.docx";
-                    table = CreateTableParty(party.Талон_Россия_24, partyName, personName, "00:23:45");
+                    table = CreateTableParty(party.Талон_Россия_24, partyName, personName);
                     break;
 
             }
@@ -136,8 +135,7 @@ namespace ElectionsProgram.Builders
         /// <returns></returns>
         static Table CreateTableParty(Talon? talon, 
             string lastRow2CellText = "", 
-            string lastRow5CellText = "", 
-            string durationCustom = "")
+            string lastRow5CellText = "")
         {
             // Создаем таблицу
             Table table = new Table();
@@ -218,6 +216,7 @@ namespace ElectionsProgram.Builders
                 );
             // Добавляем заголовок к таблице
             table.Append(trHead);
+
             // Добавляем строчку с нумерованием столбцов
             TableRow tr = new TableRow();
             TableCell tc1 = new TableCell(WordDocument.CreateParagraph($"1"));
@@ -228,63 +227,45 @@ namespace ElectionsProgram.Builders
             TableCell tc6 = new TableCell(WordDocument.CreateParagraph($"6"));
             tr.Append(tc1, tc2, tc3, tc4, tc5, tc6);
             table.Append(tr);
+
+            //
+            if (talon == null) return table;
+
             // Формируем текст ячейки с талоном
             List<string> lines = new List<string>();
-            // Если талон был, добавляем в таблицу информацию
-            if (talon != null)
+            // Строки текста для ячейки с общим вещанием
+            List<string> linesCommon = new List<string>();
+            // Добавляем номер талона
+            lines.Add($"Талон № {talon.Number}");
+            // Каждую строку талона добавляем в строки для ячейки
+            foreach (var row in talon.TalonRecords)
             {
-                // Добавляем номер талона
-                lines.Add($"Талон № {talon.Number}");
-                //
-                foreach (var row in talon.BroadcastsNominal)
-                {
-                    if (talon.MediaResource == "Вести ФМ")
-                    {
-                        lines.Add($"{row.Date} {row.Time}:{row.Time.Second} {row.Duration} {row.Description}");
-                    }
-                    else
-                    {
-                        lines.Add($"{row.Date} {row.Time} {row.Duration} {row.Description}");
-                    }
-                }
-                //if (talon.MediaResource == "Вести ФМ")
-                //{
-                //    var some = "";
-                //}
+                lines.Add(row.ToProtocolString());
             }
-            else
+            // Общее вещание добавляем в строки для соответствующей ячейки
+            foreach (var row in talon.CommonRecords)
             {
-                lines.Add("");
+                linesCommon.Add(row.ToProtocolString());
             }
             // Строка с данными
             tr = new TableRow();
-            //
-            tc1 = new TableCell(CreateParagraph($""));
-            tc2 = new TableCell(CreateParagraph($"{lastRow2CellText}"));
-            if (linesCustom != null)
-            {
-                tc3 = new TableCell(CreateParagraph(linesCustom));
-            }
-            tc4 = new TableCell(CreateParagraph(lines));
-            tc5 = new TableCell(CreateParagraph($"{lastRow5CellText}"));
-            tc6 = new TableCell(CreateParagraph($""));
+            // Одна строка с данными вещания для одной партии
+            tc1 = new TableCell(WordDocument.CreateParagraph($""));
+            tc2 = new TableCell(WordDocument.CreateParagraph($"{lastRow2CellText}"));
+            tc3 = new TableCell(WordDocument.CreateParagraph(linesCommon));
+            tc4 = new TableCell(WordDocument.CreateParagraph(lines));
+            tc5 = new TableCell(WordDocument.CreateParagraph($"{lastRow5CellText}"));
+            tc6 = new TableCell(WordDocument.CreateParagraph($""));
             tr.Append(tc1, tc2, tc3, tc4, tc5, tc6);
             table.Append(tr);
             // Строка "Итого"
             tr = new TableRow();
-            tc1 = new TableCell(CreateParagraph($"Итого"));
-            tc2 = new TableCell(CreateParagraph($""));
-            tc3 = new TableCell(CreateParagraph($"{durationCustom}"));
-            if (talon != null && talon.TotalDuration != null && talon.TotalDuration != TimeSpan.Zero)
-            {
-                tc4 = new TableCell(CreateParagraph($"{talon.TotalDuration}"));
-            }
-            else
-            {
-                tc4 = new TableCell(CreateParagraph($""));
-            }
-            tc5 = new TableCell(CreateParagraph($""));
-            tc6 = new TableCell(CreateParagraph($""));
+            tc1 = new TableCell(WordDocument.CreateParagraph($"Итого"));
+            tc2 = new TableCell(WordDocument.CreateParagraph($""));
+            tc3 = new TableCell(WordDocument.CreateParagraph($"{talon.GetDurationCommonRecords()}"));
+            tc4 = new TableCell(WordDocument.CreateParagraph($"{talon.GetDurationTalonRecords()}"));
+            tc5 = new TableCell(WordDocument.CreateParagraph($""));
+            tc6 = new TableCell(WordDocument.CreateParagraph($""));
             tr.Append(tc1, tc2, tc3, tc4, tc5, tc6);
             table.Append(tr);
             // Возвращаем

@@ -29,22 +29,45 @@ namespace ElectionsProgram.Entities
         /// <summary>
         /// Записи вещания номинальные (при составлении талонов)
         /// </summary>
-        public ObservableCollection<TalonRecord> BroadcastsNominal { get; set; } = new ObservableCollection<TalonRecord>();
+        public ObservableCollection<TalonRecord> TalonRecords { get; set; } = new ObservableCollection<TalonRecord>();
 
         /// <summary>
         /// Строки вещания, общие для группы клиентов.
         /// </summary>
-        public ObservableCollection<TalonRecord> BroadcastsCommon { get; set; } = new ObservableCollection<TalonRecord>();
-
-        ///// <summary>
-        ///// Записи вещания фактические (по вещанию)
-        ///// </summary>
-        //public ObservableCollection<PlaylistRecord> BroadcastsActual { get; set; } = new ObservableCollection<PlaylistRecord>();
+        public ObservableCollection<TalonRecord> CommonRecords { get; set; } = new ObservableCollection<TalonRecord>();
 
         public Talon(string mediaresourceName, string number)
         {
             MediaresourceName = mediaresourceName;
             Number = number;
+        }
+
+        /// <summary>
+        /// Возвращает хронометраж суммарный по всем записям талона (без общего вещания).
+        /// </summary>
+        /// <returns></returns>
+        public TimeSpan GetDurationTalonRecords()
+        {
+            TimeSpan duration = TimeSpan.Zero;
+            foreach (var record in TalonRecords)
+            {
+                duration += record.DurationNominal;
+            }
+            return duration;
+        }
+
+        /// <summary>
+        /// Возвращает хронометраж суммарный по всем записям общего вещания (без записей талона).
+        /// </summary>
+        /// <returns></returns>
+        public TimeSpan GetDurationCommonRecords()
+        {
+            TimeSpan duration = TimeSpan.Zero;
+            foreach (var record in CommonRecords)
+            {
+                duration += record.DurationNominal;
+            }
+            return duration;
         }
     }
 }

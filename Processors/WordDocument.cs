@@ -209,7 +209,7 @@ namespace ElectionsProgram.Processors
             //
             table.Append(trHead);
             //
-            foreach (var row in talon.BroadcastsNominal)
+            foreach (var row in talon.TalonRecords)
             {
                 //
                 TableRow tr = new TableRow();
@@ -268,21 +268,25 @@ namespace ElectionsProgram.Processors
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
-        public static Paragraph CreateParagraph(List<string> lines)
+        public static Paragraph CreateParagraph(List<string> lines, string textSize = "12")
         {
             var paragraph = new Paragraph();
             var run = new Run();
-            // Добавляем без лишнего переноса на новую строку в конце
-            for (int i = 0; i < lines.Count - 1; i++)
+            // Если список строк есть и не пустой
+            if (lines != null && lines.Count > 0)
             {
-                run.AppendChild(new Text(lines[i]));
-                run.AppendChild(new Break());
+                // Добавляем без лишнего переноса на новую строку в конце
+                for (int i = 0; i < lines.Count - 1; i++)
+                {
+                    run.AppendChild(new Text(lines[i]));
+                    run.AppendChild(new Break());
+                }
+                run.AppendChild(new Text(lines[lines.Count - 1]));
             }
-            run.AppendChild(new Text(lines[lines.Count - 1]));
             //
             RunProperties runProperties = new RunProperties();
             FontSize size = new FontSize();
-            size.Val = StringValue.FromString("18");
+            size.Val = StringValue.FromString(textSize);
             runProperties.Append(size);
             //
             run.Append(runProperties);
