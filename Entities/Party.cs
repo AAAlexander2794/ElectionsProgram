@@ -16,11 +16,6 @@ namespace ElectionsProgram.Entities
         /// </summary>
         public PartyView View { get; set; }
 
-        /// <summary>
-        /// Талоны, которые выдали партии (может быть пустым)
-        /// </summary>
-        public List<Talon> Talons { get; set; }
-
         string IClient.Name => View.Название_условное;
 
         #region Талоны
@@ -37,11 +32,25 @@ namespace ElectionsProgram.Entities
 
         #endregion Талоны
 
+        public string Представитель_Фамилия_ИО {  get; set; } = string.Empty;
+
         #region Конструкторы
 
         public Party(PartyView partyView) 
         {
             View = partyView;
+            // Формируем "Фамилия И.О."
+            Представитель_Фамилия_ИО = $"{View.Представитель_Фамилия_Падеж_им}";
+            // Если есть имя
+            if (View.Представитель_Имя_Падеж_им.Length > 0)
+            {
+                Представитель_Фамилия_ИО += $" {View.Представитель_Имя_Падеж_им[0]}.";
+                // Если есть имя и отчество
+                if (View.Представитель_Отчество_Падеж_им.Length > 0)
+                {
+                    Представитель_Фамилия_ИО += $"{View.Представитель_Отчество_Падеж_им[0]}.";
+                }
+            }
         }
 
         public Party() { }

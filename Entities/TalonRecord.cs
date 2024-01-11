@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.EMMA;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,14 +15,68 @@ namespace ElectionsProgram.Entities
     /// </remarks>
     public class TalonRecord
     {
-        public TalonRecordView View { get; set; }
+        public TalonRecordView View { get; set; } = new TalonRecordView();
+
+        /// <summary>
+        /// Название медиаресурса
+        /// </summary>
+        public string MediaresourceName { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Номер талона
+        /// </summary>
+        public int TalonNumber { get; set; }
+
+        /// <summary>
+        /// Дата
+        /// </summary>
+        public DateOnly Date { get; set; }
+
+        /// <summary>
+        /// Время (отрезок)
+        /// </summary>
+        public TimeOnly Time { get; set; }
+
+        /// <summary>
+        /// Хронометраж номинальный (по плану)
+        /// </summary>
+        public TimeSpan DurationNominal { get; set; }
+
+        /// <summary>
+        /// Дополнительное описание
+        /// </summary>
+        public string Description { get; set; } = string.Empty;
 
         #region Конструкторы
 
         public TalonRecord(TalonRecordView view)
         {
             View = view;
-        }
+            MediaresourceName = view.MediaresourceName;
+            // Номер талона
+            TalonNumber = int.Parse(view.TalonNumber);
+            // Если хронометраж в формате "0:00:00"
+            if (View.DurationNominal.Length == 7)
+            {
+                DurationNominal = TimeOnly.FromDateTime(DateTime.Parse("0" + View.DurationNominal.Replace('.', ','))).ToTimeSpan();
+            }
+            // Если хронометраж в формате "00:00"
+            else if (View.DurationNominal.Length == 5)
+            {
+                DurationNominal = TimeOnly.FromDateTime(DateTime.Parse("00:" + View.DurationNominal.Replace('.', ','))).ToTimeSpan();
+            }
+            // Если хронометраж в формате "00:00:00" (ну или другой, тогда ошибка)
+            else
+            {
+                DurationNominal = TimeOnly.FromDateTime(DateTime.Parse(View.DurationNominal.Replace('.', ','))).ToTimeSpan();
+            }
+            // Дата
+            Date = DateOnly.FromDateTime(DateTime.Parse(View.Date));
+            // Время (отрезок). Происходит замена точки на запятую (вот такая культура)
+            Time = TimeOnly.FromDateTime(DateTime.Parse(View.Time.Replace('.', ',')));
+            // Примечание
+            Description = View.Description;
+            }
 
         public TalonRecord() { }
 

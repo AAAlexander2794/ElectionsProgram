@@ -16,8 +16,9 @@ namespace ElectionsProgram.Builders
         /// </summary>
         /// <param name="dt"></param>
         /// <param name="mediaResource"></param>
+        /// <param name="dataTableCommon">Таблица с общими для всех клиентов вещаниями (данные только в одной строке, вторая ячейка)</param>
         /// <returns></returns>
-        public static List<Talon> ParseTalonsVariantBase(DataTable dt, string mediaResource)
+        public static List<Talon> ParseTalonsVariantBase(DataTable dt, string mediaResource, DataTable? dataTableCommon = null)
         {
             var talons = new List<Talon>();
             // В одной ячейке все строки одного талона
@@ -34,6 +35,14 @@ namespace ElectionsProgram.Builders
                     foreach (var talonRecord in talonRecords)
                     {
                         talon.BroadcastsNominal.Add(new TalonRecord(talonRecord));
+                    }
+                    // Если есть общие для всех талонов записи
+                    if (dataTableCommon != null && dataTableCommon.Rows.Count > 0)
+                    {
+                        foreach (var talonRecord in ParseTalonString("", mediaResource, dataTableCommon.Rows[0].Field<string>(1)))
+                        {
+                            talon.BroadcastsCommon.Add(new TalonRecord(talonRecord));
+                        }
                     }
                     // Добавляем сформированный талон к результату
                     talons.Add(talon);

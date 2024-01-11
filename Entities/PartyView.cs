@@ -147,8 +147,7 @@ namespace ElectionsProgram.Entities
 
         #region Конструкторы
 
-        public PartyView(
-            string название_условное)
+        public PartyView(string название_условное)
         {
             Название_условное = название_условное;
         }

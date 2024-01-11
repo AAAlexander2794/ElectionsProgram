@@ -16,7 +16,7 @@ using System.Windows.Input;
 namespace ElectionsProgram.Commands
 {
     /// <summary>
-    /// Загружает партии из Excel и добавляет к ним талоны, если те загружены и присвоены партиям.
+    /// Загружает партии из Excel и добавляет к ним талоны, если те загружены.
     /// </summary>
     public class LoadPartiesCommand : ICommand
     {
@@ -39,7 +39,7 @@ namespace ElectionsProgram.Commands
             try
             {
                 // Читаем Excel
-                DataTable dt = ProcessorExcel.LoadFromExcel(@"Настройки/Партии/Партии.xlsx");
+                DataTable dt = ExcelProcessor.LoadFromExcel(@"Настройки/Партии/Партии.xlsx");
                 // Формируем список представления партии (PartyView) из DataTable
                 var partyViews = dt.ToList<PartyView>();
                 // Создаем пустой список партий

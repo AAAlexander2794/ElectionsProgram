@@ -34,7 +34,7 @@ namespace ElectionsProgram.Commands
             try
             {
                 // Читаем Excel
-                DataTable dt = ProcessorExcel.LoadFromExcel(@"Настройки/Кандидаты/Кандидаты.xlsx");
+                DataTable dt = ExcelProcessor.LoadFromExcel(@"Настройки/Кандидаты/Кандидаты.xlsx");
                 // Формируем список представления кандидатов (CandidatesView) из DataTable
                 var candidatesViews = dt.ToList<CandidateView>();
                 // Создаем пустой список кандидатов

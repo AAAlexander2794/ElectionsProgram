@@ -35,22 +35,27 @@ namespace ElectionsProgram.Commands
 
         public void Execute(object? parameter)
         {
-            DataTable dt;
+            DataTable dt, dtCommon;
             // Россия-1
-            dt = ProcessorExcel.LoadFromExcel(@"Настройки\Партии\Талоны бесплатные\Талоны Россия-1.xlsx");
-            _viewModel.PartiesTalons_Россия_1 = new ObservableCollection<Talon>(TalonsBuilder.ParseTalonsVariantBase(dt, "Россия-1"));
+            dt = ExcelProcessor.LoadFromExcel(@"Настройки\Партии\Талоны бесплатные\Талоны Россия-1.xlsx");
+            dtCommon = ExcelProcessor.LoadFromExcel(@"Настройки\Партии\Общее вещание\Талоны Россия-1.xlsx");
+            _viewModel.PartiesTalons_Россия_1 = new ObservableCollection<Talon>(TalonsBuilder.ParseTalonsVariantBase(dt, "Россия-1", dtCommon));
             // Росия-24
-            dt = ProcessorExcel.LoadFromExcel(@"Настройки\Партии\Талоны бесплатные\Талоны Россия-24.xlsx");
-            _viewModel.PartiesTalons_Россия_24 = new ObservableCollection<Talon>(TalonsBuilder.ParseTalonsVariantBase(dt, "Россия-24"));
+            dt = ExcelProcessor.LoadFromExcel(@"Настройки\Партии\Талоны бесплатные\Талоны Россия-24.xlsx");
+            dtCommon = ExcelProcessor.LoadFromExcel(@"Настройки\Партии\Общее вещание\Талоны Россия-24.xlsx");
+            _viewModel.PartiesTalons_Россия_24 = new ObservableCollection<Talon>(TalonsBuilder.ParseTalonsVariantBase(dt, "Россия-24", dtCommon));
             // Маяк
-            dt = ProcessorExcel.LoadFromExcel(@"Настройки\Партии\Талоны бесплатные\Талоны Маяк.xlsx");
-            _viewModel.PartiesTalons_Маяк = new ObservableCollection<Talon>(TalonsBuilder.ParseTalonsVariantBase(dt, "Маяк"));
+            dt = ExcelProcessor.LoadFromExcel(@"Настройки\Партии\Талоны бесплатные\Талоны Маяк.xlsx");
+            dtCommon = ExcelProcessor.LoadFromExcel(@"Настройки\Партии\Общее вещание\Талоны Маяк.xlsx");
+            _viewModel.PartiesTalons_Маяк = new ObservableCollection<Talon>(TalonsBuilder.ParseTalonsVariantBase(dt, "Маяк", dtCommon));
             // Вести ФМ
-            dt = ProcessorExcel.LoadFromExcel(@"Настройки\Партии\Талоны бесплатные\Талоны Вести ФМ.xlsx");
-            _viewModel.PartiesTalons_Вести_ФМ = new ObservableCollection<Talon>(TalonsBuilder.ParseTalonsVariantBase(dt, "Вести ФМ"));
+            dt = ExcelProcessor.LoadFromExcel(@"Настройки\Партии\Талоны бесплатные\Талоны Вести ФМ.xlsx");
+            dtCommon = ExcelProcessor.LoadFromExcel(@"Настройки\Партии\Общее вещание\Талоны Вести ФМ.xlsx");
+            _viewModel.PartiesTalons_Вести_ФМ = new ObservableCollection<Talon>(TalonsBuilder.ParseTalonsVariantBase(dt, "Вести ФМ", dtCommon));
             // Радио России
-            dt = ProcessorExcel.LoadFromExcel(@"Настройки\Партии\Талоны бесплатные\Талоны Радио России.xlsx");
-            _viewModel.PartiesTalons_Радио_России = new ObservableCollection<Talon>(TalonsBuilder.ParseTalonsVariantBase(dt, "Радио России"));
+            dt = ExcelProcessor.LoadFromExcel(@"Настройки\Партии\Талоны бесплатные\Талоны Радио России.xlsx");
+            dtCommon = ExcelProcessor.LoadFromExcel(@"Настройки\Партии\Общее вещание\Талоны Радио России.xlsx");
+            _viewModel.PartiesTalons_Радио_России = new ObservableCollection<Talon>(TalonsBuilder.ParseTalonsVariantBase(dt, "Радио России", dtCommon));
             //
             MessageBox.Show($"Талоны партий загружены.\n" +
                 $"Россия-1: {_viewModel.PartiesTalons_Россия_1.Count}\n" +

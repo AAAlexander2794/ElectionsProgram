@@ -28,7 +28,7 @@ namespace ElectionsProgram.Commands
 
         public void Execute(object? parameter)
         {
-            ProcessorExcel.SaveToExcel(_vm.Test);
+            ExcelProcessor.SaveToExcel(_vm.Test);
             
         }
     }

@@ -12,7 +12,7 @@ using Microsoft.Win32;
 
 namespace ElectionsProgram.Processors
 {
-    internal static class ProcessorExcel
+    internal static class ExcelProcessor
     {
         /// <summary>
         /// Запись <see cref="DataTable"/> в Excel.

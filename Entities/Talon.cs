@@ -31,6 +31,11 @@ namespace ElectionsProgram.Entities
         /// </summary>
         public ObservableCollection<TalonRecord> BroadcastsNominal { get; set; } = new ObservableCollection<TalonRecord>();
 
+        /// <summary>
+        /// Строки вещания, общие для группы клиентов.
+        /// </summary>
+        public ObservableCollection<TalonRecord> BroadcastsCommon { get; set; } = new ObservableCollection<TalonRecord>();
+
         ///// <summary>
         ///// Записи вещания фактические (по вещанию)
         ///// </summary>
