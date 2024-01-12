@@ -10,19 +10,20 @@
         d:DataContext="{d:DesignInstance {x:Type k:ViewModel}}">
     <DockPanel>
         <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="150"/>
+            </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="40.004"/>
                 <RowDefinition/>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" Orientation="Horizontal">
-                <Button Content="Button" Click="Button_Click" Height="25" Width="90" Margin="5"/>
-                <Button Content="Сохранить" Command="{Binding SaveCommand}" Height="25" Width="90" Margin="5"/>
-                <Button Content="Загрузить" Command="{Binding LoadCommand}" Height="25" Width="90" Margin="5"/>
-                <Button Content="Базовые данные" Command="{Binding LoadDefaultDataCommand}" Height="25" Width="100" Margin="5"/>
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Grid.ColumnSpan="2">
+                
             </StackPanel>
 
-            <TabControl Grid.Row="1">
+            <TabControl  Margin="0,40,0,0" Grid.RowSpan="2" Grid.ColumnSpan="2">
                 <TabItem Header="Жеребьевка">
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -460,7 +461,7 @@
                     </Grid>
                 </TabItem>
             </TabControl>
-            <ScrollViewer Grid.Row="2" Height="50">
+            <ScrollViewer Grid.Row="2" Grid.Column="0">
                 <ListView ItemsSource="{Binding LogRecords}"/>
             </ScrollViewer>
 

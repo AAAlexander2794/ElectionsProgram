@@ -23,9 +23,9 @@ namespace ElectionsProgram.Builders
         /// Сортируем в подкаталоги партии, в нем по 5 протоколов для каждой СМИ.
         /// </remarks>
         /// <returns></returns>
-        public static void CreateProtocolsParties(List<Party> parties, SettingsForProtocols settingsForProtocols)
+        public static void CreateProtocolsParties(List<Party> parties, SettingsForProtocols settingsForProtocols, string protocolFolderPath)
         {
-            var _folderPath = $"Документы/Протоколы/{DateTime.Now.ToString().Replace(":", "_")}\\";
+            var _folderPath = $"{protocolFolderPath}{DateTime.Now.ToString().Replace(":", "_")}\\";
             var _templatePath = $"Настройки/Протоколы/Приложение 1.dotx";
             //
             //List<WordDocument> protocols = new List<WordDocument>();

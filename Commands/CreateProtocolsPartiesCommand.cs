@@ -31,7 +31,9 @@ namespace ElectionsProgram.Commands
         {
             try
             {
-                ProtocolPartyBuilder.CreateProtocolsParties(_viewModel.Parties.ToList(), _viewModel.ProtocolSettings);
+                ProtocolPartyBuilder.CreateProtocolsParties(_viewModel.Parties.ToList(), 
+                    _viewModel.ProtocolSettings, 
+                    _viewModel.SettingsFilePathes.View.Протоколы);
                 //
                 string message = $"Протоколы партий созданы. Обработано:\n" +
                     $"Партий: {_viewModel.Parties.Count}\n" +

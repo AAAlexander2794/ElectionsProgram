@@ -283,6 +283,18 @@ namespace ElectionsProgram.ViewModels
             }
         }
 
+        private SettingsFilePathes _settingsFilePathes = new SettingsFilePathes();
+        /// <summary>
+        /// Настройки путей к файлам программы
+        /// </summary>
+        public SettingsFilePathes SettingsFilePathes { get => _settingsFilePathes;
+            set
+            {
+                _settingsFilePathes = value;
+                OnPropertyChanged();
+            }
+        }
+
         /// <summary>
         /// Логи
         /// </summary>
@@ -324,6 +336,9 @@ namespace ElectionsProgram.ViewModels
             //
             LoadProtocolSettingsCommand = new LoadProtocolSettingsCommand(this);
             CreateProtocolsPartiesCommand = new CreateProtocolsPartiesCommand(this);
+
+            //
+            LoadDefaultDataCommand.Execute(this);
         }
 
         #endregion Конструкторы
