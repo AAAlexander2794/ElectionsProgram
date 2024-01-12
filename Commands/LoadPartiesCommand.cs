@@ -61,8 +61,10 @@ namespace ElectionsProgram.Commands
                 // Добавляем список партий в VM
                 _vm.Parties = new ObservableCollection<Party>(parties);
                 // 
-                MessageBox.Show($"Партии загружены.\n" +
-                    $"Количество: {_vm.Parties.Count}.");
+                string message = $"Партии загружены.\n" +
+                    $"Количество: {_vm.Parties.Count}.";
+                Logger.Add(message);
+                MessageBox.Show(message);
             }
             catch(Exception ex)
             {

@@ -39,6 +39,8 @@ namespace ElectionsProgram.Commands
                 SettingsForProtocolsView protocolSettingsView = dt.ToList<SettingsForProtocolsView>()[0];
                 // Передаем настройки в ViewModel
                 _vm.ProtocolSettings = new SettingsForProtocols(protocolSettingsView);
+                //
+                Logger.Add("Настройки протоколов загружены.");
             }
             catch (Exception ex)
             {

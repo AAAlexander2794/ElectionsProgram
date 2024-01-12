@@ -1,4 +1,5 @@
 ﻿using ElectionsProgram.Builders;
+using ElectionsProgram.Processors;
 using ElectionsProgram.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -30,15 +31,18 @@ namespace ElectionsProgram.Commands
         {
             try
             {
-                ProtocolBuilder.CreateProtocolsParties(_viewModel.Parties.ToList(), _viewModel.ProtocolSettings);
-                MessageBox.Show($"Протоколы партий созданы. Обработано:\n" +
+                ProtocolPartyBuilder.CreateProtocolsParties(_viewModel.Parties.ToList(), _viewModel.ProtocolSettings);
+                //
+                string message = $"Протоколы партий созданы. Обработано:\n" +
                     $"Партий: {_viewModel.Parties.Count}\n" +
                     $"Талонов: {_viewModel.PartiesTalons_Россия_1.Count}, " +
                     $"{_viewModel.PartiesTalons_Россия_24.Count}, " +
                     $"{_viewModel.PartiesTalons_Маяк.Count}, " +
                     $"{_viewModel.PartiesTalons_Вести_ФМ.Count}, " +
                     $"{_viewModel.PartiesTalons_Радио_России.Count}.\n" +
-                    $"");
+                    $"";
+                Logger.Add(message);
+                MessageBox.Show(message);
             }
             catch (Exception ex)
             {

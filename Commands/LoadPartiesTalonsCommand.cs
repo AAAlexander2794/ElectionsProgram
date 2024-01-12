@@ -57,12 +57,14 @@ namespace ElectionsProgram.Commands
             dtCommon = ExcelProcessor.LoadFromExcel(@"Настройки\Партии\Общее вещание\Талоны Радио России.xlsx");
             _viewModel.PartiesTalons_Радио_России = new ObservableCollection<Talon>(TalonsBuilder.ParseTalonsVariantBase(dt, "Радио России", dtCommon));
             //
-            MessageBox.Show($"Талоны партий загружены.\n" +
+            string message = $"Талоны партий загружены.\n" +
                 $"Россия-1: {_viewModel.PartiesTalons_Россия_1.Count}\n" +
                 $"Россия-24: {_viewModel.PartiesTalons_Россия_24.Count}\n" +
                 $"Маяк: {_viewModel.PartiesTalons_Маяк.Count}\n" +
                 $"Вести ФМ: {_viewModel.PartiesTalons_Вести_ФМ.Count}\n" +
-                $"Радио России: {_viewModel.PartiesTalons_Радио_России.Count}");
+                $"Радио России: {_viewModel.PartiesTalons_Радио_России.Count}";
+            Logger.Add(message);
+            MessageBox.Show(message);
         }
     }
 }

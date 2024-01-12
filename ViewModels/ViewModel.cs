@@ -1,5 +1,6 @@
 ﻿using ElectionsProgram.Commands;
 using ElectionsProgram.Entities;
+using ElectionsProgram.Processors;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -281,6 +282,11 @@ namespace ElectionsProgram.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        /// <summary>
+        /// Логи
+        /// </summary>
+        public ObservableCollection<string> LogRecords => Logger.LogRecords;
 
         #endregion Коллекции
 

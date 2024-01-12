@@ -126,6 +126,32 @@ namespace ElectionsProgram.Entities
 
         #endregion Данные представителя
 
+        #region Данные кандидата партии
+
+        // Именительный падеж
+
+        [DisplayName("Кандидат: фамилия (им.)")]
+        public string Кандидат_Фамилия_Падеж_им { get; set; }
+
+        [DisplayName("Кандидат: имя (им.)")]
+        public string Кандидат_Имя_Падеж_им { get; set; }
+
+        [DisplayName("Кандидат: отчество (им.)")]
+        public string Кандидат_Отчество_Падеж_им { get; set; }
+
+        // Родительный падеж
+
+        [DisplayName("Кандидат: фамилия (род.)")]
+        public string Кандидат_Фамилия_Падеж_род { get; set; }
+
+        [DisplayName("Кандидат: имя (род.)")]
+        public string Кандидат_Имя_Падеж_род { get; set; }
+
+        [DisplayName("Кандидат: отчество (род.)")]
+        public string Кандидат_Отчество_Падеж_род { get; set; }
+
+        #endregion Данные кандидата партии
+
         #region Нотариус
 
         [DisplayName("Нотариус: город")]

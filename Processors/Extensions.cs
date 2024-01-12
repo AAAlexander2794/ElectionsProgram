@@ -118,14 +118,22 @@ namespace ElectionsProgram.Processors
             foreach (var property in properties)
             {
                 var some = property.GetCustomAttribute<DisplayNameAttribute>();
+                // Если атрибут присвоен
                 if (some != null)
                 {
                     var fieldName = some.DisplayName;
-                    property.SetValue(item, row[fieldName], null);
+                    // Если есть такой столбец
+                    if (row.Table.Columns.Contains(fieldName))
+                    {
+                        property.SetValue(item, row[fieldName], null);
+                    }
                 }
                 else
                 {
-                    property.SetValue(item, row[property.Name], null);
+                    if (row.Table.Columns.Contains(property.Name))
+                    {
+                        property.SetValue(item, row[property.Name], null);
+                    }
                 }
             }
             return item;
