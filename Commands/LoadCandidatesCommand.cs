@@ -37,27 +37,17 @@ namespace ElectionsProgram.Commands
                 DataTable dt = ExcelProcessor.LoadFromExcel(@"Настройки/Кандидаты/Кандидаты.xlsx");
                 // Формируем список представления кандидатов (CandidatesView) из DataTable
                 var candidatesViews = dt.ToList<CandidateView>();
-                // Создаем пустой список кандидатов
-                List<Candidate> candidates = new List<Candidate>();
+                // Новый список кандидатов в VM
+                _vm.Candidates = new ObservableCollection<Candidate>();
                 //
-                foreach (var item in candidatesViews)
+                foreach (var view in candidatesViews)
                 {
-                    // Создаем кандидата на основе представления
-                    var candidate = new Candidate(item);
-                    // Добавляем к кандидатам имеющиеся талоны (должны быть уже загружены)
-                    candidate.Талон_Россия_1 = _vm.CandidatesTalons_Россия_1.FirstOrDefault(t => t.Number == candidate.View.Талон_Россия_1);
-                    candidate.Талон_Россия_24 = _vm.CandidatesTalons_Россия_24.FirstOrDefault(t => t.Number == candidate.View.Талон_Россия_24);
-                    candidate.Талон_Маяк = _vm.CandidatesTalons_Маяк.FirstOrDefault(t => t.Number == candidate.View.Талон_Маяк);
-                    candidate.Талон_Вести_ФМ = _vm.CandidatesTalons_Вести_ФМ.FirstOrDefault(t => t.Number == candidate.View.Талон_Вести_ФМ);
-                    candidate.Талон_Радио_России = _vm.CandidatesTalons_Радио_России.FirstOrDefault(t => t.Number == candidate.View.Талон_Радио_России);
-                    // Добавляем кандидата в список
-                    candidates.Add(candidate);
+                    _vm.Candidates.Add(new Candidate(view));
                 }
-                // Добавляем список кандидатов в VM
-                _vm.Candidates = new ObservableCollection<Candidate>(candidates);
                 // 
-                MessageBox.Show($"Кандидаты загружены.\n" +
-                    $"Количество: {_vm.Candidates.Count}.");
+                string message = $"Кандидаты загружены.\n" +
+                    $"Количество: {_vm.Candidates.Count}.";
+                Logger.Add(message);
             }
             catch (Exception ex)
             {

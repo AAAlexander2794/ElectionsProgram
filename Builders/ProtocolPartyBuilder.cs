@@ -36,25 +36,18 @@ namespace ElectionsProgram.Builders
             // По каждой партии
             foreach (var party in parties)
             {
-                //try
-                //{
-                    // Если не отмечено на печать, пропускаем
-                    if (party.View.На_печать == "") continue;
-                    // Формируем путь к документу
-                    var resultPath = $"{_folderPath}" + $"{party.View.Название_условное}\\";
-                    // Создает путь для документов, если вдруг каких-то папок нет
-                    Directory.CreateDirectory(resultPath);
-                    // По каждому СМИ
-                    CreateProtocol(party, settingsForProtocols, _templatePath, resultPath, "Маяк");
-                    CreateProtocol(party, settingsForProtocols, _templatePath, resultPath, "Вести ФМ");
-                    CreateProtocol(party, settingsForProtocols, _templatePath, resultPath, "Радио России");
-                    CreateProtocol(party, settingsForProtocols, _templatePath, resultPath, "Россия 1");
-                    CreateProtocol(party, settingsForProtocols, _templatePath, resultPath, "Россия 24");
-                //}
-                //catch
-                //{
-                //    throw new Exception($"Ошибка с {party.View.Название_условное}");
-                //}
+                // Если не отмечено на печать, пропускаем
+                if (party.View.На_печать == "") continue;
+                // Формируем путь к документу
+                var resultPath = $"{_folderPath}" + $"{party.View.Название_условное}\\";
+                // Создает путь для документов, если вдруг каких-то папок нет
+                Directory.CreateDirectory(resultPath);
+                // По каждому СМИ
+                CreateProtocol(party, settingsForProtocols, _templatePath, resultPath, "Маяк");
+                CreateProtocol(party, settingsForProtocols, _templatePath, resultPath, "Вести ФМ");
+                CreateProtocol(party, settingsForProtocols, _templatePath, resultPath, "Радио России");
+                CreateProtocol(party, settingsForProtocols, _templatePath, resultPath, "Россия 1");
+                CreateProtocol(party, settingsForProtocols, _templatePath, resultPath, "Россия 24");
             }
             return;
         }

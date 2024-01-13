@@ -48,31 +48,97 @@ namespace ElectionsProgram.Entities
 
         #region Партии
 
-        public string Партии_Таблица { get; set; }
+        public string Партии_Таблица { get => _view.Партии_Таблица;
+            set
+            {
+                _view.Партии_Таблица = value;
+                OnPropertyChanged();
+            }
+        }
 
         // Талоны бесплатные
 
-        public string Партии_Талоны_Россия_1 { get; set; }
+        public string Партии_Талоны_Россия_1 { get => _view.Партии_Талоны_Россия_1;
+            set
+            {
+                _view.Партии_Талоны_Россия_1 = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public string Партии_Талоны_Россия_24 { get; set; }
+        public string Партии_Талоны_Россия_24 { get => _view.Партии_Талоны_Россия_24;
+            set
+            {
+                _view.Партии_Талоны_Россия_24 = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public string Партии_Талоны_Маяк { get; set; }
+        public string Партии_Талоны_Маяк { get => _view.Партии_Талоны_Маяк;
+            set
+            {
+                _view.Партии_Талоны_Маяк = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public string Партии_Талоны_Вести_ФМ { get; set; }
+        public string Партии_Талоны_Вести_ФМ { get => _view.Партии_Талоны_Вести_ФМ;
+            set
+            {
+                _view.Партии_Талоны_Вести_ФМ = value;
+                OnPropertyChanged();
+            } 
+        }
 
-        public string Партии_Талоны_Радио_России { get; set; }
+        public string Партии_Талоны_Радио_России { get => _view.Партии_Талоны_Радио_России;
+            set
+            {
+                _view.Партии_Талоны_Радио_России = value;
+                OnPropertyChanged();
+            }
+        }
 
         // Время общего вещания
 
-        public string Партии_Общее_Россия_1 { get; set; }
+        public string Партии_Общее_Россия_1 { get => _view.Партии_Общее_Россия_1;
+            set
+            {
+                _view.Партии_Общее_Россия_1 = value; 
+                OnPropertyChanged();
+            }
+        }
 
-        public string Партии_Общее_Россия_24 { get; set; }
+        public string Партии_Общее_Россия_24 { get => _view.Партии_Общее_Россия_24;
+            set
+            {
+                _view.Партии_Общее_Россия_24 = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public string Партии_Общее_Маяк { get; set; }
+        public string Партии_Общее_Маяк { get => _view.Партии_Общее_Маяк;
+            set
+            {
+                _view.Партии_Общее_Маяк = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public string Партии_Общее_Вести_ФМ { get; set; }
+        public string Партии_Общее_Вести_ФМ { get => _view.Партии_Общее_Вести_ФМ;
+            set
+            {
+                _view.Партии_Общее_Вести_ФМ = value;
+                OnPropertyChanged();
+            }
+        }
 
-        public string Партии_Общее_Радио_России { get; set; }
+        public string Партии_Общее_Радио_России { get => _view.Партии_Общее_Радио_России;
+            set
+            {
+                _view.Партии_Общее_Радио_России = value;
+                OnPropertyChanged();
+            }
+        }
 
         // Шаблоны
 
