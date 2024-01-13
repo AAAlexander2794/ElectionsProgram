@@ -306,16 +306,46 @@ namespace ElectionsProgram.ViewModels
 
         // 
         public LoadMediaresourcesCommand LoadDefaultDataCommand { get; }
-        // Команды для партий
-        public LoadPartiesCommand LoadPartiesCommand { get; }
-        public LoadPartiesTalonsCommand LoadPartiesTalonsCommand { get; }
-        public SavePartiesToExcelCommand SavePartiesToExcelCommand { get; }
-        // Команды для кандидатов
-        public LoadCandidatesCommand LoadCandidatesCommand { get; }
-        public LoadCandidatesTalonsCommand LoadCandidatesTalonsCommand { get; }
+
         //
         public LoadProtocolSettingsCommand LoadProtocolSettingsCommand { get; }
+
+        //
+        public LoadSettingsPathsCommand LoadSettingsPathsCommand { get; }
+
+        #region Команды для партий
+
+        /// <summary>
+        /// Загрузка партий
+        /// </summary>
+        public LoadPartiesCommand LoadPartiesCommand { get; }
+        /// <summary>
+        /// Загрузка талонов партий (и общего вещания)
+        /// </summary>
+        public LoadPartiesTalonsCommand LoadPartiesTalonsCommand { get; }
+        /// <summary>
+        /// Жеребьевка партий
+        /// </summary>
+        public MatchPartiesAndTalonsCommand MatchPartiesAndTalonsCommand { get; }
+        /// <summary>
+        /// Создание протоколов партий
+        /// </summary>
         public CreateProtocolsPartiesCommand CreateProtocolsPartiesCommand { get; }
+        /// <summary>
+        /// Жеребьевка партий. Выполняет поочередно все нужные команды для создания протоколов.
+        /// </summary>
+        public DrawPartiesCommand DrawPartiesCommand { get; }
+
+        public SavePartiesToExcelCommand SavePartiesToExcelCommand { get; }
+
+        #endregion Команды для партий
+
+        #region Команды для кандидатов
+
+        public LoadCandidatesCommand LoadCandidatesCommand { get; }
+        public LoadCandidatesTalonsCommand LoadCandidatesTalonsCommand { get; }
+
+        #endregion Команды для кандидатов
 
         #endregion Комманды
 
@@ -325,18 +355,26 @@ namespace ElectionsProgram.ViewModels
         {
             // Инициализируем команды
             
+            // 
             LoadDefaultDataCommand = new LoadMediaresourcesCommand(this);
+            // Команда загрузки настроек протокола
+            LoadProtocolSettingsCommand = new LoadProtocolSettingsCommand(this);
             // Команды для партий
             LoadPartiesCommand = new LoadPartiesCommand(this);
             LoadPartiesTalonsCommand = new LoadPartiesTalonsCommand(this);
+            MatchPartiesAndTalonsCommand = new MatchPartiesAndTalonsCommand(this);
+            CreateProtocolsPartiesCommand = new CreateProtocolsPartiesCommand(this);
+            DrawPartiesCommand = new DrawPartiesCommand(this);
             SavePartiesToExcelCommand = new SavePartiesToExcelCommand(this);
             // Команды для кандидатов
             LoadCandidatesCommand = new LoadCandidatesCommand(this);
             LoadCandidatesTalonsCommand = new LoadCandidatesTalonsCommand(this);
-            //
-            LoadProtocolSettingsCommand = new LoadProtocolSettingsCommand(this);
-            CreateProtocolsPartiesCommand = new CreateProtocolsPartiesCommand(this);
+            
+            
+            
 
+            //
+            LoadSettingsPathsCommand = new LoadSettingsPathsCommand(this);
             //
             LoadDefaultDataCommand.Execute(this);
         }

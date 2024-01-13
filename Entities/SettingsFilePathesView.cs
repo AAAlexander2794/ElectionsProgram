@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,9 +17,11 @@ namespace ElectionsProgram.Entities
         /// <summary>
         /// Путь к папке протоколов жеребьевки.
         /// </summary>
-        public string Протоколы { get; set; } = @"Документы\Протоколы\";
+        public string Протоколы_Выходной_каталог { get; set; } = @"Документы\Протоколы\";
 
         public string Протоколы_Шаблон_Партии { get; set; } = @"Настройки\Протоколы\Приложение 1.dotx";
+
+        public string Протоколы_Настройки { get; set; } = @"Настройки\Протоколы\Протоколы.xlsx";
 
         #endregion Протоколы
 

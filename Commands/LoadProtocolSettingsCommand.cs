@@ -13,6 +13,9 @@ using System.Windows.Input;
 
 namespace ElectionsProgram.Commands
 {
+    /// <summary>
+    /// Загружает настройки для протоколов.
+    /// </summary>
     public class LoadProtocolSettingsCommand : ICommand
     {
         public event EventHandler? CanExecuteChanged;
@@ -34,7 +37,7 @@ namespace ElectionsProgram.Commands
             try
             {
                 // Загружаем таблицу настроек (интересует только одна строка)
-                DataTable dt = ExcelProcessor.LoadFromExcel($"Настройки/Протоколы/Протоколы.xlsx");
+                DataTable dt = ExcelProcessor.LoadFromExcel(_vm.SettingsFilePathes.Протоколы_Настройки);
                 // Берем первую строку
                 SettingsForProtocolsView protocolSettingsView = dt.ToList<SettingsForProtocolsView>()[0];
                 // Передаем настройки в ViewModel

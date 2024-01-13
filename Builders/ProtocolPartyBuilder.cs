@@ -23,10 +23,14 @@ namespace ElectionsProgram.Builders
         /// Сортируем в подкаталоги партии, в нем по 5 протоколов для каждой СМИ.
         /// </remarks>
         /// <returns></returns>
-        public static void CreateProtocolsParties(List<Party> parties, SettingsForProtocols settingsForProtocols, string protocolFolderPath)
+        public static void CreateProtocolsParties(
+            List<Party> parties, 
+            SettingsForProtocols settingsForProtocols, 
+            string protocolFolderPath, 
+            string templatePath)
         {
             var _folderPath = $"{protocolFolderPath}{DateTime.Now.ToString().Replace(":", "_")}\\";
-            var _templatePath = $"Настройки/Протоколы/Приложение 1.dotx";
+            var _templatePath = templatePath;
             //
             //List<WordDocument> protocols = new List<WordDocument>();
             // По каждой партии
@@ -89,27 +93,27 @@ namespace ElectionsProgram.Builders
                 case "Маяк":
                     fieldMedia = settings.View.Название_СМИ_Маяк;
                     fileName = "Маяк.docx";
-                    table = CreateTableParty(party.Талон_Маяк, partyName, personName);
+                    table = CreateTableParty(party.Талон_Маяк, partyName, personName, settings.View.Партии_Дата);
                     break;
                 case "Вести ФМ":
                     fieldMedia = settings.View.Название_СМИ_Вести_ФМ;
                     fileName = "Вести ФМ.docx";
-                    table = CreateTableParty(party.Талон_Вести_ФМ, partyName, personName);
+                    table = CreateTableParty(party.Талон_Вести_ФМ, partyName, personName, settings.View.Партии_Дата);
                     break;
                 case "Радио России":
                     fieldMedia = settings.View.Название_СМИ_Радио_России;
                     fileName = "Радио России.docx";
-                    table = CreateTableParty(party.Талон_Радио_России, partyName, personName);
+                    table = CreateTableParty(party.Талон_Радио_России, partyName, personName, settings.View.Партии_Дата);
                     break;
                 case "Россия 1":
                     fieldMedia = settings.View.Название_СМИ_Россия_1;
                     fileName = "Россия 1.docx";
-                    table = CreateTableParty(party.Талон_Россия_1, partyName, personName);
+                    table = CreateTableParty(party.Талон_Россия_1, partyName, personName, settings.View.Партии_Дата);
                     break;
                 case "Россия 24":
                     fieldMedia = settings.View.Название_СМИ_Россия_24;
                     fileName = "Россия 24.docx";
-                    table = CreateTableParty(party.Талон_Россия_24, partyName, personName);
+                    table = CreateTableParty(party.Талон_Россия_24, partyName, personName, settings.View.Партии_Дата);
                     break;
 
             }
@@ -135,7 +139,8 @@ namespace ElectionsProgram.Builders
         /// <returns></returns>
         static Table CreateTableParty(Talon? talon, 
             string lastRow2CellText = "", 
-            string lastRow5CellText = "")
+            string lastRow5CellText = "",
+            string date = "")
         {
             // Создаем таблицу
             Table table = new Table();
@@ -255,7 +260,7 @@ namespace ElectionsProgram.Builders
             tc3 = new TableCell(WordDocument.CreateParagraph(linesCommon));
             tc4 = new TableCell(WordDocument.CreateParagraph(lines));
             tc5 = new TableCell(WordDocument.CreateParagraph($"{lastRow5CellText}"));
-            tc6 = new TableCell(WordDocument.CreateParagraph($""));
+            tc6 = new TableCell(WordDocument.CreateParagraph($"{date}"));
             tr.Append(tc1, tc2, tc3, tc4, tc5, tc6);
             table.Append(tr);
             // Строка "Итого"

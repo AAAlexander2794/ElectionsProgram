@@ -33,7 +33,8 @@ namespace ElectionsProgram.Commands
             {
                 ProtocolPartyBuilder.CreateProtocolsParties(_viewModel.Parties.ToList(), 
                     _viewModel.ProtocolSettings, 
-                    _viewModel.SettingsFilePathes.View.Протоколы);
+                    _viewModel.SettingsFilePathes.Протоколы_Выходной_каталог,
+                    _viewModel.SettingsFilePathes.Протоколы_Шаблон_Партии);
                 //
                 string message = $"Протоколы партий созданы. Обработано:\n" +
                     $"Партий: {_viewModel.Parties.Count}\n" +
@@ -41,10 +42,8 @@ namespace ElectionsProgram.Commands
                     $"{_viewModel.PartiesTalons_Россия_24.Count}, " +
                     $"{_viewModel.PartiesTalons_Маяк.Count}, " +
                     $"{_viewModel.PartiesTalons_Вести_ФМ.Count}, " +
-                    $"{_viewModel.PartiesTalons_Радио_России.Count}.\n" +
-                    $"";
+                    $"{_viewModel.PartiesTalons_Радио_России.Count}.";
                 Logger.Add(message);
-                MessageBox.Show(message);
             }
             catch (Exception ex)
             {

@@ -29,18 +29,5 @@ namespace ElectionsProgram.View
             InitializeComponent();
             DataContext = _viewModel;
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (_viewModel.Mediaresources.Count > 0)
-            {
-                _viewModel.Mediaresources[0].View.Название_полное = "Новое полное название";
-            }
-            //_viewModel.Test = ProcessorExcel.ReadExcelSheet(@"Настройки/Партии/Партии.xlsx");
-            _viewModel.Test = ExcelProcessor.LoadFromExcel(@"Настройки/_database/Партии.xlsx");
-            //_viewModel.Parties = new System.Collections.ObjectModel.ObservableCollection<Entities.Party>(PartiesBuilder.BuildParties(_viewModel.Test, _viewModel));
-            MessageBox.Show("Done");
-            //MessageBox.Show($"{_viewModel.Mediaresources.Count}");
-        }
     }
 }

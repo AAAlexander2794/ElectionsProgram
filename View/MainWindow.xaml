@@ -20,7 +20,7 @@
                 <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Horizontal" Grid.ColumnSpan="2">
-                
+
             </StackPanel>
 
             <TabControl  Margin="0,40,0,0" Grid.RowSpan="2" Grid.ColumnSpan="2">
@@ -34,7 +34,8 @@
                             <RowDefinition Height="45"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <StackPanel Grid.Row="0" Grid.Column="0" Orientation="Horizontal">
+                        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+                            <Button Content="Жеребьевка партий" Width="150" Margin="5" Command="{Binding DrawPartiesCommand}"/>
                             <Button Content="Загрузить настройки протоколов" Width="200" Margin="5" Command="{Binding LoadProtocolSettingsCommand}"/>
                             <Button Content="Создать протоколы партий" Width="200" Margin="5" Command="{Binding CreateProtocolsPartiesCommand}"/>
                         </StackPanel>
@@ -92,6 +93,7 @@
                         <StackPanel Grid.Row="0" Orientation="Horizontal">
                             <Button Content="Загрузить партии" Command="{Binding LoadPartiesCommand}" Width="110" Margin="5"/>
                             <Button Content="Загрузить талоны партий" Command="{Binding LoadPartiesTalonsCommand}" Width="150" Margin="5"/>
+                            <Button Content="Сопоставить талоны партиям" Command="{Binding MatchPartiesAndTalonsCommand}" Width="180" Margin="5"/>
                         </StackPanel>
                         <TabControl Grid.Row="1">
                             <TabItem Header="Список партий">
@@ -453,6 +455,37 @@
                             </TabItem>
                         </TabControl>
 
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Настройки">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal" Grid.Row="0">
+                            <Button Content="Загрузить настройки" Command="{Binding LoadSettingsPathsCommand}" Width="150" Margin="5"/>
+                        </StackPanel>
+                        <ScrollViewer HorizontalScrollBarVisibility="Auto" Grid.Row="1">
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel>
+                                    <TextBlock Text="Таблица партий:" Margin="5"/>
+                                    <TextBlock Text="Путь к папке протоколов:" Margin="5"/>
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBox Text="{Binding SettingsFilePathes.Партии_Таблица}" Margin="5" Width="300"/>
+                                    <TextBox Text="{Binding SettingsFilePathes.Протоколы}" Margin="5" Width="300"/>
+                                </StackPanel>
+                                <StackPanel  >
+                                    <TextBlock Text="Таблица партий:" Margin="5"/>
+                                    <TextBlock Text="Путь к папке протоколов:" Margin="5"/>
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBox Text="{Binding SettingsFilePathes.Партии_Таблица}" Margin="5" Width="300"/>
+                                    <TextBox Text="{Binding SettingsFilePathes.Протоколы}" Margin="5" Width="300"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </ScrollViewer>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Test">

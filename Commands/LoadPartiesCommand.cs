@@ -42,29 +42,18 @@ namespace ElectionsProgram.Commands
                 DataTable dt = ExcelProcessor.LoadFromExcel(@"Настройки/Партии/Партии.xlsx");
                 // Формируем список представления партии (PartyView) из DataTable
                 var partyViews = dt.ToList<PartyView>();
-                // Создаем пустой список партий
-                List<Party> parties = new List<Party>();
-                //
-                foreach (var item in partyViews)
+                // Создаем новую коллекцию партий в VM
+                _vm.Parties = new ObservableCollection<Party>();
+                // 
+                foreach (var partyView in partyViews)
                 {
-                    // Создаем партию на основе представления
-                    var party = new Party(item);
-                    // Добавляем к партии имеющиеся талоны (должны быть уже загружены)
-                    party.Талон_Россия_1 = _vm.PartiesTalons_Россия_1.FirstOrDefault(t => t.Number == party.View.Талон_Россия_1);
-                    party.Талон_Россия_24 = _vm.PartiesTalons_Россия_24.FirstOrDefault(t => t.Number == party.View.Талон_Россия_24);
-                    party.Талон_Маяк = _vm.PartiesTalons_Маяк.FirstOrDefault(t => t.Number == party.View.Талон_Маяк);
-                    party.Талон_Вести_ФМ = _vm.PartiesTalons_Вести_ФМ.FirstOrDefault(t => t.Number == party.View.Талон_Вести_ФМ);
-                    party.Талон_Радио_России = _vm.PartiesTalons_Радио_России.FirstOrDefault(t => t.Number == party.View.Талон_Радио_России);
-                    // Добавляем партию в список
-                    parties.Add(party);
+                    // Создаем партию на основе представления и добавляем в коллекцию партий
+                    _vm.Parties.Add(new Party(partyView));
                 }
-                // Добавляем список партий в VM
-                _vm.Parties = new ObservableCollection<Party>(parties);
                 // 
                 string message = $"Партии загружены.\n" +
                     $"Количество: {_vm.Parties.Count}.";
                 Logger.Add(message);
-                MessageBox.Show(message);
             }
             catch(Exception ex)
             {
