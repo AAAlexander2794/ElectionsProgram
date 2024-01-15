@@ -11,6 +11,9 @@ using System.Threading.Tasks;
 
 namespace ElectionsProgram.Builders
 {
+    /// <summary>
+    /// Строит протоколы партий
+    /// </summary>
     public static class ProtocolPartyBuilder
     {
         
@@ -31,8 +34,6 @@ namespace ElectionsProgram.Builders
         {
             var _folderPath = $"{protocolFolderPath}{DateTime.Now.ToString().Replace(":", "_")}\\";
             var _templatePath = templatePath;
-            //
-            //List<WordDocument> protocols = new List<WordDocument>();
             // По каждой партии
             foreach (var party in parties)
             {

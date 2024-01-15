@@ -26,6 +26,9 @@ namespace ElectionsProgram.Commands
         {
             try
             {
+                //
+                _vm.Regions.Clear();
+                //
                 foreach (var candidate in _vm.Candidates)
                 {
                     // Добавляем к кандидатам имеющиеся талоны (должны быть уже загружены)
@@ -34,9 +37,43 @@ namespace ElectionsProgram.Commands
                     candidate.Талон_Маяк = _vm.CandidatesTalons_Маяк.FirstOrDefault(t => t.Number == candidate.View.Талон_Маяк);
                     candidate.Талон_Вести_ФМ = _vm.CandidatesTalons_Вести_ФМ.FirstOrDefault(t => t.Number == candidate.View.Талон_Вести_ФМ);
                     candidate.Талон_Радио_России = _vm.CandidatesTalons_Радио_России.FirstOrDefault(t => t.Number == candidate.View.Талон_Радио_России);
+
+                    #region Формирование округов
+
+                    bool isInCollection = false;
+                    // Проверяем по списку округов
+                    for (int i = 0; i < _vm.Regions.Count; i++)
+                    {
+                        // Если округ текущего кандидата уже есть в списке
+                        if (_vm.Regions[i].Номер == candidate.View.Округ_Номер)
+                        {
+                            isInCollection = true;
+                            // Добавляем кандидата округу
+                            _vm.Regions[i].Candidates.Add(candidate);
+                        }
+                    }
+                    // Если округа текущего кандидата не было в списке
+                    if (!isInCollection) 
+                    {
+                        // Создаем новый регион по данным текущего кандидата
+                        Region newRegion = new Region()
+                        {
+                            Номер = candidate.View.Округ_Номер,
+                            Название_Падеж_им = candidate.View.Округ_Название_падеж_им,
+                            Название_Падеж_дат = candidate.View.Округ_Название_падеж_дат,
+                            Дополнительно = candidate.View.Округ_Дополнительно
+                        };
+                        // Добавляем текущего кандидата
+                        newRegion.Candidates.Add(candidate);
+                        // Добавляем созданный округ в список округов
+                        _vm.Regions.Add(newRegion);
+                    }
+
+                    #endregion Формирование округов
                 }
                 //
-                Logger.Add($"Сопоставлены кандидаты и талоны.");
+                Logger.Add($"Сопоставлены кандидаты и талоны.\n" +
+                    $"Созданы округи: {_vm.Regions.Count}.");
             }
             catch(Exception ex)
             {

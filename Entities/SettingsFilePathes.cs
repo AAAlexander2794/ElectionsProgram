@@ -148,6 +148,107 @@ namespace ElectionsProgram.Entities
 
         #endregion Партии
 
+        #region Кандидаты
+
+        // Талоны бесплатные
+
+        public string Кандидаты_Талоны_Россия_1 { get => _view.Кандидаты_Талоны_Россия_1; 
+            set { _view.Кандидаты_Талоны_Россия_1 = value; OnPropertyChanged(); } }
+
+        public string Кандидаты_Талоны_Россия_24
+        {
+            get => _view.Кандидаты_Талоны_Россия_24;
+            set
+            {
+                _view.Кандидаты_Талоны_Россия_24 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Кандидаты_Талоны_Маяк
+        {
+            get => _view.Кандидаты_Талоны_Маяк;
+            set
+            {
+                _view.Кандидаты_Талоны_Маяк = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Кандидаты_Талоны_Вести_ФМ
+        {
+            get => _view.Кандидаты_Талоны_Вести_ФМ;
+            set
+            {
+                _view.Кандидаты_Талоны_Вести_ФМ = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Кандидаты_Талоны_Радио_России
+        {
+            get => _view.Кандидаты_Талоны_Радио_России;
+            set
+            {
+                _view.Кандидаты_Талоны_Радио_России = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // Время общего вещания
+
+        public string Кандидаты_Общее_Россия_1
+        {
+            get => _view.Кандидаты_Общее_Россия_1;
+            set
+            {
+                _view.Кандидаты_Общее_Россия_1 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Кандидаты_Общее_Россия_24
+        {
+            get => _view.Кандидаты_Общее_Россия_24;
+            set
+            {
+                _view.Кандидаты_Общее_Россия_24 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Кандидаты_Общее_Маяк
+        {
+            get => _view.Кандидаты_Общее_Маяк;
+            set
+            {
+                _view.Кандидаты_Общее_Маяк = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Кандидаты_Общее_Вести_ФМ
+        {
+            get => _view.Кандидаты_Общее_Вести_ФМ;
+            set
+            {
+                _view.Кандидаты_Общее_Вести_ФМ = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Кандидаты_Общее_Радио_России
+        {
+            get => _view.Кандидаты_Общее_Радио_России;
+            set
+            {
+                _view.Кандидаты_Общее_Радио_России = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion Кандидаты
+
         public event PropertyChangedEventHandler? PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

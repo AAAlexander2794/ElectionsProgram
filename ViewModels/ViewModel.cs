@@ -169,8 +169,7 @@ namespace ElectionsProgram.ViewModels
 
         #region Коллекции кандидатов
 
-        private ObservableCollection<Candidate> _candidates = 
-            new ObservableCollection<Candidate>();
+        private ObservableCollection<Candidate> _candidates = new ObservableCollection<Candidate>();
         /// <summary>
         /// Список кандидатов
         /// </summary>
@@ -190,6 +189,18 @@ namespace ElectionsProgram.ViewModels
             set
             {
                 _currentCandidate = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private ObservableCollection<Region> _regions = new ObservableCollection<Region>();
+        /// <summary>
+        /// Округи
+        /// </summary>
+        public ObservableCollection<Region> Regions { get => _regions;
+            set
+            {
+                _regions = value;
                 OnPropertyChanged();
             }
         }
@@ -344,6 +355,7 @@ namespace ElectionsProgram.ViewModels
 
         public LoadCandidatesCommand LoadCandidatesCommand { get; }
         public LoadCandidatesTalonsCommand LoadCandidatesTalonsCommand { get; }
+        public MatchCandidatesAndTalonsCommand MatchCandidatesAndTalonsCommand { get; }
 
         #endregion Команды для кандидатов
 
@@ -369,6 +381,7 @@ namespace ElectionsProgram.ViewModels
             // Команды для кандидатов
             LoadCandidatesCommand = new LoadCandidatesCommand(this);
             LoadCandidatesTalonsCommand = new LoadCandidatesTalonsCommand(this);
+            MatchCandidatesAndTalonsCommand = new MatchCandidatesAndTalonsCommand(this);
             
             
             
