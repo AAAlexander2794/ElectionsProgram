@@ -37,7 +37,7 @@ namespace ElectionsProgram.Builders
             {
                 // Формируем путь к документу (с промежуточной папкой текущего времени)
                 var resultPath = $"{protocolFolderPath}{subfolder}\\" +
-                    $"{region.Номер} {region.Название_Падеж_им}\\";
+                    $"{region.Номер.Trim()} {region.Название_Падеж_им.Trim()}\\";
                 // Надо очистить путь от знаков, которыми нельзя называть каталоги
                 resultPath = Regex.Replace(resultPath, "\"", "");
                 // Создает путь для документов, если вдруг каких-то папок нет
