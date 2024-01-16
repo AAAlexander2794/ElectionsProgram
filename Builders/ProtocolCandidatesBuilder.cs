@@ -30,12 +30,14 @@ namespace ElectionsProgram.Builders
             string protocolFolderPath,
             string templatePath)
         {
-
+            // Дата и время для формирования одной папки под все округи протоколов
+            var subfolder = DateTime.Now.ToString().Replace(":", "_");
             // По каждому округу делаем свои 5 протоколов на каждое СМИ
             foreach (var region in regions)
             {
-                // Формируем путь к документу
-                var resultPath = $"{protocolFolderPath}" + $"{region.Номер} {region.Название_Падеж_им}\\";
+                // Формируем путь к документу (с промежуточной папкой текущего времени)
+                var resultPath = $"{protocolFolderPath}{subfolder}\\" +
+                    $"{region.Номер} {region.Название_Падеж_им}\\";
                 // Надо очистить путь от знаков, которыми нельзя называть каталоги
                 resultPath = Regex.Replace(resultPath, "\"", "");
                 // Создает путь для документов, если вдруг каких-то папок нет
@@ -52,7 +54,7 @@ namespace ElectionsProgram.Builders
 
 
         /// <summary>
-        /// Формирует файл протокола кандидатов
+        /// Формирует файл протокола кандидатов округа
         /// </summary>
         private static void CreateProtocol(Region region, SettingsForProtocols settings, string templatePath, string resultPath, string mediaresource)
         {
@@ -82,22 +84,18 @@ namespace ElectionsProgram.Builders
                     fileName = "Россия 24.docx";
                     break;
             }
-            // Новый протокол
+            // Новый документ протокола
             var document = new WordDocument(templatePath);
             // Заполняем поля слияния
             document.SetMergeFieldText("Наименование_СМИ", $"{fieldMedia}");
-            document.SetMergeFieldText("ИО_Фамилия_предст_СМИ", $"{settings.Кандидаты_ИО_Фамилия_предст_СМИ}");
-            document.SetMergeFieldText("Дата", $"{settings.Кандидаты_Дата}");
-            document.SetMergeFieldText("ИО_Фамилия_члена_изб_ком", $"{settings.Кандидаты_ИО_Фамилия_члена_изб_ком}");
-            //
-            try
-            {
-                document.SetBookmarkText($"Талон", "");
-                var table = CreateTableProtocolCandidates(protocol, mediaresource);
-                document.SetBookmarkTable($"Талон", table);
-            }
-            catch { }
-            //
+            document.SetMergeFieldText("ИО_Фамилия_предст_СМИ", $"{settings.View.Кандидаты_Предст_СМИ_ИО_Фамилия}");
+            document.SetMergeFieldText("Дата", $"{settings.View.Кандидаты_Дата}");
+            document.SetMergeFieldText("ИО_Фамилия_члена_изб_ком", $"{settings.View.Кандидаты_Член_изб_ком_ИО_Фамилия}");
+            // Вставляем таблицу c талонами кандидатов округа
+            document.SetBookmarkText($"Талон", "");
+            var table = CreateTableProtocolCandidates(region, mediaresource, settings);
+            document.SetBookmarkTable($"Талон", table);
+            // Сохраняем и закрываем документ
             document.Save(resultPath + $"{fileName}");
             document.Close();
         }
@@ -107,7 +105,7 @@ namespace ElectionsProgram.Builders
         /// </summary>
         /// <param name="talon"></param>
         /// <returns></returns>
-        Table CreateTableProtocolCandidates(ProtocolCandidates protocol, string mediaresource)
+        static Table CreateTableProtocolCandidates(Region region, string mediaresource, SettingsForProtocols settings)
         {
             // 
             Table table = new Table();
@@ -147,14 +145,11 @@ namespace ElectionsProgram.Builders
                 }
             };
             tblProp.Append(tblBorders);
-            //// Now we create a new layout and make it "fixed".
-            //TableLayout tl = new TableLayout() { Type = TableLayoutValues.Fixed };
-            //tblProp.TableLayout = tl;
             //
             table.Append(tblProp);
             // Заголовки таблицы
             TableRow trHead = new TableRow();
-            var tcH4 = new TableCell(CreateParagraph($"Даты и время\r\n" +
+            var tcH4 = new TableCell(WordDocument.CreateParagraph($"Даты и время\r\n" +
                 $"выхода в эфир предвыборных\r\n" +
                 $"агитационных материалов\r\n" +
                 $"(число, месяц, год; время;\r\n" +
@@ -162,27 +157,27 @@ namespace ElectionsProgram.Builders
                 $"минут/секунд"));
             tcH4.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
             trHead.Append(
-                new TableCell(CreateParagraph($"№ п/п")),
-                new TableCell(CreateParagraph($"Фамилия, инициалы\r\n" +
+                new TableCell(WordDocument.CreateParagraph($"№ п/п")),
+                new TableCell(WordDocument.CreateParagraph($"Фамилия, инициалы\r\n" +
                 $"зарегистрированного кандидата,\r\n" +
                 $"№ одномандатного\r\n" +
                 $"избирательного округа, по\r\n" +
                 $"которому он зарегистрирован")),
-                new TableCell(CreateParagraph($"Даты и время выхода в эфир\r\n" +
+                new TableCell(WordDocument.CreateParagraph($"Даты и время выхода в эфир\r\n" +
                 $"совместных агитационных\r\n" +
                 $"мероприятий\r\n" +
                 $"(число, месяц, год; время;\r\n" +
                 $"количество\r\n" +
                 $"минут/секунд")),
                 tcH4,
-                new TableCell(CreateParagraph($"Фамилия, инициалы представителя\r\n" +
+                new TableCell(WordDocument.CreateParagraph($"Фамилия, инициалы представителя\r\n" +
                 $"зарегистрированного кандидата,\r\n" +
                 $"участвовавшего\r\n" +
                 $"в жеребьевке (члена\r\n" +
                 $"соответствующей\r\n" +
                 $"избирательной комиссии с\r\n" +
                 $"правом решающего голоса)")),
-                new TableCell(CreateParagraph($"Подпись зарегистрированного кандидата,\r\n" +
+                new TableCell(WordDocument.CreateParagraph($"Подпись зарегистрированного кандидата,\r\n" +
                 $"участвовавшего в жеребьевке\r\n" +
                 $"(члена соответствующей\r\n" +
                 $"избирательной комиссии с\r\n" +
@@ -193,52 +188,57 @@ namespace ElectionsProgram.Builders
             table.Append(trHead);
             // Добавляем строчку с нумерованием столбцов
             TableRow tr = new TableRow();
-            TableCell tc1 = new TableCell(CreateParagraph($"1"));
-            TableCell tc2 = new TableCell(CreateParagraph($"2"));
-            TableCell tc3 = new TableCell(CreateParagraph($"3"));
-            TableCell tc4 = new TableCell(CreateParagraph($"4"));
-            TableCell tc5 = new TableCell(CreateParagraph($"5"));
-            TableCell tc6 = new TableCell(CreateParagraph($"6"));
+            TableCell tc1 = new TableCell(WordDocument.CreateParagraph($"1"));
+            TableCell tc2 = new TableCell(WordDocument.CreateParagraph($"2"));
+            TableCell tc3 = new TableCell(WordDocument.CreateParagraph($"3"));
+            TableCell tc4 = new TableCell(WordDocument.CreateParagraph($"4"));
+            TableCell tc5 = new TableCell(WordDocument.CreateParagraph($"5"));
+            TableCell tc6 = new TableCell(WordDocument.CreateParagraph($"6"));
             tr.Append(tc1, tc2, tc3, tc4, tc5, tc6);
             table.Append(tr);
-            // Добавляем округ одной строкой
-            tr = CreateRowMergedCells(protocol.Округ, 6);
-            table.Append(tr);
-            // Для строки Итого со всех кандидатов длительность берем
+            // Если у округа есть номер (если пустой, не указываем округ)
+            if (region.Номер != "")
+            {
+                // Добавляем округ одной строкой
+                tr = WordDocument.CreateRowMergedCells(region.Номер, 6);
+                table.Append(tr);
+            }
+            // Для строки Итого со всех кандидатов длительность берем (талонов и общего вещания)
             TimeSpan duration = TimeSpan.Zero;
+            TimeSpan durationCommonRecords =TimeSpan.Zero;
             // По каждому кандидату из протокола
-            for (int i = 0; i < protocol.Candidates.Count; i++)
+            for (int i = 0; i < region.Candidates.Count; i++)
             {
                 //
-                var c = protocol.Candidates[i];
-                //
+                var c = region.Candidates[i];
+                // Ячейка с ФИО того, кто тянул талон и подписывает протокол
                 string cell5Text = "";
-                if (c.Info.Явка_кандидата == "1")
+                if (c.View.Явка_кандидата == "1")
                 {
                     // Если кандидат внесен (вообще и так должен быть внесен)
-                    if (c.Info.Фамилия.Length > 0 &&
-                    c.Info.Имя.Length > 0 &&
-                    c.Info.Отчество.Length > 0)
+                    if (c.View.Фамилия.Length > 0 &&
+                    c.View.Имя.Length > 0 &&
+                    c.View.Отчество.Length > 0)
                     {
-                        cell5Text = $"{c.Info.Фамилия} {c.Info.Имя[0]}. {c.Info.Отчество[0]}.";
+                        cell5Text = $"{c.View.Фамилия} {c.View.Имя[0]}. {c.View.Отчество[0]}.";
                     }
                 }
-                else if (c.Info.Явка_представителя == "1")
+                else if (c.View.Явка_представителя == "1")
                 {
                     // Если Представитель внесен
-                    if (c.Info.Представитель_Фамилия.Length > 0 &&
-                    c.Info.Представитель_Имя.Length > 0 &&
-                    c.Info.Представитель_Отчество.Length > 0)
+                    if (c.View.Представитель_Фамилия.Length > 0 &&
+                    c.View.Представитель_Имя.Length > 0 &&
+                    c.View.Представитель_Отчество.Length > 0)
                     {
-                        cell5Text = $"{c.Info.Представитель_Фамилия} {c.Info.Представитель_Имя[0]}. {c.Info.Представитель_Отчество[0]}.";
+                        cell5Text = $"{c.View.Представитель_Фамилия} {c.View.Представитель_Имя[0]}. {c.View.Представитель_Отчество[0]}.";
                     }
                 }
                 else
                 {
-                    cell5Text = $"{protocol.Изб_ком_Фамилия_ИО}";
+                    cell5Text = $"{settings.View.Кандидаты_Член_изб_ком_Фамилия_ИО}";
                 }
                 //
-                Talon talon = null;
+                Talon? talon = null;
                 // Определяем, какой из талонов надо использовать
                 switch (mediaresource)
                 {
@@ -259,9 +259,17 @@ namespace ElectionsProgram.Builders
                         break;
                 }
                 // Для общей длительности в Итого
-                if (talon != null && talon.TotalDuration != null) duration += talon.TotalDuration;
-                // Делаем строку кандидата
-                tr = CreateRowProtocolCandidates(c, talon, mediaresource, i, cell5Text);
+                if (talon != null)
+                {
+                    duration += talon.GetDurationTalonRecords();
+                    durationCommonRecords += talon.GetDurationCommonRecords();
+                }
+                // Если у кандидата есть фамилия и этот талон (запасная проверка)
+                if (c.View.Фамилия != "" && talon != null)
+                {
+                    // Делаем строку кандидата
+                    tr = CreateRowProtocolCandidates(c, talon, mediaresource, i, cell5Text, settings.View.Кандидаты_Дата);
+                }
                 //
                 if (tr == null) continue;
                 // Добавляем к таблице
@@ -269,110 +277,77 @@ namespace ElectionsProgram.Builders
             }
             // Строка "Итого"
             tr = new TableRow();
-            tc1 = new TableCell(CreateParagraph($"Итого"));
-            tc2 = new TableCell(CreateParagraph($""));
-            tc3 = new TableCell(CreateParagraph($""));
-            if (duration != TimeSpan.Zero)
+            tc1 = new TableCell(WordDocument.CreateParagraph($"Итого"));
+            tc2 = new TableCell(WordDocument.CreateParagraph($""));
+            if (durationCommonRecords != TimeSpan.Zero)
             {
-                tc4 = new TableCell(CreateParagraph($"{duration}"));
+                tc3 = new TableCell(WordDocument.CreateParagraph($"{durationCommonRecords}"));
             }
             else
             {
-                tc4 = new TableCell(CreateParagraph($""));
+                tc3 = new TableCell(WordDocument.CreateParagraph($""));
             }
-            tc5 = new TableCell(CreateParagraph($""));
-            tc6 = new TableCell(CreateParagraph($""));
+            if (duration != TimeSpan.Zero)
+            {
+                tc4 = new TableCell(WordDocument.CreateParagraph($"{duration}"));
+            }
+            else
+            {
+                tc4 = new TableCell(WordDocument.CreateParagraph($""));
+            }
+            tc5 = new TableCell(WordDocument.CreateParagraph($""));
+            tc6 = new TableCell(WordDocument.CreateParagraph($""));
             tr.Append(tc1, tc2, tc3, tc4, tc5, tc6);
             table.Append(tr);
             // Возвращаем
             return table;
         }
 
-        private TableRow CreateRowProtocolCandidates(Candidate candidate, Talon talon, string mediaresource, int i, string row5Text)
+        private static TableRow CreateRowProtocolCandidates(
+            Candidate candidate, 
+            Talon talon, 
+            string mediaresource, 
+            int i, 
+            string row5Text,
+            string row6Text)
         {
-            var tr = new TableRow();
-
-            //
-            if (candidate.Info.Фамилия == "") return null;
             // Формируем текст ячейки с талоном
-            List<string> lines = new List<string>();
-            //
-            if (talon != null)
-            {
+            List<string> lines =
+            [
                 // Добавляем номер талона
-                lines.Add($"Талон № {talon.Id}");
-                //
-                foreach (var row in talon.TalonRecords)
-                {
-                    if (talon.MediaResource == "Вести ФМ")
-                    {
-                        lines.Add($"{row.Date} {row.Time}:{row.Time.Second} {row.Duration} {row.Description}");
-                    }
-                    else
-                    {
-                        lines.Add($"{row.Date} {row.Time} {row.Duration} {row.Description}");
-                    }
-                }
-            }
-            else
+                $"Талон № {talon.Id}"
+            ];
+            //
+            foreach (var row in talon.TalonRecords)
             {
-                lines.Add("");
+                lines.Add($"{row.Date} {row.Time} {row.Duration} {row.Description}");
+            }
+            // Текст ячейки с общим вещанием
+            List<string> linesCommonRecords = new List<string>();
+            //
+            foreach (var row in talon.CommonRecords)
+            {
+                linesCommonRecords.Add($"{row.Date} {row.Time} {row.Duration} {row.Description}");
             }
             // Строка с данными
-            tr = new TableRow();
+            var tr = new TableRow();
             //// Чтобы не разделялась при переходе на другую страницу
             //var rowProp = new TableRowProperties(new CantSplit());
             //tr.Append(rowProp);
             // 
-            var tc1 = new TableCell(CreateParagraph($"{i + 1}"));
-            var tc2 = new TableCell(CreateParagraph($"{candidate.Info.Фамилия} {candidate.Info.Имя} {candidate.Info.Отчество}, {candidate.Info.Округ_Номер}"));
-            var tc3 = new TableCell(CreateParagraph($""));
-            var tc4 = new TableCell(CreateParagraph(lines));
+            var tc1 = new TableCell(WordDocument.CreateParagraph($"{i + 1}"));
+            var tc2 = new TableCell(WordDocument.CreateParagraph($"{candidate.View.Фамилия}" +
+                $" {candidate.View.Имя} {candidate.View.Отчество}, {candidate.View.Округ_Номер}"));
+            var tc3 = new TableCell(WordDocument.CreateParagraph(linesCommonRecords));
+            var tc4 = new TableCell(WordDocument.CreateParagraph(lines));
             //tc4.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Pct, Width = "60" }));
-            var tc5 = new TableCell(CreateParagraph($"{row5Text}"));
-            var tc6 = new TableCell(CreateParagraph($""));
+            var tc5 = new TableCell(WordDocument.CreateParagraph($"{row5Text}"));
+            var tc6 = new TableCell(WordDocument.CreateParagraph($"{row6Text}"));
             tr.Append(tc1, tc2, tc3, tc4, tc5, tc6);
             //
             return tr;
         }
 
-        /// <summary>
-        /// Объединяет указанное количество ячеек в строке вместе, также вставляет туда текст. (в теории, пока нет)
-        /// </summary>
-        /// <param name="text"></param>
-        /// <param name="cellsNumber"></param>
-        /// <returns></returns>
-        private TableRow CreateRowMergedCells(string text, int cellsNumber)
-        {
-            var tr = new TableRow();
-            // Создаем свойства ячейки для начала объединения
-            TableCellProperties propStart = new TableCellProperties();
-            propStart.Append(new HorizontalMerge()
-            {
-                Val = MergedCellValues.Restart,
-            });
-            // Делаем ячейку с текстом и добавляем ей свойство начала объединения
-            var tc = new TableCell(CreateParagraph($"{text}", "alignmentCenter"));
-            tc.Append(propStart);
-            tr.Append(tc);
-            // Цикл по количеству ячеек, которые надо объединить
-            for (int i = 1; i < cellsNumber; i++)
-            {
-                // Создаем свойства ячейки для продолжения объединения
-                var prop = new TableCellProperties();
-                prop.Append(new HorizontalMerge()
-                {
-                    Val = MergedCellValues.Continue
-                });
-                // Создаем новую ячейку
-                var tcNext = new TableCell(CreateParagraph($""));
-                // Прикрепляем к новой ячейке свойства продолжения объединения
-                tcNext.Append(prop);
-                // Добавляем ячейку к строке
-                tr.Append(tcNext);
-            };
-            //
-            return tr;
-        }
+        
     }
 }

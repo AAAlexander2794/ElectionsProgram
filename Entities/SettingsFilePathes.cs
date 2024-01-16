@@ -20,7 +20,9 @@ namespace ElectionsProgram.Entities
         /// <summary>
         /// Путь к папке протоколов жеребьевки.
         /// </summary>
-        public string Протоколы_Выходной_каталог { get => _view.Протоколы_Выходной_каталог; 
+        public string Протоколы_Выходной_каталог
+        { 
+            get => _view.Протоколы_Выходной_каталог; 
             set
             {
                 _view.Протоколы_Выходной_каталог = value;
@@ -28,10 +30,22 @@ namespace ElectionsProgram.Entities
             }
         }
 
-        public string Протоколы_Шаблон_Партии { get => _view.Протоколы_Шаблон_Партии;
+        public string Протоколы_Шаблон_Партии
+        { 
+            get => _view.Протоколы_Шаблон_Партии;
             set
             {
                 _view.Протоколы_Шаблон_Партии = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Протоколы_Шаблон_Кандидаты
+        {
+            get => _view.Протоколы_Шаблон_Кандидаты;
+            set
+            {
+                _view.Протоколы_Шаблон_Кандидаты = value;
                 OnPropertyChanged();
             }
         }

@@ -56,7 +56,7 @@ namespace ElectionsProgram.Entities
         public Candidate(CandidateView candidateView) 
         {
             View = candidateView;
-            Фамилия_И_О = $"{View.Surname} {View.Name[0]} {View.Patronimyc[0]}";
+            Фамилия_И_О = $"{View.Фамилия} {View.Имя[0]} {View.Отчество[0]}";
         }
 
         public Candidate() { }

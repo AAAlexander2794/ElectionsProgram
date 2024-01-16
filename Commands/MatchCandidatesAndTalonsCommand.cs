@@ -58,10 +58,10 @@ namespace ElectionsProgram.Commands
                         // Создаем новый регион по данным текущего кандидата
                         Region newRegion = new Region()
                         {
-                            Номер = candidate.View.Округ_Номер,
-                            Название_Падеж_им = candidate.View.Округ_Название_падеж_им,
-                            Название_Падеж_дат = candidate.View.Округ_Название_падеж_дат,
-                            Дополнительно = candidate.View.Округ_Дополнительно
+                            Номер = candidate.View.Округ_Номер.Trim(),
+                            Название_Падеж_им = candidate.View.Округ_Название_падеж_им.Trim(),
+                            Название_Падеж_дат = candidate.View.Округ_Название_падеж_дат.Trim(),
+                            Дополнительно = candidate.View.Округ_Дополнительно.Trim()
                         };
                         // Добавляем текущего кандидата
                         newRegion.Candidates.Add(candidate);

@@ -31,13 +31,18 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="45"/>
+                            <RowDefinition Height="50"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
+                        
                         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
                             <Button Content="Жеребьевка партий" Width="150" Margin="5" Command="{Binding DrawPartiesCommand}"/>
+                            <Button Content="Жеребьевка кандидатов" Width="150" Margin="5" Command="{Binding DrawCandidatesCommand}"/>
                             <Button Content="Загрузить настройки протоколов" Width="200" Margin="5" Command="{Binding LoadProtocolSettingsCommand}"/>
-                            <Button Content="Создать протоколы партий" Width="200" Margin="5" Command="{Binding CreateProtocolsPartiesCommand}"/>
+                            <StackPanel>
+                                <Button Content="Создать протоколы партий" Width="200" Margin="2" Command="{Binding CreateProtocolsPartiesCommand}"/>
+                                <Button Content="Создать протоколы кандидатов" Width="200" Margin="2" Command="{Binding CreateProtocolsCandidatesCommand}"/>
+                            </StackPanel>
                         </StackPanel>
 
                         <ListView Grid.Row="1" Grid.Column="0">

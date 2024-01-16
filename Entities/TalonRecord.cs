@@ -21,12 +21,12 @@ namespace ElectionsProgram.Entities
         /// <summary>
         /// Название медиаресурса
         /// </summary>
-        public string MediaresourceName { get; set; } = string.Empty;
+        public string MediaresourceName { get; set; } = "";
 
         /// <summary>
         /// Номер талона
         /// </summary>
-        public string TalonNumber { get; set; }
+        public string TalonNumber { get; set; } = "";
 
         /// <summary>
         /// Дата
@@ -41,12 +41,12 @@ namespace ElectionsProgram.Entities
         /// <summary>
         /// Хронометраж номинальный (по плану)
         /// </summary>
-        public TimeSpan DurationNominal { get; set; }
+        public TimeSpan Duration { get; set; }
 
         /// <summary>
         /// Дополнительное описание
         /// </summary>
-        public string Description { get; set; } = string.Empty;
+        public string Description { get; set; } = "";
 
         #region Конструкторы
 
@@ -57,19 +57,19 @@ namespace ElectionsProgram.Entities
             // Номер талона
             TalonNumber = view.TalonNumber;
             // Если хронометраж в формате "0:00:00"
-            if (View.DurationNominal.Length == 7)
+            if (View.Duration.Length == 7)
             {
-                DurationNominal = TimeOnly.FromDateTime(DateTime.Parse("0" + View.DurationNominal.Replace('.', ','))).ToTimeSpan();
+                Duration = TimeOnly.FromDateTime(DateTime.Parse("0" + View.Duration.Replace('.', ','))).ToTimeSpan();
             }
             // Если хронометраж в формате "00:00"
-            else if (View.DurationNominal.Length == 5)
+            else if (View.Duration.Length == 5)
             {
-                DurationNominal = TimeOnly.FromDateTime(DateTime.Parse("00:" + View.DurationNominal.Replace('.', ','))).ToTimeSpan();
+                Duration = TimeOnly.FromDateTime(DateTime.Parse("00:" + View.Duration.Replace('.', ','))).ToTimeSpan();
             }
             // Если хронометраж в формате "00:00:00" (ну или другой, тогда ошибка)
             else
             {
-                DurationNominal = TimeOnly.FromDateTime(DateTime.Parse(View.DurationNominal.Replace('.', ','))).ToTimeSpan();
+                Duration = TimeOnly.FromDateTime(DateTime.Parse(View.Duration.Replace('.', ','))).ToTimeSpan();
             }
             // Дата
             Date = DateOnly.FromDateTime(DateTime.Parse(View.Date));
@@ -79,7 +79,7 @@ namespace ElectionsProgram.Entities
             Description = View.Description;
             }
 
-        public TalonRecord() { }
+        //public TalonRecord() { }
 
         #endregion Конструкторы
 
@@ -89,7 +89,7 @@ namespace ElectionsProgram.Entities
         /// <returns></returns>
         public string ToProtocolString()
         {
-            return $"{Date} {Time} {DurationNominal} {Description}";
+            return $"{Date} {Time} {Duration} {Description}";
         }
     }
 }

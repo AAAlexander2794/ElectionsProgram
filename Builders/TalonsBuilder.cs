@@ -87,7 +87,7 @@ namespace ElectionsProgram.Builders
                         MediaresourceName = mediaResource,
                         Date = columns[0],
                         Time = columns[1],
-                        DurationNominal = columns[2],
+                        Duration = columns[2],
                         Description = description
                     });
                 }

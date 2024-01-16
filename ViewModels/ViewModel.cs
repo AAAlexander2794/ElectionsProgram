@@ -356,6 +356,8 @@ namespace ElectionsProgram.ViewModels
         public LoadCandidatesCommand LoadCandidatesCommand { get; }
         public LoadCandidatesTalonsCommand LoadCandidatesTalonsCommand { get; }
         public MatchCandidatesAndTalonsCommand MatchCandidatesAndTalonsCommand { get; }
+        public CreateProtocolsCandidatesCommand CreateProtocolsCandidatesCommand { get; }
+        public DrawCandidatesCommand DrawCandidatesCommand { get; }
 
         #endregion Команды для кандидатов
 
@@ -382,7 +384,8 @@ namespace ElectionsProgram.ViewModels
             LoadCandidatesCommand = new LoadCandidatesCommand(this);
             LoadCandidatesTalonsCommand = new LoadCandidatesTalonsCommand(this);
             MatchCandidatesAndTalonsCommand = new MatchCandidatesAndTalonsCommand(this);
-            
+            CreateProtocolsCandidatesCommand = new CreateProtocolsCandidatesCommand(this);
+            DrawCandidatesCommand = new DrawCandidatesCommand(this);
             
             
 

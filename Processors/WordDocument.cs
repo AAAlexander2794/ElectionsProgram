@@ -217,7 +217,7 @@ namespace ElectionsProgram.Processors
                 TableCell tc1 = new TableCell(CreateParagraph($"{row.View.MediaresourceName}"));
                 TableCell tc2 = new TableCell(CreateParagraph($"{row.View.Date}"));
                 TableCell tc3 = new TableCell(CreateParagraph($"{row.View.Time}"));
-                TableCell tc4 = new TableCell(CreateParagraph($"{row.View.DurationNominal}"));
+                TableCell tc4 = new TableCell(CreateParagraph($"{row.View.Duration}"));
                 TableCell tc5 = new TableCell(CreateParagraph($""));
                 //
                 tr.Append(tc1, tc2, tc3, tc4, tc5);
@@ -293,6 +293,45 @@ namespace ElectionsProgram.Processors
             paragraph.Append(run);
             //
             return paragraph;
+        }
+
+        /// <summary>
+        /// Объединяет указанное количество ячеек в строке вместе, также вставляет туда текст. (в теории, пока нет)
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="cellsNumber"></param>
+        /// <returns></returns>
+        public static TableRow CreateRowMergedCells(string text, int cellsNumber)
+        {
+            var tr = new TableRow();
+            // Создаем свойства ячейки для начала объединения
+            TableCellProperties propStart = new TableCellProperties();
+            propStart.Append(new HorizontalMerge()
+            {
+                Val = MergedCellValues.Restart,
+            });
+            // Делаем ячейку с текстом и добавляем ей свойство начала объединения
+            var tc = new TableCell(CreateParagraph($"{text}", "alignmentCenter"));
+            tc.Append(propStart);
+            tr.Append(tc);
+            // Цикл по количеству ячеек, которые надо объединить
+            for (int i = 1; i < cellsNumber; i++)
+            {
+                // Создаем свойства ячейки для продолжения объединения
+                var prop = new TableCellProperties();
+                prop.Append(new HorizontalMerge()
+                {
+                    Val = MergedCellValues.Continue
+                });
+                // Создаем новую ячейку
+                var tcNext = new TableCell(CreateParagraph($""));
+                // Прикрепляем к новой ячейке свойства продолжения объединения
+                tcNext.Append(prop);
+                // Добавляем ячейку к строке
+                tr.Append(tcNext);
+            };
+            //
+            return tr;
         }
 
     }

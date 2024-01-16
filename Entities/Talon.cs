@@ -53,7 +53,7 @@ namespace ElectionsProgram.Entities
             TimeSpan duration = TimeSpan.Zero;
             foreach (var record in TalonRecords)
             {
-                duration += record.DurationNominal;
+                duration += record.Duration;
             }
             return duration;
         }
@@ -67,7 +67,7 @@ namespace ElectionsProgram.Entities
             TimeSpan duration = TimeSpan.Zero;
             foreach (var record in CommonRecords)
             {
-                duration += record.DurationNominal;
+                duration += record.Duration;
             }
             return duration;
         }
