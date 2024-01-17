@@ -2,6 +2,7 @@
 using ElectionsProgram.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,13 +13,9 @@ namespace ElectionsProgram.Builders
     {
         public static void BuildTable(List<Party> parties, List<Candidate> candidates, string catalogPath)
         {
-            List<IClient> clients = new List<IClient>();
-            List<>
+            
             //
-            foreach (var party in parties)
-            {
-                clients
-            }
+            var broadcastRecords = BuildBroadcastRecords(parties, candidates);
             //
             string subCatalog = $"{DateTime.Now.ToShortDateString()} {DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}";
             //
@@ -29,7 +26,7 @@ namespace ElectionsProgram.Builders
             WriteBroadcastRecordsToExcel(broadcastRecords, $@"{catalogPath}Рабочие\{subCatalog}\Россия 24.xlsx", "Россия 24");
         }
 
-        DataTable WriteBroadcastRecordsToExcel(List<BroadcastRecord> records, string filePath, string mediaResource)
+        static DataTable WriteBroadcastRecordsToExcel(List<PlaylistRecord> records, string filePath, string mediaResource)
         {
             //
             DataTable dt = new DataTable();
@@ -45,18 +42,18 @@ namespace ElectionsProgram.Builders
             dt.Columns.Add("Форма выступления");
             dt.Columns.Add("Название ролика/тема дебатов");
             // Оставляем записи только заданного медиаресурса
-            records = records.Where(x => x.MediaResource == mediaResource).ToList();
+            records = records.Where(x => x.View.MediaresourceName == mediaResource).ToList();
             //
             foreach (var record in records)
             {
                 dt.Rows.Add();
-                dt.Rows[dt.Rows.Count - 1][0] = record.MediaResource;
-                dt.Rows[dt.Rows.Count - 1][1] = record.Date;
-                dt.Rows[dt.Rows.Count - 1][2] = record.Time;
-                dt.Rows[dt.Rows.Count - 1][3] = record.DurationNominal;
-                dt.Rows[dt.Rows.Count - 1][4] = record.RegionNumber;
-                dt.Rows[dt.Rows.Count - 1][5] = record.ClientType;
-                dt.Rows[dt.Rows.Count - 1][6] = record.ClientName;
+                dt.Rows[dt.Rows.Count - 1][0] = record.View.MediaresourceName;
+                dt.Rows[dt.Rows.Count - 1][1] = record.View.Date;
+                dt.Rows[dt.Rows.Count - 1][2] = record.View.Time;
+                dt.Rows[dt.Rows.Count - 1][3] = record.View.DurationNominal;
+                dt.Rows[dt.Rows.Count - 1][4] = record.View.Region;
+                dt.Rows[dt.Rows.Count - 1][5] = record.View.ClientType;
+                dt.Rows[dt.Rows.Count - 1][6] = record.View.ClientName;
                 dt.Rows[dt.Rows.Count - 1][7] = "";
                 dt.Rows[dt.Rows.Count - 1][8] = "";
                 dt.Rows[dt.Rows.Count - 1][9] = "";
@@ -78,9 +75,9 @@ namespace ElectionsProgram.Builders
         /// <param name="parties"></param>
         /// <param name="candidates"></param>
         /// <returns></returns>
-        List<BroadcastRecord> BuildBroadcastRecords(List<Party> parties, List<Candidate> candidates)
+        static List<PlaylistRecord> BuildBroadcastRecords(List<Party> parties, List<Candidate> candidates)
         {
-            List<BroadcastRecord> records = new List<BroadcastRecord>();
+            List<PlaylistRecord> records = new List<PlaylistRecord>();
             foreach (var party in parties)
             {
                 var list1 = BuildBroadcastRecords(party, party.Талон_Россия_1);
@@ -111,46 +108,46 @@ namespace ElectionsProgram.Builders
             return records;
         }
 
-        List<BroadcastRecord> BuildBroadcastRecords(Party party, Talon talon)
+        static List<PlaylistRecord> BuildBroadcastRecords(Party party, Talon talon)
         {
-            List<BroadcastRecord> broadcastRecords = new List<BroadcastRecord>();
+            List<PlaylistRecord> broadcastRecords = new List<PlaylistRecord>();
             if (talon == null) return broadcastRecords;
             foreach (var talonRecord in talon.TalonRecords)
             {
-                BroadcastRecord record = new BroadcastRecord()
+                PlaylistRecordView record = new PlaylistRecordView()
                 {
-                    MediaResource = talonRecord.MediaResource,
-                    Date = talonRecord.Date,
-                    Time = talonRecord.Time,
-                    DurationNominal = talonRecord.Duration,
-                    ClientType = "партия",
-                    ClientName = party.Info.Партия_Название_Рабочее
+                    MediaresourceName = talonRecord.MediaresourceName,
+                    Date = talonRecord.Date.ToString(),
+                    Time = talonRecord.Time.ToString(),
+                    DurationNominal = talonRecord.Duration.ToString(),
+                    ClientType = "Партия",
+                    ClientName = party.View.Название_условное
                 };
-                broadcastRecords.Add(record);
+                broadcastRecords.Add(new PlaylistRecord(record));
             }
             return broadcastRecords;
         }
 
-        List<BroadcastRecord> BuildBroadcastRecords(Candidate candidate, Talon talon)
+        static List<PlaylistRecord> BuildBroadcastRecords(Candidate candidate, Talon talon)
         {
-            List<BroadcastRecord> broadcastRecords = new List<BroadcastRecord>();
+            List<PlaylistRecord> broadcastRecords = new List<PlaylistRecord>();
             if (talon == null) return broadcastRecords;
             foreach (var talonRecord in talon.TalonRecords)
             {
-                BroadcastRecord record = new BroadcastRecord()
+                PlaylistRecordView record = new PlaylistRecordView()
                 {
-                    MediaResource = talonRecord.MediaResource,
-                    Date = talonRecord.Date,
-                    Time = talonRecord.Time,
-                    DurationNominal = talonRecord.Duration,
-                    ClientType = "кандидат",
-                    RegionNumber = candidate.Info.Округ_Номер,
-                    ClientName = $"{candidate.Info.Фамилия} " +
-                        $"{candidate.Info.Имя} " +
-                        $"{candidate.Info.Отчество} " +
-                        $"({candidate.Info.Округ_Номер})"
+                    MediaresourceName = talonRecord.MediaresourceName,
+                    Date = talonRecord.Date.ToString(),
+                    Time = talonRecord.Time.ToString(),
+                    DurationNominal = talonRecord.Duration.ToString(),
+                    ClientType = "Кандидат",
+                    Region = candidate.View.Округ_Номер,
+                    ClientName = $"{candidate.View.Фамилия} " +
+                        $"{candidate.View.Имя} " +
+                        $"{candidate.View.Отчество} " +
+                        $"({candidate.View.Округ_Номер})"
                 };
-                broadcastRecords.Add(record);
+                broadcastRecords.Add(new PlaylistRecord(record));
             }
             return broadcastRecords;
         }

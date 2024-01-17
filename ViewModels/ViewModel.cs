@@ -364,6 +364,9 @@ namespace ElectionsProgram.ViewModels
         public SettingsPathesLoadCommand SettingsPathesLoadCommand { get; }
         public SettngsPathesSaveCommand SettngsPathesSaveCommand { get; }
 
+        //
+        public PlaylistCreateCommand PlaylistCreateCommand { get; }
+
         #endregion Комманды
 
         #region Конструкторы
@@ -392,6 +395,8 @@ namespace ElectionsProgram.ViewModels
             //
             SettingsPathesLoadCommand = new SettingsPathesLoadCommand(this);
             SettngsPathesSaveCommand = new SettngsPathesSaveCommand(this);
+            //
+            PlaylistCreateCommand = new PlaylistCreateCommand(this);
 
             //
             SettingsPathesLoadCommand.Execute(this);
