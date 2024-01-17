@@ -321,8 +321,7 @@ namespace ElectionsProgram.ViewModels
         //
         public LoadProtocolSettingsCommand LoadProtocolSettingsCommand { get; }
 
-        //
-        public LoadSettingsPathsCommand LoadSettingsPathsCommand { get; }
+        
 
         #region Команды для партий
 
@@ -361,6 +360,10 @@ namespace ElectionsProgram.ViewModels
 
         #endregion Команды для кандидатов
 
+        // Команды настроек
+        public SettingsPathesLoadCommand SettingsPathesLoadCommand { get; }
+        public SettngsPathesSaveCommand SettngsPathesSaveCommand { get; }
+
         #endregion Комманды
 
         #region Конструкторы
@@ -386,11 +389,12 @@ namespace ElectionsProgram.ViewModels
             MatchCandidatesAndTalonsCommand = new MatchCandidatesAndTalonsCommand(this);
             CreateProtocolsCandidatesCommand = new CreateProtocolsCandidatesCommand(this);
             DrawCandidatesCommand = new DrawCandidatesCommand(this);
-            
-            
+            //
+            SettingsPathesLoadCommand = new SettingsPathesLoadCommand(this);
+            SettngsPathesSaveCommand = new SettngsPathesSaveCommand(this);
 
             //
-            LoadSettingsPathsCommand = new LoadSettingsPathsCommand(this);
+            SettingsPathesLoadCommand.Execute(this);
             //
             LoadDefaultDataCommand.Execute(this);
         }

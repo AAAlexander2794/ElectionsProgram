@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,68 +8,54 @@ using System.Threading.Tasks;
 namespace ElectionsProgram.Entities
 {
     /// <summary>
-    /// Запись вещания по факту выхода в эфир в текстовом виде.
+    /// Строка плейлиста (запись вещания по факту выхода в эфир) в текстовом виде.
     /// </summary>
     public class PlaylistRecordView
     {
-        public string MediaresourceName { get; set; }
-
-        public string TalonNumber { get; set; }
+        [DisplayName("Канал")]
+        public string MediaresourceName { get; set; } = "";
 
         /// <summary>
         /// Дата
         /// </summary>
-        public string Date { get; set; }
+        [DisplayName("Дата")]
+        public string Date { get; set; } = "";
 
         /// <summary>
         /// Время (отрезок)
         /// </summary>
-        public string Time { get; set; }
+        [DisplayName("Отрезок")]
+        public string Time { get; set; } = "";
 
         /// <summary>
         /// Хронометраж номинальный (по плану)
         /// </summary>
-        public string DurationNominal { get; set; }
+        [DisplayName("Хрон")]
+        public string DurationNominal { get; set; } = "";
+
+        [DisplayName("Округ")]
+        public string Region { get; set; } = "";
+
+        [DisplayName("Партия/кандидат")]
+        public string ClientType { get; set; } = "";
+
+        [DisplayName("Название партии/ФИО кандидата")]
+        public string ClientName { get; set; } = "";
 
         /// <summary>
         /// Хронометраж актуальный (по факту выхода в эфир)
         /// </summary>
-        public string DurationActual { get; set; }
+        [DisplayName("Факт время")]
+        public string DurationActual { get; set; } = "";
 
-        /// <summary>
-        /// Дополнительное описание
-        /// </summary>
-        public string Description { get; set; }
+        [DisplayName("Форма выступления")]
+        public string BroadcastForm { get; set; } = "";
 
         /// <summary>
         /// Название вещания (название ролика)
         /// </summary>
-        public string Caption { get; set; }
+        [DisplayName("Название ролика/тема дебатов")]
+        public string Caption { get; set; } = "";
 
-        #region Конструкторы
-
-        public PlaylistRecordView(
-            string mediaresourceName, 
-            string talonNumber, 
-            string date, 
-            string time, 
-            string durationNominal, 
-            string durationActual, 
-            string caption,
-            string description)
-        {
-            MediaresourceName = mediaresourceName;
-            TalonNumber = talonNumber;
-            Date = date;
-            Time = time;
-            DurationNominal = durationNominal;
-            DurationActual = durationActual;
-            Caption = caption;
-            Description = description;
-        }
-
-        public PlaylistRecordView() { }
-
-        #endregion Конструкторы
     }
 }

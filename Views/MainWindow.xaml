@@ -489,15 +489,23 @@
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <StackPanel Orientation="Horizontal" Grid.Row="0">
-                            <Button Content="Загрузить настройки" Command="{Binding LoadSettingsPathsCommand}" Width="150" Margin="5"/>
+                            <Button Content="Загрузить настройки" Command="{Binding SettingsPathesLoadCommand}" Width="150" Margin="5"/>
+                            <Button Content="Сохранить настройки" Command="{Binding SettngsPathesSaveCommand}" Width="150" Margin="5"/>
                         </StackPanel>
                         <ScrollViewer HorizontalScrollBarVisibility="Auto" Grid.Row="1">
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel>
+                                    <TextBlock Text="Каталог настроек:" Margin="5"/>
+                                    <TextBlock Text="Каталог документов:" Margin="5"/>
+                                    <TextBlock Text="" Margin="5"/>
+                                    
                                     <TextBlock Text="Таблица партий:" Margin="5"/>
                                     <TextBlock Text="Путь к папке протоколов:" Margin="5"/>
                                 </StackPanel>
                                 <StackPanel>
+                                    <TextBox Text="{Binding SettingsFilePathes.Каталог_настроек}" Margin="5" Width="300"/>
+                                    <TextBox Text="{Binding SettingsFilePathes.Каталог_документов}" Margin="5" Width="300"/>
+                                    <TextBlock Text=""/>
                                     <TextBox Text="{Binding SettingsFilePathes.Партии_Таблица}" Margin="5" Width="300"/>
                                     <TextBox Text="{Binding SettingsFilePathes.Протоколы_Выходной_каталог}" Margin="5" Width="300"/>
                                 </StackPanel>

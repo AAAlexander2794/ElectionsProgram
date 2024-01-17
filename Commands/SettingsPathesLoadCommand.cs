@@ -5,20 +5,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ElectionsProgram.Commands
 {
-    public class LoadSettingsPathsCommand : ICommand
+    public class SettingsPathesLoadCommand(ViewModel viewModel) : ICommand
     {
         public event EventHandler? CanExecuteChanged;
 
-        private ViewModel _viewModel;
-
-        public LoadSettingsPathsCommand(ViewModel viewModel)
-        {
-            _viewModel = viewModel;
-        }
+        private readonly ViewModel _viewModel = viewModel;
 
         public bool CanExecute(object? parameter)
         {
@@ -27,10 +23,16 @@ namespace ElectionsProgram.Commands
 
         public void Execute(object? parameter)
         {
-            //_viewModel.SettingsFilePathes.Протоколы = "New text";
-            //_viewModel.SettingsFilePathes.Партии_Таблица = "New text";
-            //
-            Logger.Add("Настройки загружены");
+            try
+            {
+                _viewModel.SettingsFilePathes.Load();
+                //
+                Logger.Add("Настройки путей загружены.");
+            }
+            catch(Exception ex) 
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

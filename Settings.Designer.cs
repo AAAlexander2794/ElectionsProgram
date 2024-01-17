@@ -25,25 +25,25 @@ namespace ElectionsProgram {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Настройки\\Партии\\Талоны бесплатные\\")]
-        public string Path_Партии_Талоны_бесплатные {
+        [global::System.Configuration.DefaultSettingValueAttribute(".\\Настройки\\")]
+        public string Каталог_настроек {
             get {
-                return ((string)(this["Path_Партии_Талоны_бесплатные"]));
+                return ((string)(this["Каталог_настроек"]));
             }
             set {
-                this["Path_Партии_Талоны_бесплатные"] = value;
+                this["Каталог_настроек"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("Настройки\\Кандидаты\\Талоны бесплатные\\")]
-        public string Path_Кандидаты_Талоны_бесплатные {
+        [global::System.Configuration.DefaultSettingValueAttribute(".\\Документы\\")]
+        public string Каталог_документов {
             get {
-                return ((string)(this["Path_Кандидаты_Талоны_бесплатные"]));
+                return ((string)(this["Каталог_документов"]));
             }
             set {
-                this["Path_Кандидаты_Талоны_бесплатные"] = value;
+                this["Каталог_документов"] = value;
             }
         }
     }

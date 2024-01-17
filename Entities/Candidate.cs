@@ -37,6 +37,8 @@ namespace ElectionsProgram.Entities
 
         string IClient.Name { get => Фамилия_И_О; }
 
+        string IClient.Type => "Кандидат";
+
         #region Талоны
 
         public Talon? Талон_Россия_1 { get => талон_Россия_1; set { талон_Россия_1 = value; OnPropertyChanged(); } }
@@ -58,8 +60,6 @@ namespace ElectionsProgram.Entities
             View = candidateView;
             Фамилия_И_О = $"{View.Фамилия} {View.Имя[0]} {View.Отчество[0]}";
         }
-
-        public Candidate() { }
 
         #endregion Конструкторы
 

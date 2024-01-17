@@ -8,7 +8,15 @@ namespace ElectionsProgram.Entities
 {
     public interface IClient
     {
+        /// <summary>
+        /// Название партии/ФИО кандидата.
+        /// </summary>
         public string Name { get; }
+
+        /// <summary>
+        /// Партия/кандидат.
+        /// </summary>
+        public string Type { get; }
 
         #region Талоны
 

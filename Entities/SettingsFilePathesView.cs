@@ -12,6 +12,10 @@ namespace ElectionsProgram.Entities
     /// </summary>
     public class SettingsFilePathesView
     {
+        public string Каталог_настроек { get; set; } = @".\Настройки\zzzzzz";
+
+        public string Каталог_документов { get; set; } = @".\Документы\zzzzzzz";
+
         #region Протоколы
 
         /// <summary>
@@ -65,7 +69,7 @@ namespace ElectionsProgram.Entities
 
         #region Кандидаты
 
-        public string Кандидаты_Таблица { get; set; } = @".\Настройки/Кандидаты/Кандидаты.xlsx";
+        public string Кандидаты_Таблица { get; set; } = @".\Настройки\Кандидаты\Кандидаты.xlsx";
 
         // Кандидаты талоны бесплатные
 

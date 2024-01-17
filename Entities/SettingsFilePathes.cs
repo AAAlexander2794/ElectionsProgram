@@ -15,6 +15,42 @@ namespace ElectionsProgram.Entities
         /// </summary>
         private readonly SettingsFilePathesView _view = new();
 
+        public string Каталог_настроек { get => _view.Каталог_настроек;
+            set
+            {
+                _view.Каталог_настроек = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Каталог_документов { get => _view.Каталог_документов;
+            set
+            {
+                _view.Каталог_документов = value;
+                OnPropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Загружает настройки из файла настроек.
+        /// </summary>
+        public void Load()
+        {
+            Каталог_настроек = Settings.Default.Каталог_настроек;
+            Каталог_документов = Settings.Default.Каталог_документов;
+        }
+
+        /// <summary>
+        /// Сохраняет настройки в файл настроек.
+        /// </summary>
+        public void Save()
+        {
+            Settings.Default.Каталог_настроек = Каталог_настроек;
+            Settings.Default.Каталог_документов = Каталог_документов;
+            //
+            Settings.Default.Save();
+        }
+
         #region Протоколы
 
         /// <summary>

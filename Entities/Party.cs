@@ -26,6 +26,8 @@ namespace ElectionsProgram.Entities
 
         string IClient.Name => View.Название_условное;
 
+        string IClient.Type => "Партия";
+
         #region Талоны
 
         public Talon? Талон_Россия_1 { get => талон_Россия_1; set { талон_Россия_1 = value; OnPropertyChanged(); }  }

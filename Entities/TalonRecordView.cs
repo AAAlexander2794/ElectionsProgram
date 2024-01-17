@@ -38,42 +38,5 @@ namespace ElectionsProgram.Entities
         /// </summary>
         public string Description { get; set; } = "";
 
-        ///// <summary>
-        ///// Конструктор со всеми свойствами
-        ///// </summary>
-        ///// <param name="mediaresourceName"></param>
-        ///// <param name="talonNumber"></param>
-        ///// <param name="date"></param>
-        ///// <param name="time"></param>
-        ///// <param name="durationNominal"></param>
-        ///// <param name="description"></param>
-        //public TalonRecordView(
-        //    string mediaresourceName, 
-        //    string talonNumber, 
-        //    string date, 
-        //    string time, 
-        //    string durationNominal, 
-        //    string description = "")
-        //{
-        //    MediaresourceName = mediaresourceName;
-        //    TalonNumber = talonNumber;
-        //    Date = date;
-        //    Time = time;
-        //    DurationNominal = durationNominal;
-        //    Description = description;
-        //}
-
-        ///// <summary>
-        ///// Базовый конструктор.
-        ///// </summary>
-        ///// <remarks>
-        ///// Нужен, чтобы автоматически создавать экземпляры.
-        ///// </remarks>
-        //public TalonRecordView() { }
-
-        //public new string ToString()
-        //{
-        //    return $"{MediaresourceName} № {TalonNumber} {Date} {Time} {DurationNominal} {Description}";
-        //}
     }
 }

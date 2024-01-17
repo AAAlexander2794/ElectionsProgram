@@ -77,9 +77,7 @@ namespace ElectionsProgram.Entities
             Time = TimeOnly.FromDateTime(DateTime.Parse(View.Time.Replace('.', ',')));
             // Примечание
             Description = View.Description;
-            }
-
-        //public TalonRecord() { }
+        }
 
         #endregion Конструкторы
 

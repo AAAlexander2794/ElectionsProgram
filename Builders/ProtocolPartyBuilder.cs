@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace ElectionsProgram.Builders
 {
     /// <summary>
-    /// Строит протоколы партий
+    /// Строит протоколы жеребьевки партий по определенному шаблону.
     /// </summary>
     public static class ProtocolPartyBuilder
     {
