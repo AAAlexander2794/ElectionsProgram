@@ -33,10 +33,12 @@ namespace ElectionsProgram.Entities
         /// </summary>
         public ObservableCollection<TalonRecord> TalonRecords { get; set; } = new ObservableCollection<TalonRecord>();
 
-        /// <summary>
-        /// Строки вещания, общие для группы клиентов.
-        /// </summary>
-        public ObservableCollection<TalonRecord> CommonRecords { get; set; } = new ObservableCollection<TalonRecord>();
+        ///// <summary>
+        ///// Строки вещания, общие для группы клиентов.
+        ///// </summary>
+        //public ObservableCollection<TalonRecord> CommonRecords { get; set; } = new ObservableCollection<TalonRecord>();
+
+        public Talon? CommonTalon { get; set; }
 
         public Talon(string mediaresourceName, string number)
         {
@@ -65,7 +67,8 @@ namespace ElectionsProgram.Entities
         public TimeSpan GetDurationCommonRecords()
         {
             TimeSpan duration = TimeSpan.Zero;
-            foreach (var record in CommonRecords)
+            if (CommonTalon == null) { return TimeSpan.Zero; }
+            foreach (var record in CommonTalon.TalonRecords)
             {
                 duration += record.Duration;
             }
@@ -74,7 +77,7 @@ namespace ElectionsProgram.Entities
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

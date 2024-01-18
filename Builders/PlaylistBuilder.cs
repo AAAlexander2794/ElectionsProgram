@@ -127,7 +127,7 @@ namespace ElectionsProgram.Builders
                 broadcastRecords.Add(new PlaylistRecord(record));
             }
             // Записи общего вещания
-            foreach (var item in talon.CommonRecords)
+            foreach (var item in talon.CommonTalon.TalonRecords)
             {
                 PlaylistRecordView record = new PlaylistRecordView()
                 {
@@ -165,7 +165,7 @@ namespace ElectionsProgram.Builders
                 broadcastRecords.Add(new PlaylistRecord(record));
             }
             // Записи общего вещания
-            foreach (var item in talon.CommonRecords)
+            foreach (var item in talon.CommonTalon.TalonRecords)
             {
                 PlaylistRecordView record = new PlaylistRecordView()
                 {

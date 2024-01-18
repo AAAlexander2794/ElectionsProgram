@@ -37,6 +37,12 @@ namespace ElectionsProgram.Commands
                     candidate.Талон_Маяк = _vm.CandidatesTalons_Маяк.FirstOrDefault(t => t.Number == candidate.View.Талон_Маяк);
                     candidate.Талон_Вести_ФМ = _vm.CandidatesTalons_Вести_ФМ.FirstOrDefault(t => t.Number == candidate.View.Талон_Вести_ФМ);
                     candidate.Талон_Радио_России = _vm.CandidatesTalons_Радио_России.FirstOrDefault(t => t.Number == candidate.View.Талон_Радио_России);
+                    //
+                    if (candidate.Талон_Россия_1 != null) candidate.Талон_Россия_1.CommonTalon = _vm.candidatesCommonTalon_Россия_1;
+                    if (candidate.Талон_Россия_24 != null) candidate.Талон_Россия_24.CommonTalon = _vm.candidatesCommonTalon_Россия_24;
+                    if (candidate.Талон_Маяк != null) candidate.Талон_Маяк.CommonTalon = _vm.candidatesCommonTalon_Маяк;
+                    if (candidate.Талон_Вести_ФМ != null) candidate.Талон_Вести_ФМ.CommonTalon = _vm.candidatesCommonTalon_Вести_ФМ;
+                    if (candidate.Талон_Радио_России != null) candidate.Талон_Радио_России.CommonTalon = _vm.candidatesCommonTalon_Радио_России;
 
                     #region Формирование округов
 

@@ -3,10 +3,10 @@
   <Profiles />
   <Settings>
     <Setting Name="Каталог_настроек" Type="System.String" Scope="User">
-      <Value Profile="(Default)">.\Настройки\</Value>
+      <Value Profile="(Default)">.\Настройки</Value>
     </Setting>
     <Setting Name="Каталог_документов" Type="System.String" Scope="User">
-      <Value Profile="(Default)">.\Документы\</Value>
+      <Value Profile="(Default)">.\Документы</Value>
     </Setting>
   </Settings>
 </SettingsFile>

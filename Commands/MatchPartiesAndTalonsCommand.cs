@@ -38,6 +38,12 @@ namespace ElectionsProgram.Commands
                     party.Талон_Маяк = _vm.PartiesTalons_Маяк.FirstOrDefault(t => t.Number == party.View.Талон_Маяк);
                     party.Талон_Вести_ФМ = _vm.PartiesTalons_Вести_ФМ.FirstOrDefault(t => t.Number == party.View.Талон_Вести_ФМ);
                     party.Талон_Радио_России = _vm.PartiesTalons_Радио_России.FirstOrDefault(t => t.Number == party.View.Талон_Радио_России);
+                    //
+                    if (party.Талон_Россия_1 != null) party.Талон_Россия_1.CommonTalon = _vm.PartiesCommonTalon_Россия_1;
+                    if (party.Талон_Россия_24 != null) party.Талон_Россия_24.CommonTalon = _vm.PartiesCommonTalon_Россия_24;
+                    if (party.Талон_Маяк != null) party.Талон_Маяк.CommonTalon = _vm.PartiesCommonTalon_Маяк;
+                    if (party.Талон_Вести_ФМ != null) party.Талон_Вести_ФМ.CommonTalon = _vm.PartiesCommonTalon_Вести_ФМ;
+                    if (party.Талон_Радио_России != null) party.Талон_Радио_России.CommonTalon = _vm.PartiesCommonTalon_Радио_России;
                 }
                 //
                 Logger.Add($"Талоны сопоставлены партиям. Партий: {_vm.Parties.Count}.");

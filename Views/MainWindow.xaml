@@ -148,7 +148,7 @@
                                         <TextBlock Text="Партия:"/>
                                         <TextBlock Text="{Binding CurrentParty.View.Название_условное}"/>
                                         <TextBlock Text="Талон Россия-1"/>
-                                        <ListBox ItemsSource="{Binding CurrentParty.Талон_Россия_1.CommonRecords}">
+                                        <ListBox ItemsSource="{Binding CurrentParty.Талон_Россия_1.CommonTalon.TalonRecords}">
                                             <ListBox.ItemTemplate>
                                                 <DataTemplate>
                                                     <StackPanel>
@@ -179,6 +179,18 @@
                                                 <StackPanel>
                                                     <TextBlock Text="{Binding Path=Number}" />
                                                     <TextBlock Text="{Binding Path=MediaresourceName}"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListView>
+                                    <ListView Grid.Row="1" Grid.Column="1" ItemsSource="{Binding PartiesCommonTalon_Россия_1.TalonRecords}">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding Path=MediaresourceName}"/>
+                                                    <TextBlock Text="{Binding Path=Date}" />
+                                                    <TextBlock Text="{Binding Path=Time}"/>
+                                                    <TextBlock Text="{Binding Path=Duration}"/>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
@@ -333,9 +345,9 @@
                                     </ListView>
                                     <StackPanel Grid.Row="1" Grid.Column="1">
                                         <TextBlock Text="Кандидат:"/>
-                                        <TextBlock Text="{Binding CurrentCandidate.View.Surname}"/>
+                                        <TextBlock Text="{Binding CurrentCandidate.View.Фамилия}"/>
                                         <TextBlock Text="Талон Россия-1"/>
-                                        <ListBox ItemsSource="{Binding CurrentCandidate.Талон_Россия_1.CommonRecords}">
+                                        <ListBox ItemsSource="{Binding CurrentCandidate.Талон_Россия_1.CommonTalon.TalonRecords}">
                                             <ListBox.ItemTemplate>
                                                 <DataTemplate>
                                                     <StackPanel>
@@ -385,6 +397,18 @@
                                                 <StackPanel>
                                                     <TextBlock Text="{Binding Path=Number}" />
                                                     <TextBlock Text="{Binding Path=MediaresourceName}"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListBox.ItemTemplate>
+                                    </ListView>
+                                    <ListView Grid.Row="1" Grid.Column="1" ItemsSource="{Binding candidatesCommonTalon_Россия_1.TalonRecords}">
+                                        <ListBox.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel>
+                                                    <TextBlock Text="{Binding Path=MediaresourceName}"/>
+                                                    <TextBlock Text="{Binding Path=Date}" />
+                                                    <TextBlock Text="{Binding Path=Time}"/>
+                                                    <TextBlock Text="{Binding Path=Duration}"/>
                                                 </StackPanel>
                                             </DataTemplate>
                                         </ListBox.ItemTemplate>
@@ -500,24 +524,15 @@
                                     <TextBlock Text="Каталог документов:" Margin="5"/>
                                     <TextBlock Text="" Margin="5"/>
                                     
-                                    <TextBlock Text="Таблица партий:" Margin="5"/>
-                                    <TextBlock Text="Путь к папке протоколов:" Margin="5"/>
+                                    
                                 </StackPanel>
                                 <StackPanel>
                                     <TextBox Text="{Binding SettingsFilePathes.Каталог_настроек}" Margin="5" Width="300"/>
                                     <TextBox Text="{Binding SettingsFilePathes.Каталог_документов}" Margin="5" Width="300"/>
                                     <TextBlock Text=""/>
-                                    <TextBox Text="{Binding SettingsFilePathes.Партии_Таблица}" Margin="5" Width="300"/>
-                                    <TextBox Text="{Binding SettingsFilePathes.Протоколы_Выходной_каталог}" Margin="5" Width="300"/>
+                                    
                                 </StackPanel>
-                                <StackPanel  >
-                                    <TextBlock Text="Таблица партий:" Margin="5"/>
-                                    <TextBlock Text="Путь к папке протоколов:" Margin="5"/>
-                                </StackPanel>
-                                <StackPanel>
-                                    <TextBox Text="{Binding SettingsFilePathes.Партии_Таблица}" Margin="5" Width="300"/>
-                                    <TextBox Text="{Binding SettingsFilePathes.Протоколы_Выходной_каталог}" Margin="5" Width="300"/>
-                                </StackPanel>
+                                
                             </StackPanel>
                         </ScrollViewer>
                     </Grid>

@@ -25,7 +25,7 @@ namespace ElectionsProgram {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(".\\Настройки\\")]
+        [global::System.Configuration.DefaultSettingValueAttribute(".\\Настройки")]
         public string Каталог_настроек {
             get {
                 return ((string)(this["Каталог_настроек"]));
@@ -37,7 +37,7 @@ namespace ElectionsProgram {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute(".\\Документы\\")]
+        [global::System.Configuration.DefaultSettingValueAttribute(".\\Документы")]
         public string Каталог_документов {
             get {
                 return ((string)(this["Каталог_документов"]));

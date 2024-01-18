@@ -242,7 +242,7 @@ namespace ElectionsProgram.Builders
                 lines.Add(row.ToProtocolString());
             }
             // Общее вещание добавляем в строки для соответствующей ячейки
-            foreach (var row in talon.CommonRecords)
+            foreach (var row in talon.CommonTalon.TalonRecords)
             {
                 linesCommon.Add(row.ToProtocolString());
             }

@@ -18,34 +18,55 @@ namespace ElectionsProgram.Builders
         /// <param name="mediaResource"></param>
         /// <param name="dataTableCommon">Таблица с общими для всех клиентов вещаниями (данные только в одной строке, вторая ячейка)</param>
         /// <returns></returns>
-        public static List<Talon> ParseTalonsVariantBase(DataTable dt, string mediaResource, DataTable? dataTableCommon = null)
+        public static List<Talon> ParseTalonsVariantBase(DataTable dt, string mediaResource)
         {
             var talons = new List<Talon>();
             // В одной ячейке все строки одного талона
             for (int i = 0; i < dt.Rows.Count; i++)
             {
                 var talonId = dt.Rows[i].Field<string>(0).Trim();
-                // Ячейка со строками одного талона парсится в список строк одного талона
-                var talonRecords = ParseTalonString(talonId, mediaResource, dt.Rows[i].Field<string>(1));
-                // Создаем талон
-                Talon talon = new Talon(mediaResource, talonId);
-                // Все записи добавляем к талону
-                foreach (var talonRecord in talonRecords)
-                {
-                    talon.TalonRecords.Add(new TalonRecord(talonRecord));
-                }
-                // Если есть общие для всех талонов записи
-                if (dataTableCommon != null && dataTableCommon.Rows.Count > 0)
-                {
-                    foreach (var talonRecord in ParseTalonString("", mediaResource, dataTableCommon.Rows[0].Field<string>(1)))
-                    {
-                        talon.CommonRecords.Add(new TalonRecord(talonRecord));
-                    }
-                }
+                // Из одной ячейки с текстом строим талон
+                Talon talon = ParseTalonsVariantBase(mediaResource, talonId, dt.Rows[i].Field<string>(1));
                 // Добавляем сформированный талон к результату
                 talons.Add(talon);
             }
             return talons;
+        }
+
+        /// <summary>
+        /// Парсинг текста одной ячейки в один талон.
+        /// </summary>
+        /// <param name="talonId"></param>
+        /// <param name="mediaResource"></param>
+        /// <param name="cellText"></param>
+        /// <returns></returns>
+        public static Talon ParseTalonsVariantBase(string mediaResource, string talonId, string cellText)
+        {
+            // Ячейка со строками одного талона парсится в список строк одного талона
+            var talonRecords = ParseTalonString(talonId, mediaResource, cellText);
+            // Создаем талон
+            Talon talon = new Talon(mediaResource, talonId);
+            // Все записи добавляем к талону
+            foreach (var talonRecord in talonRecords)
+            {
+                talon.TalonRecords.Add(new TalonRecord(talonRecord));
+            }
+            //
+            return talon;
+        }
+
+        /// <summary>
+        /// КОСТЫЛЬ (очередной) для формирования талона общего вещания.
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <param name="mediaResource"></param>
+        /// <param name="talonId"></param>
+        /// <returns></returns>
+        public static Talon? ParseTalonsVariantBase(DataTable dt, string mediaResource, string talonId)
+        {
+            if (dt.Rows.Count == 0) return null;
+            
+            return ParseTalonsVariantBase(mediaResource, talonId, dt.Rows[0].Field<string>(1));
         }
 
         /// <summary>

@@ -93,6 +93,64 @@ namespace ElectionsProgram.ViewModels
             }
         }
 
+        #region Общее вещание для партий
+
+        private Talon? _partiesCommonTalon_Россия_1;
+        private Talon? _partiesCommonTalon_Россия_24;
+        private Talon? _partiesCommonTalon_Маяк;
+        private Talon? _partiesCommonTalon_Вести_ФМ;
+        private Talon? _partiesCommonTalon_Радио_России;
+
+        public Talon? PartiesCommonTalon_Россия_1 { get => _partiesCommonTalon_Россия_1;
+            set
+            {
+                _partiesCommonTalon_Россия_1 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Talon? PartiesCommonTalon_Россия_24
+        {
+            get => _partiesCommonTalon_Россия_24;
+            set
+            {
+                _partiesCommonTalon_Россия_24 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Talon? PartiesCommonTalon_Маяк
+        {
+            get => _partiesCommonTalon_Маяк;
+            set
+            {
+                _partiesCommonTalon_Маяк = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Talon? PartiesCommonTalon_Вести_ФМ
+        {
+            get => _partiesCommonTalon_Вести_ФМ;
+            set
+            {
+                _partiesCommonTalon_Вести_ФМ = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Talon? PartiesCommonTalon_Радио_России
+        {
+            get => _partiesCommonTalon_Радио_России;
+            set
+            {
+                _partiesCommonTalon_Радио_России = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion Общее вещание для партий
+
         #region Талоны для партий
 
         private ObservableCollection<Talon> _partiesTalons_Россия_1 = new ObservableCollection<Talon>();
@@ -204,6 +262,66 @@ namespace ElectionsProgram.ViewModels
                 OnPropertyChanged();
             }
         }
+
+        #region Общее вещание для кандидатов
+
+        private Talon? _candidatesCommonTalon_Россия_1;
+        private Talon? _candidatesCommonTalon_Россия_24;
+        private Talon? _candidatesCommonTalon_Маяк;
+        private Talon? _candidatesCommonTalon_Вести_ФМ;
+        private Talon? _candidatesCommonTalon_Радио_России;
+
+        public Talon? candidatesCommonTalon_Россия_1
+        {
+            get => _candidatesCommonTalon_Россия_1;
+            set
+            {
+                _candidatesCommonTalon_Россия_1 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Talon? candidatesCommonTalon_Россия_24
+        {
+            get => _candidatesCommonTalon_Россия_24;
+            set
+            {
+                _candidatesCommonTalon_Россия_24 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Talon? candidatesCommonTalon_Маяк
+        {
+            get => _candidatesCommonTalon_Маяк;
+            set
+            {
+                _candidatesCommonTalon_Маяк = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Talon? candidatesCommonTalon_Вести_ФМ
+        {
+            get => _candidatesCommonTalon_Вести_ФМ;
+            set
+            {
+                _candidatesCommonTalon_Вести_ФМ = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public Talon? candidatesCommonTalon_Радио_России
+        {
+            get => _candidatesCommonTalon_Радио_России;
+            set
+            {
+                _candidatesCommonTalon_Радио_России = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion Общее вещание для кандидатов
 
         #region Талоны для кандидатов
 
@@ -422,7 +540,7 @@ namespace ElectionsProgram.ViewModels
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
