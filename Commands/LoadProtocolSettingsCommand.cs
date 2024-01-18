@@ -37,7 +37,7 @@ namespace ElectionsProgram.Commands
             try
             {
                 // Загружаем таблицу настроек (интересует только одна строка)
-                DataTable dt = ExcelProcessor.LoadFromExcel(_vm.SettingsFilePathes.Протоколы_Настройки);
+                DataTable dt = ExcelProcessor.LoadFromExcel($@"{_vm.SettingsFilePathes.Каталог_настроек}{_vm.SettingsFilePathes.Протоколы_Настройки}");
                 // Берем первую строку
                 SettingsForProtocolsView protocolSettingsView = dt.ToList<SettingsForProtocolsView>()[0];
                 // Передаем настройки в ViewModel

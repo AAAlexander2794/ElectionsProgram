@@ -31,13 +31,15 @@ namespace ElectionsProgram.Commands
         {
             try
             {
+                string protocolFolder = $@"{_viewModel.SettingsFilePathes.Каталог_документов}{_viewModel.SettingsFilePathes.Протоколы_Выходной_каталог}";
+                string templatePath = $@"{_viewModel.SettingsFilePathes.Каталог_настроек}{_viewModel.SettingsFilePathes.Протоколы_Шаблон_Партии}";
                 ProtocolPartyBuilder.CreateProtocolsParties(_viewModel.Parties.ToList(), 
                     _viewModel.ProtocolSettings, 
-                    _viewModel.SettingsFilePathes.Протоколы_Выходной_каталог,
-                    _viewModel.SettingsFilePathes.Протоколы_Шаблон_Партии);
+                    protocolFolder,
+                    templatePath);
                 //
-                string message = $"Протоколы партий созданы. Обработано:\n" +
-                    $"Партий: {_viewModel.Parties.Count}\n" +
+                string message = $"Протоколы партий созданы. Обработано: " +
+                    $"Партий: {_viewModel.Parties.Count}. " +
                     $"Талонов: {_viewModel.PartiesTalons_Россия_1.Count}, " +
                     $"{_viewModel.PartiesTalons_Россия_24.Count}, " +
                     $"{_viewModel.PartiesTalons_Маяк.Count}, " +

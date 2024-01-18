@@ -327,9 +327,13 @@ namespace ElectionsProgram.Builders
             // Текст ячейки с общим вещанием
             List<string> linesCommonRecords = new List<string>();
             //
-            foreach (var row in talon.CommonTalon.TalonRecords)
+            if (talon.CommonTalon != null)
             {
-                linesCommonRecords.Add($"{row.Date} {row.Time} {row.Duration} {row.Description}");
+                //
+                foreach (var row in talon.CommonTalon.TalonRecords)
+                {
+                    linesCommonRecords.Add($"{row.Date} {row.Time} {row.Duration} {row.Description}");
+                }
             }
             // Строка с данными
             var tr = new TableRow();

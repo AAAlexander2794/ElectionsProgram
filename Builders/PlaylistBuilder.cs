@@ -22,8 +22,8 @@ namespace ElectionsProgram.Builders
             WriteBroadcastRecordsToExcel(broadcastRecords, $@"{catalogPath}Рабочие\{subCatalog}\Маяк.xlsx", "Маяк");
             WriteBroadcastRecordsToExcel(broadcastRecords, $@"{catalogPath}Рабочие\{subCatalog}\Радио России.xlsx", "Радио России");
             WriteBroadcastRecordsToExcel(broadcastRecords, $@"{catalogPath}Рабочие\{subCatalog}\Вести ФМ.xlsx", "Вести ФМ");
-            WriteBroadcastRecordsToExcel(broadcastRecords, $@"{catalogPath}Рабочие\{subCatalog}\Россия 1.xlsx", "Россия 1");
-            WriteBroadcastRecordsToExcel(broadcastRecords, $@"{catalogPath}Рабочие\{subCatalog}\Россия 24.xlsx", "Россия 24");
+            WriteBroadcastRecordsToExcel(broadcastRecords, $@"{catalogPath}Рабочие\{subCatalog}\Россия 1.xlsx", "Россия-1");
+            WriteBroadcastRecordsToExcel(broadcastRecords, $@"{catalogPath}Рабочие\{subCatalog}\Россия 24.xlsx", "Россия-24");
         }
 
         static DataTable WriteBroadcastRecordsToExcel(List<PlaylistRecord> records, string filePath, string mediaResource)
@@ -55,8 +55,8 @@ namespace ElectionsProgram.Builders
                 dt.Rows[dt.Rows.Count - 1][5] = record.View.ClientType;
                 dt.Rows[dt.Rows.Count - 1][6] = record.View.ClientName;
                 dt.Rows[dt.Rows.Count - 1][7] = "";
-                dt.Rows[dt.Rows.Count - 1][8] = "";
-                dt.Rows[dt.Rows.Count - 1][9] = "";
+                dt.Rows[dt.Rows.Count - 1][8] = record.View.BroadcastForm;
+                dt.Rows[dt.Rows.Count - 1][9] = record.View.Caption;
             }
             // Запись в файл Excel
             XLWorkbook wb = new XLWorkbook();
@@ -127,18 +127,22 @@ namespace ElectionsProgram.Builders
                 broadcastRecords.Add(new PlaylistRecord(record));
             }
             // Записи общего вещания
-            foreach (var item in talon.CommonTalon.TalonRecords)
+            if (talon.CommonTalon != null)
             {
-                PlaylistRecordView record = new PlaylistRecordView()
+                foreach (var item in talon.CommonTalon.TalonRecords)
                 {
-                    MediaresourceName = item.MediaresourceName,
-                    Date = item.Date.ToString(),
-                    Time = item.Time.ToString(),
-                    DurationNominal = item.Duration.ToString(),
-                    ClientType = "Партия",
-                    ClientName = party.View.Название_условное
-                };
-                broadcastRecords.Add(new PlaylistRecord(record));
+                    PlaylistRecordView record = new PlaylistRecordView()
+                    {
+                        MediaresourceName = item.MediaresourceName,
+                        Date = item.Date.ToString(),
+                        Time = item.Time.ToString(),
+                        DurationNominal = item.Duration.ToString(),
+                        ClientType = "Партия",
+                        ClientName = party.View.Название_условное,
+                        BroadcastForm = "Дебаты"
+                    };
+                    broadcastRecords.Add(new PlaylistRecord(record));
+                }
             }
             return broadcastRecords;
         }
@@ -165,22 +169,26 @@ namespace ElectionsProgram.Builders
                 broadcastRecords.Add(new PlaylistRecord(record));
             }
             // Записи общего вещания
-            foreach (var item in talon.CommonTalon.TalonRecords)
+            if (talon.CommonTalon != null)
             {
-                PlaylistRecordView record = new PlaylistRecordView()
+                foreach (var item in talon.CommonTalon.TalonRecords)
                 {
-                    MediaresourceName = item.MediaresourceName,
-                    Date = item.Date.ToString(),
-                    Time = item.Time.ToString(),
-                    DurationNominal = item.Duration.ToString(),
-                    ClientType = "Кандидат",
-                    Region = candidate.View.Округ_Номер,
-                    ClientName = $"{candidate.View.Фамилия} " +
-                        $"{candidate.View.Имя} " +
-                        $"{candidate.View.Отчество} " +
-                        $"({candidate.View.Округ_Номер})"
-                };
-                broadcastRecords.Add(new PlaylistRecord(record));
+                    PlaylistRecordView record = new PlaylistRecordView()
+                    {
+                        MediaresourceName = item.MediaresourceName,
+                        Date = item.Date.ToString(),
+                        Time = item.Time.ToString(),
+                        DurationNominal = item.Duration.ToString(),
+                        ClientType = "Кандидат",
+                        Region = candidate.View.Округ_Номер,
+                        ClientName = $"{candidate.View.Фамилия} " +
+                            $"{candidate.View.Имя} " +
+                            $"{candidate.View.Отчество} " +
+                            $"({candidate.View.Округ_Номер})",
+                        BroadcastForm = "Дебаты"
+                    };
+                    broadcastRecords.Add(new PlaylistRecord(record));
+                }
             }
             return broadcastRecords;
         }

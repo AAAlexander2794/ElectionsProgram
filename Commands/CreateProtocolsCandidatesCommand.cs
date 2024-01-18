@@ -26,11 +26,13 @@ namespace ElectionsProgram.Commands
         {
             try
             {
+                string protocolFolder = $@"{_viewModel.SettingsFilePathes.Каталог_документов}{_viewModel.SettingsFilePathes.Протоколы_Выходной_каталог}";
+                string templatePath = $@"{_viewModel.SettingsFilePathes.Каталог_настроек}{_viewModel.SettingsFilePathes.Протоколы_Шаблон_Кандидаты}";
                 ProtocolCandidatesBuilder.BuildProtocolsCandidates(
                     _viewModel.Regions.ToList(),
                     _viewModel.ProtocolSettings,
-                    _viewModel.SettingsFilePathes.Протоколы_Выходной_каталог,
-                    _viewModel.SettingsFilePathes.Протоколы_Шаблон_Кандидаты);
+                    protocolFolder,
+                    templatePath);
                 //
                 Logger.Add("Протоколы кандидатов созданы.");
             }

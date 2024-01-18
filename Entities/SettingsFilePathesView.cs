@@ -21,7 +21,7 @@ namespace ElectionsProgram.Entities
         /// <summary>
         /// Путь к папке протоколов жеребьевки.
         /// </summary>
-        public string Протоколы_Выходной_каталог { get; set; } = @"\Протоколы";
+        public string Протоколы_Выходной_каталог { get; set; } = @"\Протоколы\";
 
         public string Протоколы_Шаблон_Партии { get; set; } = @"\Протоколы\Приложение 1.dotx";
 
