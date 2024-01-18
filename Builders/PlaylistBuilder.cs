@@ -112,6 +112,7 @@ namespace ElectionsProgram.Builders
         {
             List<PlaylistRecord> broadcastRecords = new List<PlaylistRecord>();
             if (talon == null) return broadcastRecords;
+            // Записи талона
             foreach (var talonRecord in talon.TalonRecords)
             {
                 PlaylistRecordView record = new PlaylistRecordView()
@@ -120,6 +121,20 @@ namespace ElectionsProgram.Builders
                     Date = talonRecord.Date.ToString(),
                     Time = talonRecord.Time.ToString(),
                     DurationNominal = talonRecord.Duration.ToString(),
+                    ClientType = "Партия",
+                    ClientName = party.View.Название_условное
+                };
+                broadcastRecords.Add(new PlaylistRecord(record));
+            }
+            // Записи общего вещания
+            foreach (var item in talon.CommonRecords)
+            {
+                PlaylistRecordView record = new PlaylistRecordView()
+                {
+                    MediaresourceName = item.MediaresourceName,
+                    Date = item.Date.ToString(),
+                    Time = item.Time.ToString(),
+                    DurationNominal = item.Duration.ToString(),
                     ClientType = "Партия",
                     ClientName = party.View.Название_условное
                 };
@@ -140,6 +155,24 @@ namespace ElectionsProgram.Builders
                     Date = talonRecord.Date.ToString(),
                     Time = talonRecord.Time.ToString(),
                     DurationNominal = talonRecord.Duration.ToString(),
+                    ClientType = "Кандидат",
+                    Region = candidate.View.Округ_Номер,
+                    ClientName = $"{candidate.View.Фамилия} " +
+                        $"{candidate.View.Имя} " +
+                        $"{candidate.View.Отчество} " +
+                        $"({candidate.View.Округ_Номер})"
+                };
+                broadcastRecords.Add(new PlaylistRecord(record));
+            }
+            // Записи общего вещания
+            foreach (var item in talon.CommonRecords)
+            {
+                PlaylistRecordView record = new PlaylistRecordView()
+                {
+                    MediaresourceName = item.MediaresourceName,
+                    Date = item.Date.ToString(),
+                    Time = item.Time.ToString(),
+                    DurationNominal = item.Duration.ToString(),
                     ClientType = "Кандидат",
                     Region = candidate.View.Округ_Номер,
                     ClientName = $"{candidate.View.Фамилия} " +
