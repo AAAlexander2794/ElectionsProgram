@@ -87,7 +87,8 @@ namespace ElectionsProgram.Entities
         /// <returns></returns>
         public string ToProtocolString()
         {
-            return $"{Date} {Time} {Duration} {Description}";
+            string time = Time.ToString("hh:mm:ss");
+            return $"{Date} {time} {Duration} {Description}";
         }
     }
 }
