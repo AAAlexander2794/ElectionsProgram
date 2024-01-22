@@ -96,6 +96,18 @@ namespace ElectionsProgram.Entities
 
         #endregion Протоколы
 
+        #region Договоры
+
+        public string Договоры_Выходной_каталог { get => _view.Договоры_Выходной_каталог;
+            set
+            {
+                _view.Договоры_Выходной_каталог = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion Договоры
+
         #region Партии
 
         public string Партии_Таблица { get => _view.Партии_Таблица;
@@ -192,9 +204,21 @@ namespace ElectionsProgram.Entities
 
         // Шаблоны
 
-        public string Партии_Шаблон_договора_РВ { get; set; }
+        public string Партии_Шаблон_договора_РВ { get => _view.Партии_Шаблон_договора_РВ;
+            set 
+            {
+                _view.Партии_Шаблон_договора_РВ = value;
+                OnPropertyChanged();
+            } 
+        }
 
-        public string Партии_Шаблон_договора_ТВ { get; set; }
+        public string Партии_Шаблон_договора_ТВ { get => _view.Партии_Шаблон_договора_ТВ;
+            set
+            {
+                _view.Партии_Шаблон_договора_ТВ = value;
+                OnPropertyChanged();
+            }
+        }
 
         #endregion Партии
 

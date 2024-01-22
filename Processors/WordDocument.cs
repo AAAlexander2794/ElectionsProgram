@@ -154,7 +154,7 @@ namespace ElectionsProgram.Processors
         /// </remarks>
         /// <param name="talon"></param>
         /// <returns></returns>
-        Table CreateTable(Talon talon)
+        public static Table CreateTable(Talon talon)
         {
             if (talon == null) return null;
             // 

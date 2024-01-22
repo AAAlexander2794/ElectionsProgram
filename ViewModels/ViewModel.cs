@@ -463,6 +463,10 @@ namespace ElectionsProgram.ViewModels
         /// Жеребьевка партий. Выполняет поочередно все нужные команды для создания протоколов.
         /// </summary>
         public DrawPartiesCommand DrawPartiesCommand { get; }
+        /// <summary>
+        /// Договоры партий
+        /// </summary>
+        public ContractPartiesCreateCommand ContractPartiesCreateCommand { get; }
 
         public SavePartiesToExcelCommand SavePartiesToExcelCommand { get; }
 
@@ -513,8 +517,11 @@ namespace ElectionsProgram.ViewModels
             //
             SettingsPathesLoadCommand = new SettingsPathesLoadCommand(this);
             SettngsPathesSaveCommand = new SettngsPathesSaveCommand(this);
+            // Договоры
+            ContractPartiesCreateCommand = new ContractPartiesCreateCommand(this);
             //
             PlaylistCreateCommand = new PlaylistCreateCommand(this);
+            
 
             //
             SettingsPathesLoadCommand.Execute(this);
