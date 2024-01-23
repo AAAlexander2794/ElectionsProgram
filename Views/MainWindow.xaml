@@ -22,6 +22,7 @@
             <StackPanel Grid.Row="0" Orientation="Horizontal" Grid.ColumnSpan="2">
                 <Button Content="Создать плейлист" Command="{Binding PlaylistCreateCommand}" Margin="5"/>
                 <Button Content="Договоры партий" Command="{Binding ContractPartiesCreateCommand}" Margin="5"/>
+                <Button Content="Договоры кандидатов" Command="{Binding ContractCandidatesCreateCommand}" Margin="5"/>
             </StackPanel>
 
             <TabControl  Margin="0,40,0,0" Grid.RowSpan="2" Grid.ColumnSpan="2">

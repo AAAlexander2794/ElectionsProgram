@@ -21,9 +21,11 @@ namespace ElectionsProgram.Entities
 
         public int Id { get; set; }
 
-        public string Фамилия_И_О { get; }
+        public string Фамилия_ИО { get; } = "";
+        public string ИО_Фамилия { get; } = "";
+        public string Представитель_ИО_Фамилия { get; } = "";
 
-        List<Talon> Talons { get; set; }
+        //List<Talon> Talons { get; set; }
 
         /// <summary>
         /// Данные кандидата в текстовом виде (как в таблицах)
@@ -33,9 +35,9 @@ namespace ElectionsProgram.Entities
         /// <summary>
         /// Партия, от которой выдвигается кандидат
         /// </summary>
-        public Party Party { get; set; }
+        public Party? Party { get; set; }
 
-        string IClient.Name { get => Фамилия_И_О; }
+        string IClient.Name { get => Фамилия_ИО; }
 
         string IClient.Type => "Кандидат";
 
@@ -58,7 +60,15 @@ namespace ElectionsProgram.Entities
         public Candidate(CandidateView candidateView) 
         {
             View = candidateView;
-            Фамилия_И_О = $"{View.Фамилия} {View.Имя[0]} {View.Отчество[0]}";
+            if (View.Имя.Length > 0 && View.Отчество.Length > 0)
+            {
+                Фамилия_ИО = $"{View.Фамилия} {View.Имя[0]}.{View.Отчество[0]}.";
+                ИО_Фамилия = $"{View.Имя[0]}.{View.Отчество[0]}. {View.Фамилия}";
+            }
+            if (View.Представитель_Имя.Length > 0 && View.Представитель_Отчество.Length > 0)
+            {
+                Представитель_ИО_Фамилия = $"{View.Представитель_Имя[0]}.{View.Представитель_Отчество[0]}. {View.Представитель_Фамилия}";
+            }
         }
 
         #endregion Конструкторы

@@ -479,6 +479,7 @@ namespace ElectionsProgram.ViewModels
         public MatchCandidatesAndTalonsCommand MatchCandidatesAndTalonsCommand { get; }
         public CreateProtocolsCandidatesCommand CreateProtocolsCandidatesCommand { get; }
         public DrawCandidatesCommand DrawCandidatesCommand { get; }
+        public ContractCandidatesCreateCommand ContractCandidatesCreateCommand { get; }
 
         #endregion Команды для кандидатов
 
@@ -519,6 +520,7 @@ namespace ElectionsProgram.ViewModels
             SettngsPathesSaveCommand = new SettngsPathesSaveCommand(this);
             // Договоры
             ContractPartiesCreateCommand = new ContractPartiesCreateCommand(this);
+            ContractCandidatesCreateCommand = new ContractCandidatesCreateCommand(this);
             //
             PlaylistCreateCommand = new PlaylistCreateCommand(this);
             

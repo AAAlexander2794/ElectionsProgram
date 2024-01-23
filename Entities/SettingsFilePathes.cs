@@ -321,6 +321,28 @@ namespace ElectionsProgram.Entities
             }
         }
 
+        // Шаблоны
+
+        public string Кандидаты_Шаблон_договора_РВ
+        {
+            get => _view.Кандидаты_Шаблон_договора_РВ;
+            set
+            {
+                _view.Кандидаты_Шаблон_договора_РВ = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Кандидаты_Шаблон_договора_ТВ
+        {
+            get => _view.Кандидаты_Шаблон_договора_ТВ;
+            set
+            {
+                _view.Кандидаты_Шаблон_договора_ТВ = value;
+                OnPropertyChanged();
+            }
+        }
+
         #endregion Кандидаты
 
         public event PropertyChangedEventHandler? PropertyChanged;
