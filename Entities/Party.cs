@@ -11,7 +11,7 @@ namespace ElectionsProgram.Entities
     /// <summary>
     /// Политическая партия
     /// </summary>
-    public class Party : IClient, INotifyPropertyChanged
+    public class Party : INotifyPropertyChanged
     {
         private Talon? талон_Россия_1;
         private Talon? талон_Россия_24;
@@ -24,9 +24,7 @@ namespace ElectionsProgram.Entities
         /// </summary>
         public PartyView View { get; set; }
 
-        string IClient.Name => View.Название_условное;
-
-        string IClient.Type => "Партия";
+        
 
         #region Талоны
 

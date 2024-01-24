@@ -16,7 +16,7 @@ namespace ElectionsProgram.Entities
         /// <summary>
         /// Канал
         /// </summary>
-        public string MediaResource { get; set; } = "";
+        public string MediaResourceName { get; set; } = "";
 
         /// <summary>
         /// Дата

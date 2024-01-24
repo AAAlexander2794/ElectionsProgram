@@ -11,7 +11,7 @@ namespace ElectionsProgram.Entities
     /// <summary>
     /// Кандидат на выборы
     /// </summary>
-    public class Candidate : IClient, INotifyPropertyChanged
+    public class Candidate : INotifyPropertyChanged
     {
         private Talon? талон_Россия_1;
         private Talon? талон_Россия_24;
@@ -36,10 +36,6 @@ namespace ElectionsProgram.Entities
         /// Партия, от которой выдвигается кандидат
         /// </summary>
         public Party? Party { get; set; }
-
-        string IClient.Name { get => Фамилия_ИО; }
-
-        string IClient.Type => "Кандидат";
 
         #region Талоны
 

@@ -11,20 +11,100 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace ElectionsProgram.Builders
+namespace ElectionsProgram.Builders.TotalReport
 {
-    public static class ReportBuilder
+    public static partial class TotalReportBuilder
     {
-
-
-
-
-        public static void BuildTotalReport(DataTable playlistRecords, string mediaResource, string subCatalog)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="playlists">Плейлист одного медиаресурса</param>
+        /// <param name="record">Запись из плейлиста со всеми медиаресурсами</param>
+        private static void AddRecord(List<Playlist> playlists, PlaylistRecord record)
         {
-            string recordsFilePath = $@"./Настройки/Учет вещания/{mediaResource}.xlsx";
-            // Список строк вещания одной СМИ
-            var playlistRecords = BuildBroadcastRecords(playlistRecords);
+            foreach (var playlist in playlists)
+            {
+                // Если такой плейлист уже есть в списке
+                if (playlist.MediaresourceName == record.MediaResourceName)
+                {
+                    // Передаем на добавление записи клиентам найденного плейлиста
+                    AddRecord(playlist.Clients, record);
+                    // Запись присвоена, возвращаемся
+                    return;
+                }
+            }
+            
+            // Если все плейлисты проверили, но не прекратили, значит, надо создать новый плейлист
 
+            // Создаем новый плейлист
+            Playlist newPlaylist = new Playlist()
+            { 
+                MediaresourceName = record.MediaResourceName
+            };
+            // Передаем новый плейлист на добавление ему записи
+            AddRecord(newPlaylist.Clients, record);
+            //
+            playlists.Add(newPlaylist);
+            //
+            return;
+        }
+
+        private static Client AddRecord(List<Client> clients, PlaylistRecord record)
+        {
+            //
+            foreach (var client in clients)
+            {
+                // Если клиент уже есть в списке
+                if (client.Name == record.ClientName)
+                {
+                    // Добавляем запись из плейлиста клиенту
+                    client.PlaylistRecords.Add(record);
+                    // Запись присвоена, прекращаем
+                    return client;
+                }
+            }
+
+            // Если всех клиентов проверили, но не прекратили, значит, клиента в списке нет - добавляем
+
+            // Создаем нового клиента по данным записи из плейлиста
+            Client newClient = new Client()
+            {
+                Name = record.ClientName,
+                Type = record.ClientType
+            };
+            // Добавляем новому клиенту запись
+            newClient.PlaylistRecords.Add(record);
+            // Добавляем нового клиента в список клиентов
+            clients.Add(newClient);
+            // Возвращаем
+            return newClient;
+        }
+
+
+        public static void BuildTotalReport(DataTable playlist, string mediaResource, string subCatalog)
+        {
+            //string recordsFilePath = $@"./Настройки/Учет вещания/{mediaResource}.xlsx";
+
+            // Из таблицы плейлиста формируем список текстового представления записей
+            var playlistRecordsView = playlist.ToList<PlaylistRecordView>();
+            // Список из 5 (ожидаемо) плейлистов по каждому каналу
+            List<Playlist> mediaresourcePlaylists = new List<Playlist>();
+            //
+            foreach (var playlistRecord in playlistRecordsView)
+            {
+                bool isNewPlaylist = false;
+                foreach(var item in mediaresourcePlaylists)
+                {
+                    if (item.MediaresourceName == playlistRecord.MediaresourceName)
+                    {
+                        
+                    }
+                }
+                var newPlaylistRecord = new PlaylistRecord(playlistRecord);
+            }
+            //
+
+            
 
             // На основе строк одной СМИ строим блоки для таблицы
             var blocks = BuildTotalReport(playlistRecords, regions);
@@ -33,7 +113,7 @@ namespace ElectionsProgram.Builders
             {
                 bool isFound = false;
                 // Поиск только по блокам, где указан округ, то есть только по кандидатам
-                foreach (var block in blocks.Where(b => b.RegionNumber.All(Char.IsDigit)))
+                foreach (var block in blocks.Where(b => b.RegionNumber.All(char.IsDigit)))
                 {
                     foreach (var client in block.ClientBlocks)
                     {
@@ -498,62 +578,7 @@ namespace ElectionsProgram.Builders
             return table;
         }
 
-        ///// <summary>
-        ///// Создает строку таблицы в ворде
-        ///// </summary>
-        ///// <param name="candidate"></param>
-        ///// <param name="talon"></param>
-        ///// <param name="mediaresource"></param>
-        ///// <param name="i"></param>
-        ///// <param name="row5Text"></param>
-        ///// <returns></returns>
-        //private TableRow CreateRowProtocolCandidates(Candidate candidate, Talon talon, string mediaresource, int i, string row5Text)
-        //{
-        //    var tr = new TableRow();
 
-        //    //
-        //    if (candidate.Info.Фамилия == "") return null;
-        //    // Формируем текст ячейки с талоном
-        //    List<string> lines = new List<string>();
-        //    //
-        //    if (talon != null)
-        //    {
-        //        // Добавляем номер талона
-        //        lines.Add($"Талон № {talon.Id}");
-        //        //
-        //        foreach (var row in talon.TalonRecords)
-        //        {
-        //            if (talon.MediaResource == "Вести ФМ")
-        //            {
-        //                lines.Add($"{row.Date} {row.Time}:{row.Time.Second} {row.Duration} {row.Description}");
-        //            }
-        //            else
-        //            {
-        //                lines.Add($"{row.Date} {row.Time} {row.Duration} {row.Description}");
-        //            }
-        //        }
-        //    }
-        //    else
-        //    {
-        //        lines.Add("");
-        //    }
-        //    // Строка с данными
-        //    tr = new TableRow();
-        //    //// Чтобы не разделялась при переходе на другую страницу
-        //    //var rowProp = new TableRowProperties(new CantSplit());
-        //    //tr.Append(rowProp);
-        //    // 
-        //    var tc1 = new TableCell(CreateParagraph($"{i + 1}"));
-        //    var tc2 = new TableCell(CreateParagraph($"{candidate.Info.Фамилия} {candidate.Info.Имя} {candidate.Info.Отчество}, {candidate.Info.Округ_Номер}"));
-        //    var tc3 = new TableCell(CreateParagraph($""));
-        //    var tc4 = new TableCell(CreateParagraph(lines));
-        //    //tc4.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Pct, Width = "60" }));
-        //    var tc5 = new TableCell(CreateParagraph($"{row5Text}"));
-        //    var tc6 = new TableCell(CreateParagraph($""));
-        //    tr.Append(tc1, tc2, tc3, tc4, tc5, tc6);
-        //    //
-        //    return tr;
-        //}
 
         /// <summary>
         /// Объединяет указанное количество ячеек в строке вместе, также вставляет туда текст. (в теории, пока нет)
