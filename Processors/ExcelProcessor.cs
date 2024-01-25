@@ -35,10 +35,16 @@ namespace ElectionsProgram.Processors
             if (path == "")
             {
                 saveFileDialog.InitialDirectory = AppContext.BaseDirectory;
+                if (saveFileDialog.ShowDialog() == true)
+                {
+                    wb.SaveAs(saveFileDialog.FileName);
+                }
+                return;
             }
-            if (saveFileDialog.ShowDialog() == true)
+            else
             {
-                wb.SaveAs(saveFileDialog.FileName);
+                wb.SaveAs(path);
+                return;
             }
         }
 
@@ -104,6 +110,13 @@ namespace ElectionsProgram.Processors
                         // Читаем те же столбцы, что и для заголовков
                         foreach (IXLCell cell in row.Cells(firstColumn, lastColumn))
                         {
+                            // Чтобы не выдавало ошибку при попытке прочитать формулу
+                            if (cell.HasFormula)
+                            {
+                                dt.Rows[dt.Rows.Count - 1][i] = "formula";
+                                continue;
+                            }
+                            //
                             dt.Rows[dt.Rows.Count - 1][i] = cell.Value.ToString();
                             i++;
                         }

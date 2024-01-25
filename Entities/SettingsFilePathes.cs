@@ -108,6 +108,70 @@ namespace ElectionsProgram.Entities
 
         #endregion Договоры
 
+        #region Итоговый отчет
+
+        public string Итоговый_отчет_Выходной_каталог { get => _view.Итоговый_отчет_Выходной_каталог;
+            set
+            {
+                _view.Итоговый_отчет_Выходной_каталог = value;
+                OnPropertyChanged();
+            }
+        }
+
+        //
+
+        public string Итоговый_отчет_Плейлист_Россия_1 
+        { 
+            get => _view.Итоговый_отчет_Плейлист_Россия_1;
+            set 
+            {
+                _view.Итоговый_отчет_Плейлист_Россия_1 = value;
+                OnPropertyChanged();
+            } 
+        } 
+
+        public string Итоговый_отчет_Плейлист_Россия_24 
+        { 
+            get => _view.Итоговый_отчет_Плейлист_Россия_24;
+            set
+            {
+                _view.Итоговый_отчет_Плейлист_Россия_24 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Итоговый_отчет_Плейлист_Маяк
+        {
+            get => _view.Итоговый_отчет_Плейлист_Маяк;
+            set
+            {
+                _view.Итоговый_отчет_Плейлист_Маяк = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Итоговый_отчет_Плейлист_Вести_ФМ
+        {
+            get => _view.Итоговый_отчет_Плейлист_Вести_ФМ;
+            set
+            {
+                _view.Итоговый_отчет_Плейлист_Вести_ФМ = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string Итоговый_отчет_Плейлист_Радио_России
+        {
+            get => _view.Итоговый_отчет_Плейлист_Радио_России;
+            set
+            {
+                _view.Итоговый_отчет_Плейлист_Радио_России = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion Итоговый отчет
+
         #region Партии
 
         public string Партии_Таблица { get => _view.Партии_Таблица;

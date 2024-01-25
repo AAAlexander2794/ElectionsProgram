@@ -49,6 +49,24 @@ namespace ElectionsProgram.Entities
 
         #endregion Договоры
 
+        #region Итоговый отчет
+
+        public string Итоговый_отчет_Выходной_каталог { get; set; } = @"\Отчеты\";
+
+        // 
+
+        public string Итоговый_отчет_Плейлист_Россия_1 { get; set; } = @"\Итоговый отчет\Россия 1.xlsx";
+
+        public string Итоговый_отчет_Плейлист_Россия_24 { get; set; } = @"\Итоговый отчет\Россия 24.xlsx";
+
+        public string Итоговый_отчет_Плейлист_Маяк { get; set; } = @"\Итоговый отчет\Маяк.xlsx";
+
+        public string Итоговый_отчет_Плейлист_Вести_ФМ { get; set; } = @"\Итоговый отчет\Вести ФМ.xlsx";
+
+        public string Итоговый_отчет_Плейлист_Радио_России { get; set; } = @"\Итоговый отчет\Радио России.xlsx";
+
+        #endregion Итоговый отчет
+
         #region Партии
 
         public string Партии_Таблица { get; set; } = @"\Партии\Партии.xlsx";

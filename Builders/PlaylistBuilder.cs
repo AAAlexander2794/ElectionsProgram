@@ -51,12 +51,12 @@ namespace ElectionsProgram.Builders
                 dt.Rows[dt.Rows.Count - 1][1] = record.View.Date;
                 dt.Rows[dt.Rows.Count - 1][2] = record.View.Time;
                 dt.Rows[dt.Rows.Count - 1][3] = record.View.DurationNominal;
-                dt.Rows[dt.Rows.Count - 1][4] = record.View.Region;
+                dt.Rows[dt.Rows.Count - 1][4] = record.View.RegionNumber;
                 dt.Rows[dt.Rows.Count - 1][5] = record.View.ClientType;
                 dt.Rows[dt.Rows.Count - 1][6] = record.View.ClientName;
                 dt.Rows[dt.Rows.Count - 1][7] = "";
                 dt.Rows[dt.Rows.Count - 1][8] = record.View.BroadcastForm;
-                dt.Rows[dt.Rows.Count - 1][9] = record.View.Caption;
+                dt.Rows[dt.Rows.Count - 1][9] = record.View.BroadcastCaption;
             }
             // Запись в файл Excel
             XLWorkbook wb = new XLWorkbook();
@@ -160,7 +160,7 @@ namespace ElectionsProgram.Builders
                     Time = talonRecord.Time.ToString(),
                     DurationNominal = talonRecord.Duration.ToString(),
                     ClientType = "Кандидат",
-                    Region = candidate.View.Округ_Номер,
+                    RegionNumber = candidate.View.Округ_Номер,
                     ClientName = $"{candidate.View.Фамилия} " +
                         $"{candidate.View.Имя} " +
                         $"{candidate.View.Отчество} " +
@@ -180,7 +180,7 @@ namespace ElectionsProgram.Builders
                         Time = item.Time.ToString(),
                         DurationNominal = item.Duration.ToString(),
                         ClientType = "Кандидат",
-                        Region = candidate.View.Округ_Номер,
+                        RegionNumber = candidate.View.Округ_Номер,
                         ClientName = $"{candidate.View.Фамилия} " +
                             $"{candidate.View.Имя} " +
                             $"{candidate.View.Отчество} " +

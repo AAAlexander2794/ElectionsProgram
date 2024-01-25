@@ -28,9 +28,12 @@ namespace ElectionsProgram.Builders.TotalReport
             public TimeSpan GetTotalDurationActual()
             {
                 TimeSpan totalDuration = TimeSpan.Zero;
-                foreach (var item in PlaylistRecords)
+                foreach (PlaylistRecord record in PlaylistRecords)
                 {
-                    totalDuration += item.DurationActual;
+                    if (record.DurationActual != null)
+                    {
+                        totalDuration += record.DurationActual.Value;
+                    }
                 }
                 return totalDuration;
             }

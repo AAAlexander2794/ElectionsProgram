@@ -34,7 +34,7 @@ namespace ElectionsProgram.Entities
         public string DurationNominal { get; set; } = "";
 
         [DisplayName("Округ")]
-        public string Region { get; set; } = "";
+        public string RegionNumber { get; set; } = "";
 
         [DisplayName("Партия/кандидат")]
         public string ClientType { get; set; } = "";
@@ -55,7 +55,7 @@ namespace ElectionsProgram.Entities
         /// Название вещания (название ролика)
         /// </summary>
         [DisplayName("Название ролика/тема дебатов")]
-        public string Caption { get; set; } = "";
+        public string BroadcastCaption { get; set; } = "";
 
     }
 }

@@ -16,7 +16,7 @@ namespace ElectionsProgram.Entities
         /// <summary>
         /// Канал
         /// </summary>
-        public string MediaResourceName { get; set; } = "";
+        public string MediaresourceName { get; set; } = "";
 
         /// <summary>
         /// Дата
@@ -31,7 +31,7 @@ namespace ElectionsProgram.Entities
         /// <summary>
         /// Хронометраж вещания номинальный
         /// </summary>
-        public TimeSpan DurationNominal { get; set; } = TimeSpan.Zero;
+        public TimeSpan? DurationNominal { get; set; }
 
         /// <summary>
         /// Номер округа
@@ -51,12 +51,12 @@ namespace ElectionsProgram.Entities
         /// <summary>
         /// Хронометраж вещания фактический
         /// </summary>
-        public TimeSpan DurationActual { get; set; } = TimeSpan.Zero;
+        public TimeSpan? DurationActual { get; set; }
 
         /// <summary>
         /// Форма выступления
         /// </summary>
-        public string BroadcastType { get; set; } = "";
+        public string BroadcastForm { get; set; } = "";
 
         /// <summary>
         /// Название ролика/тема дебатов
@@ -66,6 +66,53 @@ namespace ElectionsProgram.Entities
         public PlaylistRecord(PlaylistRecordView view)
         {
             View = view;
+            //
+            MediaresourceName = View.MediaresourceName;
+            Date = DateOnly.FromDateTime(DateTime.Parse(View.Date));
+            Time = TimeOnly.FromDateTime(DateTime.Parse(View.Time));
+            // Хронометраж номинальный
+            var dateTime = ParseStringToDateTime(View.DurationNominal);
+            DurationNominal = dateTime != null ? ((DateTime)dateTime).TimeOfDay : null;
+            //
+            RegionNumber = View.RegionNumber;
+            ClientType = View.ClientType;
+            ClientName = View.ClientName;
+            // Хронометраж фактический
+            dateTime = ParseStringToDateTime(View.DurationActual);
+            DurationActual = dateTime != null ? ((DateTime)dateTime).TimeOfDay : null;
+            //
+            BroadcastForm = View.BroadcastForm;
+            BroadcastCaption = View.BroadcastCaption;
+        }
+
+        public static DateTime? ParseStringToDateTime(string str)
+        {
+            // Если строка пустая, возвращаем null
+            if (str.Trim() == "") return null;
+            //
+            DateTime dateTime;
+            // Пробуем парсить как текст
+            bool success = DateTime.TryParse(str, out dateTime);
+            // 
+            if (success)
+            {
+                return dateTime;
+            }
+            else
+            {
+                // Пробуем парсить как значение времени из Excel
+                double d;
+                //
+                success = double.TryParse(str, out d);
+                //
+                if (success)
+                {
+                    dateTime = DateTime.FromOADate(d);
+                    return dateTime;
+                }
+            }
+            // Если никакой парсинг не помог, возвращаем null
+            return null;
         }
 
         /// <summary>
@@ -77,14 +124,14 @@ namespace ElectionsProgram.Entities
             PlaylistRecordView view = new PlaylistRecordView()
             {
                 BroadcastForm = View.BroadcastForm,
-                Caption = View.Caption,
+                BroadcastCaption = View.BroadcastCaption,
                 ClientName = View.ClientName,
                 ClientType = View.ClientType,
                 Date = View.Date,
                 DurationActual = View.DurationActual,
                 DurationNominal = View.DurationNominal,
                 MediaresourceName = View.MediaresourceName,
-                Region = View.Region,
+                RegionNumber = View.RegionNumber,
                 Time = View.Time
             };
             return view;

@@ -490,6 +490,9 @@ namespace ElectionsProgram.ViewModels
         //
         public PlaylistCreateCommand PlaylistCreateCommand { get; }
 
+        //
+        public TotalReportCreateCommand TotalReportCreateCommand { get; }
+
         #endregion Комманды
 
         #region Конструкторы
@@ -523,7 +526,8 @@ namespace ElectionsProgram.ViewModels
             ContractCandidatesCreateCommand = new ContractCandidatesCreateCommand(this);
             //
             PlaylistCreateCommand = new PlaylistCreateCommand(this);
-            
+            //
+            TotalReportCreateCommand = new TotalReportCreateCommand(this);
 
             //
             SettingsPathesLoadCommand.Execute(this);
