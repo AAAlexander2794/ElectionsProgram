@@ -26,6 +26,13 @@ namespace ElectionsProgram.Commands
         {
             try
             {
+                // Загрузка партий
+                _vm.LoadPartiesCommand.Execute(null);
+                // Загрузка талонов и общего вещания
+                _vm.LoadPartiesTalonsCommand.Execute(null);
+                // Сопоставление талонов партиям
+                _vm.MatchPartiesAndTalonsCommand.Execute(null);
+                //
                 string pathContracts = $"{_vm.SettingsFilePathes.Каталог_документов}{_vm.SettingsFilePathes.Договоры_Выходной_каталог}";
                 string path_РВ = $"{_vm.SettingsFilePathes.Каталог_настроек}{_vm.SettingsFilePathes.Партии_Шаблон_договора_РВ}";
                 string path_ТВ = $"{_vm.SettingsFilePathes.Каталог_настроек}{_vm.SettingsFilePathes.Партии_Шаблон_договора_ТВ}";

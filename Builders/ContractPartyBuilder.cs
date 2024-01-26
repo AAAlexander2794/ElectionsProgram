@@ -121,24 +121,24 @@ namespace ElectionsProgram.Builders
                 //
                 if (p.Талон_Маяк != null)
                 {
-                    table = WordDocument.CreateTable(p.Талон_Маяк);
-                    table2 = WordDocument.CreateTable(p.Талон_Маяк);
+                    table = WordDocument.CreateTable(p.Талон_Маяк, p.Талон_Маяк.CommonTalon);
+                    table2 = WordDocument.CreateTable(p.Талон_Маяк, p.Талон_Маяк.CommonTalon);
                     doc.SetBookmarkTable($"Талон_1", table);
                     doc.SetBookmarkTable($"Талон_1_2", table2);
                 }
                 //
                 if (p.Талон_Радио_России != null)
                 {
-                    table = WordDocument.CreateTable(p.Талон_Радио_России);
-                    table2 = WordDocument.CreateTable(p.Талон_Радио_России);
+                    table = WordDocument.CreateTable(p.Талон_Радио_России, p.Талон_Радио_России.CommonTalon);
+                    table2 = WordDocument.CreateTable(p.Талон_Радио_России, p.Талон_Радио_России.CommonTalon);
                     doc.SetBookmarkTable($"Талон_2", table);
                     doc.SetBookmarkTable($"Талон_2_2", table2);
                 }
                 //
                 if (p.Талон_Вести_ФМ != null)
                 {
-                    table = WordDocument.CreateTable(p.Талон_Вести_ФМ);
-                    table2 = WordDocument.CreateTable(p.Талон_Вести_ФМ);
+                    table = WordDocument.CreateTable(p.Талон_Вести_ФМ, p.Талон_Вести_ФМ.CommonTalon);
+                    table2 = WordDocument.CreateTable(p.Талон_Вести_ФМ, p.Талон_Вести_ФМ.CommonTalon);
                     doc.SetBookmarkTable($"Талон_3", table);
                     doc.SetBookmarkTable($"Талон_3_2", table2);
                 }
@@ -149,16 +149,16 @@ namespace ElectionsProgram.Builders
                 //
                 if (p.Талон_Россия_1 != null)
                 {
-                    table = WordDocument.CreateTable(p.Талон_Россия_1);
-                    table2 = WordDocument.CreateTable(p.Талон_Россия_1);
+                    table = WordDocument.CreateTable(p.Талон_Россия_1, p.Талон_Россия_1.CommonTalon);
+                    table2 = WordDocument.CreateTable(p.Талон_Россия_1, p.Талон_Россия_1.CommonTalon);
                     doc.SetBookmarkTable($"Талон_4", table);
                     doc.SetBookmarkTable($"Талон_4_2", table2);
                 }
                 //
                 if (p.Талон_Россия_24 != null)
                 {
-                    table = WordDocument.CreateTable(p.Талон_Россия_24);
-                    table2 = WordDocument.CreateTable(p.Талон_Россия_24);
+                    table = WordDocument.CreateTable(p.Талон_Россия_24, p.Талон_Россия_24.CommonTalon);
+                    table2 = WordDocument.CreateTable(p.Талон_Россия_24, p.Талон_Россия_24.CommonTalon);
                     doc.SetBookmarkTable($"Талон_5", table);
                     doc.SetBookmarkTable($"Талон_5_2", table2);
                 }

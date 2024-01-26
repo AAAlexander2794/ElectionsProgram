@@ -26,6 +26,7 @@ namespace ElectionsProgram.Commands
         {
             try
             {
+                //
                 string protocolFolder = $@"{_viewModel.SettingsFilePathes.Каталог_документов}{_viewModel.SettingsFilePathes.Протоколы_Выходной_каталог}";
                 string templatePath = $@"{_viewModel.SettingsFilePathes.Каталог_настроек}{_viewModel.SettingsFilePathes.Протоколы_Шаблон_Кандидаты}";
                 ProtocolCandidatesBuilder.BuildProtocolsCandidates(

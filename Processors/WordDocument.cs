@@ -154,7 +154,7 @@ namespace ElectionsProgram.Processors
         /// </remarks>
         /// <param name="talon"></param>
         /// <returns></returns>
-        public static Table CreateTable(Talon talon)
+        public static Table CreateTable(Talon talon, Talon? commonTalon = null)
         {
             if (talon == null) return null;
             // 
@@ -223,6 +223,25 @@ namespace ElectionsProgram.Processors
                 tr.Append(tc1, tc2, tc3, tc4, tc5);
                 //
                 table.Append(tr);
+            }
+            // Если есть талон общего вещания
+            if (commonTalon != null)
+            {
+                foreach (var row in commonTalon.TalonRecords)
+                {
+                    //
+                    TableRow tr = new TableRow();
+                    //
+                    TableCell tc1 = new TableCell(CreateParagraph($"{row.View.MediaresourceName}"));
+                    TableCell tc2 = new TableCell(CreateParagraph($"{row.View.Date}"));
+                    TableCell tc3 = new TableCell(CreateParagraph($"{row.View.Time}"));
+                    TableCell tc4 = new TableCell(CreateParagraph($"{row.View.Duration}"));
+                    TableCell tc5 = new TableCell(CreateParagraph($"Совместные агитационные мероприятия"));
+                    //
+                    tr.Append(tc1, tc2, tc3, tc4, tc5);
+                    //
+                    table.Append(tr);
+                }
             }
             return table;
         }
