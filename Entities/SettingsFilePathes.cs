@@ -288,6 +288,14 @@ namespace ElectionsProgram.Entities
 
         #region Кандидаты
 
+        public string Кандидаты_Таблица { get => _view.Кандидаты_Таблица;
+        set
+            {
+                _view.Кандидаты_Таблица = value;
+                OnPropertyChanged();
+            }
+        }
+
         // Талоны бесплатные
 
         public string Кандидаты_Талоны_Россия_1 { get => _view.Кандидаты_Талоны_Россия_1; 

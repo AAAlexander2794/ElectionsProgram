@@ -39,7 +39,8 @@ namespace ElectionsProgram.Commands
             try
             {
                 // Читаем Excel
-                DataTable dt = ExcelProcessor.LoadFromExcel(@"Настройки/Партии/Партии.xlsx");
+                DataTable dt = ExcelProcessor.LoadFromExcel($"{_vm.SettingsFilePathes.Каталог_настроек}" +
+                    $"{_vm.SettingsFilePathes.Партии_Таблица}");
                 // Формируем список представления партии (PartyView) из DataTable
                 var partyViews = dt.ToList<PartyView>();
                 // Создаем новую коллекцию партий в VM

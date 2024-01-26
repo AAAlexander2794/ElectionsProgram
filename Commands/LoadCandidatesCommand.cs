@@ -34,7 +34,8 @@ namespace ElectionsProgram.Commands
             try
             {
                 // Читаем Excel
-                DataTable dt = ExcelProcessor.LoadFromExcel(@"Настройки/Кандидаты/Кандидаты.xlsx");
+                DataTable dt = ExcelProcessor.LoadFromExcel($"{_vm.SettingsFilePathes.Каталог_настроек}" +
+                    $"{_vm.SettingsFilePathes.Кандидаты_Таблица}");
                 // Формируем список представления кандидатов (CandidatesView) из DataTable
                 var candidatesViews = dt.ToList<CandidateView>();
                 // Новый список кандидатов в VM

@@ -44,6 +44,8 @@ namespace ElectionsProgram.Builders
             // Оставляем записи только заданного медиаресурса
             records = records.Where(x => x.View.MediaresourceName == mediaResource).ToList();
             //
+            int rowCount = 1;
+            //
             foreach (var record in records)
             {
                 dt.Rows.Add();
@@ -57,10 +59,28 @@ namespace ElectionsProgram.Builders
                 dt.Rows[dt.Rows.Count - 1][7] = "";
                 dt.Rows[dt.Rows.Count - 1][8] = record.View.BroadcastForm;
                 dt.Rows[dt.Rows.Count - 1][9] = record.View.BroadcastCaption;
+                //
+                rowCount++;
             }
             // Запись в файл Excel
             XLWorkbook wb = new XLWorkbook();
-            wb.Worksheets.Add(dt, "Отчет");
+            var ws = wb.Worksheets.Add(dt, "Отчет");
+            // Определяем формат столбцов
+            ws.Column(2).Style.NumberFormat.Format = "dd.mm.yyyy";
+            ws.Column(3).Style.NumberFormat.Format = "hh:mm:ss";
+            ws.Column(4).Style.NumberFormat.Format = "hh:mm:ss";
+            // Столбцы по ширине содержимого
+            ws.Column(1).AdjustToContents();
+            ws.Column(2).AdjustToContents();
+            ws.Column(3).AdjustToContents();
+            ws.Column(4).AdjustToContents();
+            ws.Column(5).AdjustToContents();
+            ws.Column(6).AdjustToContents();
+            ws.Column(7).AdjustToContents();
+            ws.Column(8).AdjustToContents();
+            ws.Column(9).AdjustToContents();
+            ws.Column(10).AdjustToContents();
+            //
             wb.SaveAs(filePath);
             //
             return dt;
