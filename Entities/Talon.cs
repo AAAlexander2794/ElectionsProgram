@@ -11,7 +11,7 @@ namespace ElectionsProgram.Entities
 {
     public class Talon
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
 
         /// <summary>
         /// Медиаресурс, к которому относится талон

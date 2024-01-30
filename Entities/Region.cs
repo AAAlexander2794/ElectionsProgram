@@ -13,7 +13,13 @@ namespace ElectionsProgram.Entities
     {
         public string Номер { get; set; } = "";
 
-        public string Название_Падеж_им { get; set; } = "";
+        private string _название_Падеж_им = "Без округа";
+        public string Название_Падеж_им { get => _название_Падеж_им; 
+            set
+            { 
+                if (value != "") _название_Падеж_им = value;
+            }
+        }
 
         public string Название_Падеж_дат { get; set; } = "";
 

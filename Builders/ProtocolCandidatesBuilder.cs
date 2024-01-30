@@ -37,9 +37,11 @@ namespace ElectionsProgram.Builders
             // По каждому округу делаем свои 5 протоколов на каждое СМИ
             foreach (var region in regions)
             {
+                // 
+                string regionFolder = $"{region.Номер.Trim()} {region.Название_Падеж_им.Trim()}\\";
                 // Формируем путь к документу (с промежуточной папкой текущего времени)
-                var resultPath = $"{protocolFolderPath}{subfolder}\\" +
-                    $"{region.Номер.Trim()} {region.Название_Падеж_им.Trim()}\\";
+                var resultPath = $"{protocolFolderPath}{subfolder}\\" + regionFolder;
+                    
                 // Надо очистить путь от знаков, которыми нельзя называть каталоги
                 resultPath = Regex.Replace(resultPath, "\"", "");
                 // Создает путь для документов, если вдруг каких-то папок нет
@@ -317,7 +319,7 @@ namespace ElectionsProgram.Builders
             List<string> lines =
             [
                 // Добавляем номер талона
-                $"Талон № {talon.Id}"
+                $"Талон № {talon.Number}"
             ];
             //
             foreach (var row in talon.TalonRecords)
