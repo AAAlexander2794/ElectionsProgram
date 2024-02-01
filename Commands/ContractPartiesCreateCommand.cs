@@ -1,5 +1,5 @@
-﻿using ElectionsProgram.Builders;
-using ElectionsProgram.Processors;
+﻿using ElectionsProgram.Processors;
+using ElectionsProgram.Reports.Contracts;
 using ElectionsProgram.ViewModels;
 using System;
 using System.Collections.Generic;

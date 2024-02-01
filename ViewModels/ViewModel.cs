@@ -1,6 +1,8 @@
 ﻿using ElectionsProgram.Commands;
 using ElectionsProgram.Entities;
 using ElectionsProgram.Processors;
+using ElectionsProgram.Reports.Contracts;
+using ElectionsProgram.Reports.Protocols;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,7 +19,7 @@ namespace ElectionsProgram.ViewModels
     /// <summary>
     /// 
     /// </summary>
-    public class ViewModel : INotifyPropertyChanged
+    public partial class ViewModel : INotifyPropertyChanged
     {
         // Test
         private DataTable _test =
@@ -431,69 +433,7 @@ namespace ElectionsProgram.ViewModels
 
         #endregion Коллекции
 
-        #region Комманды
-
-        // 
-        public LoadMediaresourcesCommand LoadDefaultDataCommand { get; }
-
-        //
-        public LoadProtocolSettingsCommand LoadProtocolSettingsCommand { get; }
-
         
-
-        #region Команды для партий
-
-        /// <summary>
-        /// Загрузка партий
-        /// </summary>
-        public LoadPartiesCommand LoadPartiesCommand { get; }
-        /// <summary>
-        /// Загрузка талонов партий (и общего вещания)
-        /// </summary>
-        public LoadPartiesTalonsCommand LoadPartiesTalonsCommand { get; }
-        /// <summary>
-        /// Жеребьевка партий
-        /// </summary>
-        public MatchPartiesAndTalonsCommand MatchPartiesAndTalonsCommand { get; }
-        /// <summary>
-        /// Создание протоколов партий
-        /// </summary>
-        public CreateProtocolsPartiesCommand CreateProtocolsPartiesCommand { get; }
-        /// <summary>
-        /// Жеребьевка партий. Выполняет поочередно все нужные команды для создания протоколов.
-        /// </summary>
-        public DrawPartiesCommand DrawPartiesCommand { get; }
-        /// <summary>
-        /// Договоры партий
-        /// </summary>
-        public ContractPartiesCreateCommand ContractPartiesCreateCommand { get; }
-
-        public SavePartiesToExcelCommand SavePartiesToExcelCommand { get; }
-
-        #endregion Команды для партий
-
-        #region Команды для кандидатов
-
-        public LoadCandidatesCommand LoadCandidatesCommand { get; }
-        public LoadCandidatesTalonsCommand LoadCandidatesTalonsCommand { get; }
-        public MatchCandidatesAndTalonsCommand MatchCandidatesAndTalonsCommand { get; }
-        public CreateProtocolsCandidatesCommand CreateProtocolsCandidatesCommand { get; }
-        public DrawCandidatesCommand DrawCandidatesCommand { get; }
-        public ContractCandidatesCreateCommand ContractCandidatesCreateCommand { get; }
-
-        #endregion Команды для кандидатов
-
-        // Команды настроек
-        public SettingsPathesLoadCommand SettingsPathesLoadCommand { get; }
-        public SettngsPathesSaveCommand SettngsPathesSaveCommand { get; }
-
-        //
-        public PlaylistCreateCommand PlaylistCreateCommand { get; }
-
-        //
-        public TotalReportCreateCommand TotalReportCreateCommand { get; }
-
-        #endregion Комманды
 
         #region Конструкторы
 

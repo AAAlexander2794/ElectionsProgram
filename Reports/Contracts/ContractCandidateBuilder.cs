@@ -10,7 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElectionsProgram.Builders
+namespace ElectionsProgram.Reports.Contracts
 {
     public static class ContractCandidateBuilder
     {
@@ -68,7 +68,7 @@ namespace ElectionsProgram.Builders
             return count;
         }
 
-       
+
         /// <summary>
         /// Захардкоженное присваивание значений местам в документе.
         /// </summary>

@@ -9,15 +9,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElectionsProgram.Builders
+namespace ElectionsProgram.Reports.Protocols
 {
     /// <summary>
     /// Строит протоколы жеребьевки партий по определенному шаблону.
     /// </summary>
     public static class ProtocolPartyBuilder
     {
-        
-        
+
+
         /// <summary>
         /// 
         /// </summary>
@@ -27,9 +27,9 @@ namespace ElectionsProgram.Builders
         /// </remarks>
         /// <returns></returns>
         public static void CreateProtocolsParties(
-            List<Party> parties, 
-            SettingsForProtocols settingsForProtocols, 
-            string protocolFolderPath, 
+            List<Party> parties,
+            SettingsForProtocols settingsForProtocols,
+            string protocolFolderPath,
             string templatePath)
         {
             var _folderPath = $"{protocolFolderPath}{DateTime.Now.ToString().Replace(":", "_")}\\";
@@ -63,7 +63,7 @@ namespace ElectionsProgram.Builders
         private static void CreateProtocol(Party party, SettingsForProtocols settings, string templatePath, string resultPath, string mediaresource)
         {
             //
-            List<string> partyName = new List<string>() 
+            List<string> partyName = new List<string>()
             {
                 $"{party.View.Кандидат_Фамилия_Падеж_им} " +
                 $"{party.View.Кандидат_Имя_Падеж_им} " +
@@ -75,7 +75,7 @@ namespace ElectionsProgram.Builders
             // Если представитель партии явился (и тянул талон)
             if (party.View.Явка == "1")
             {
-                personName.Add(party.Представитель_Фамилия_ИО);   
+                personName.Add(party.Представитель_Фамилия_ИО);
             }
             // Если представитель партии не явился, подписывает член избиркома
             else
@@ -83,8 +83,8 @@ namespace ElectionsProgram.Builders
                 personName.Add($"{settings.View.Партии_Член_изб_ком_Фамилия_ИО}");
             }
             //
-            List<string> date = new List<string>() 
-            { 
+            List<string> date = new List<string>()
+            {
                 $"{settings.View.Партии_Дата}"
             };
             //
@@ -142,8 +142,8 @@ namespace ElectionsProgram.Builders
         /// </summary>
         /// <param name="talon"></param>
         /// <returns></returns>
-        static Table CreateTableParty(Talon? talon, 
-            List<string> Row2CellText, 
+        static Table CreateTableParty(Talon? talon,
+            List<string> Row2CellText,
             List<string> Row5CellText,
             List<string> Row6CellText)
         {
@@ -287,5 +287,5 @@ namespace ElectionsProgram.Builders
 
 
     }
-    
+
 }

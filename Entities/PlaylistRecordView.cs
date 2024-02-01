@@ -57,5 +57,17 @@ namespace ElectionsProgram.Entities
         [DisplayName("Название ролика/тема дебатов")]
         public string BroadcastCaption { get; set; } = "";
 
+        // Для финансовой части
+
+        /// <summary>
+        /// Тариф в рублях за минуту
+        /// </summary>
+        public string Tariff { get; set; } = "";
+
+        /// <summary>
+        /// Итоговая стоимость в зависимости от хронометража
+        /// </summary>
+        public string Price { get; set; } = "";
+
     }
 }

@@ -21,7 +21,14 @@ namespace ElectionsProgram.Entities
 
         public int Id { get; set; }
 
-        public string Фамилия_ИО { get; } = "";
+        private string _фамилия_ИО = "";
+        public string Фамилия_ИО { get => _фамилия_ИО;
+            private set
+            {
+                _фамилия_ИО = value;
+                OnPropertyChanged();
+            }
+        }
         public string ИО_Фамилия { get; } = "";
         public string Представитель_ИО_Фамилия { get; } = "";
 

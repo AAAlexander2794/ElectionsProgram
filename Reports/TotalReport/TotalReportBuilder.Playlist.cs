@@ -49,6 +49,8 @@ namespace ElectionsProgram.Builders.TotalReport
                 dt.Columns.Add($"Дата выхода в эфир");
                 dt.Columns.Add($"Время выхода в эфир");
                 dt.Columns.Add($"Объем фактически использованного эфирного времени");
+                dt.Columns.Add($"Тариф вещания");
+                dt.Columns.Add($"Итоговая стоимость");
                 //
                 dt.Rows.Add();
                 dt.Rows[dt.Rows.Count - 1][0] = "1";
@@ -57,6 +59,8 @@ namespace ElectionsProgram.Builders.TotalReport
                 dt.Rows[dt.Rows.Count - 1][3] = "4";
                 dt.Rows[dt.Rows.Count - 1][4] = "5";
                 dt.Rows[dt.Rows.Count - 1][5] = "6";
+                dt.Rows[dt.Rows.Count - 1][6] = "7";
+                dt.Rows[dt.Rows.Count - 1][7] = "8";
                 // Счетчик клиентов
                 int count = 1;
                 //
@@ -83,6 +87,9 @@ namespace ElectionsProgram.Builders.TotalReport
                         dt.Rows[dt.Rows.Count - 1][3] = $"{record.Date.ToShortDateString()}";
                         dt.Rows[dt.Rows.Count - 1][4] = $"{record.Time.ToLongTimeString()}";
                         dt.Rows[dt.Rows.Count - 1][5] = $"{record.DurationActual}";
+                        // Стоимости
+                        dt.Rows[dt.Rows.Count - 1][6] = $"{record.Tariff}";
+                        dt.Rows[dt.Rows.Count - 1][7] = $"{record.Price}";
                     }
                     if (client.GetTotalDurationActual() != TimeSpan.Zero)
                     {

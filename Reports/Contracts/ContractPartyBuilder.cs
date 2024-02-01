@@ -9,13 +9,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ElectionsProgram.Builders
+namespace ElectionsProgram.Reports.Contracts
 {
     public static class ContractPartyBuilder
     {
         public static int BuildContractsParties(
-            List<Party> parties, 
-            string contractsFolderPath, 
+            List<Party> parties,
+            string contractsFolderPath,
             string partiesContractTemplatePath_РВ,
             string partiesContractTemplatePath_ТВ)
         {

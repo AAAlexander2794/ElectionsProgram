@@ -63,6 +63,16 @@ namespace ElectionsProgram.Entities
         /// </summary>
         public string BroadcastCaption { get; set; } = "";
 
+        /// <summary>
+        /// Тариф в рублях за минуту
+        /// </summary>
+        public double Tariff { get; set; }
+
+        /// <summary>
+        /// Итоговая стоимость в зависимости от хронометража
+        /// </summary>
+        public double Price { get; set; }
+
         public PlaylistRecord(PlaylistRecordView view)
         {
             View = view;
@@ -83,6 +93,10 @@ namespace ElectionsProgram.Entities
             //
             BroadcastForm = View.BroadcastForm;
             BroadcastCaption = View.BroadcastCaption;
+            //
+            Tariff = ParseStringToDouble(View.Tariff);
+            //
+            Price = CalculatePrice(DurationActual, Tariff);
         }
 
         public static DateTime? ParseStringToDateTime(string str)
@@ -115,6 +129,32 @@ namespace ElectionsProgram.Entities
             return null;
         }
 
+        public static double ParseStringToDouble(string str)
+        {
+            if (string.IsNullOrEmpty(str.Trim())) return 0;
+            // Пробуем парсить
+            double d;
+            //
+            bool success = double.TryParse(str, out d);
+            //
+            if (success)
+            {
+                return d;
+            }
+            return 0;
+        }
+
+        public static double CalculatePrice(TimeSpan? duration, double tariff)
+        {
+            if (!duration.HasValue) return 0;
+            // Берем секунды
+            double seconds = duration.Value.TotalSeconds;
+            // Тариф поминутный, считаем через секунды как части минуты
+            double price = seconds * tariff / 60;
+            //
+            return price;
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -132,7 +172,9 @@ namespace ElectionsProgram.Entities
                 DurationNominal = View.DurationNominal,
                 MediaresourceName = View.MediaresourceName,
                 RegionNumber = View.RegionNumber,
-                Time = View.Time
+                Time = View.Time,
+                Tariff = View.Tariff,
+                Price = View.Price
             };
             return view;
         }

@@ -1,5 +1,5 @@
-﻿using ElectionsProgram.Builders;
-using ElectionsProgram.Processors;
+﻿using ElectionsProgram.Processors;
+using ElectionsProgram.Reports.Protocols;
 using ElectionsProgram.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -34,8 +34,8 @@ namespace ElectionsProgram.Commands
                 //
                 string protocolFolder = $@"{_viewModel.SettingsFilePathes.Каталог_документов}{_viewModel.SettingsFilePathes.Протоколы_Выходной_каталог}";
                 string templatePath = $@"{_viewModel.SettingsFilePathes.Каталог_настроек}{_viewModel.SettingsFilePathes.Протоколы_Шаблон_Партии}";
-                ProtocolPartyBuilder.CreateProtocolsParties(_viewModel.Parties.ToList(), 
-                    _viewModel.ProtocolSettings, 
+                ProtocolPartyBuilder.CreateProtocolsParties(_viewModel.Parties.ToList(),
+                    _viewModel.ProtocolSettings,
                     protocolFolder,
                     templatePath);
                 //

@@ -10,7 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace ElectionsProgram.Builders
+namespace ElectionsProgram.Reports.Protocols
 {
     /// <summary>
     /// Строит протоколы жеребьевки кандидатов по определенному шаблону.
@@ -41,7 +41,7 @@ namespace ElectionsProgram.Builders
                 string regionFolder = $"{region.Номер.Trim()} {region.Название_Падеж_им.Trim()}\\";
                 // Формируем путь к документу (с промежуточной папкой текущего времени)
                 var resultPath = $"{protocolFolderPath}{subfolder}\\" + regionFolder;
-                    
+
                 // Надо очистить путь от знаков, которыми нельзя называть каталоги
                 resultPath = Regex.Replace(resultPath, "\"", "");
                 // Создает путь для документов, если вдруг каких-то папок нет
@@ -209,7 +209,7 @@ namespace ElectionsProgram.Builders
             }
             // Для строки Итого со всех кандидатов длительность берем (талонов и общего вещания)
             TimeSpan duration = TimeSpan.Zero;
-            TimeSpan durationCommonRecords =TimeSpan.Zero;
+            TimeSpan durationCommonRecords = TimeSpan.Zero;
             // По каждому кандидату из протокола
             for (int i = 0; i < region.Candidates.Count; i++)
             {
@@ -308,10 +308,10 @@ namespace ElectionsProgram.Builders
         }
 
         private static TableRow CreateRowProtocolCandidates(
-            Candidate candidate, 
-            Talon talon, 
-            string mediaresource, 
-            int i, 
+            Candidate candidate,
+            Talon talon,
+            string mediaresource,
+            int i,
             string row5Text,
             string row6Text)
         {
@@ -356,6 +356,6 @@ namespace ElectionsProgram.Builders
             return tr;
         }
 
-        
+
     }
 }

@@ -317,7 +317,7 @@
                                         <ListBox.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel>
-                                                    <TextBlock Text="{Binding Path=Фамилия_И_О}" />
+                                                    <TextBlock Text="{Binding Path=Фамилия_ИО}" />
                                                     <TextBlock Text="{Binding Path=View.Округ_Номер}"/>
                                                     <StackPanel Orientation="Horizontal">
                                                         <StackPanel>

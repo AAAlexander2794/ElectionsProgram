@@ -1,5 +1,5 @@
-﻿using ElectionsProgram.Builders;
-using ElectionsProgram.Processors;
+﻿using ElectionsProgram.Processors;
+using ElectionsProgram.Reports.Contracts;
 using ElectionsProgram.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -44,7 +44,7 @@ namespace ElectionsProgram.Commands
                 //
                 Logger.Add($"Договоры кандидатов созданы: {count}.");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
