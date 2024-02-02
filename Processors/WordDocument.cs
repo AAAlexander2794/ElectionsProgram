@@ -4,6 +4,7 @@ using DocumentFormat.OpenXml.Wordprocessing;
 using ElectionsProgram.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -198,6 +199,17 @@ namespace ElectionsProgram.Processors
             table.Append(tblProp);
             //
             TableRow trHead = new TableRow();
+
+            //// test
+            //trHead.Append(new TableCell(CreateParagraph($"Название радиоканала")));
+            //trHead.Append(new TableCell(CreateParagraph($"Дата выхода в эфир")));
+            //trHead.Append(new TableCell(CreateParagraph($"Время выхода \r\nв эфир")));
+            //trHead.Append(new TableCell(CreateParagraph($"Хронометраж")));
+            //    trHead.Append(new TableCell(CreateParagraph($"Вид (форма) предвыборной агитации\r\n" +
+            //    $"(Материалы, Совместные агитационные мероприятия)"))
+            //    );
+
+            //
             trHead.Append(
                 new TableCell(CreateParagraph($"Название радиоканала")),
                 new TableCell(CreateParagraph($"Дата выхода в эфир")),
@@ -252,34 +264,17 @@ namespace ElectionsProgram.Processors
         /// <param name="text"></param>
         /// <param name="style">Для выбора различных дополнений текста типа выравнивания по центру</param>
         /// <returns></returns>
-        public static Paragraph CreateParagraph(string text, string style = "default")
+        public static Paragraph CreateParagraph(string text, string style = "default", string textSize = "12")
         {
-            var paragraph = new Paragraph();
-            var run = new Run();
-            var runText = new Text($"{text}");
+            List<string> lines = new List<string>();
             //
-            RunProperties runProperties = new RunProperties();
-            FontSize size = new FontSize();
-            size.Val = StringValue.FromString("18");
-            runProperties.Append(size);
-            //
-            run.Append(runProperties);
-            run.Append(runText);
-            //
-            if (style == "alignmentCenter")
+            var some = text.Split("\r\n");
+            for (int i = 0; i < some.Length; i++)
             {
-                Justification justification = new Justification()
-                {
-                    Val = JustificationValues.Center
-                };
-                var prProp = new ParagraphProperties();
-                prProp.Append(justification);
-                paragraph.Append(prProp);
+                lines.Add(some[i]);
             }
             //
-            paragraph.Append(run);
-            //
-            return paragraph;
+            return CreateParagraph(lines, textSize, style);
         }
 
         /// <summary>
@@ -287,7 +282,7 @@ namespace ElectionsProgram.Processors
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
-        public static Paragraph CreateParagraph(List<string> lines, string textSize = "12")
+        public static Paragraph CreateParagraph(List<string> lines, string textSize = "12", string style = "default")
         {
             var paragraph = new Paragraph();
             var run = new Run();
@@ -309,6 +304,17 @@ namespace ElectionsProgram.Processors
             runProperties.Append(size);
             //
             run.Append(runProperties);
+            //
+            if (style == "alignmentCenter")
+            {
+                Justification justification = new Justification()
+                {
+                    Val = JustificationValues.Center
+                };
+                var prProp = new ParagraphProperties();
+                prProp.Append(justification);
+                paragraph.Append(prProp);
+            }
             paragraph.Append(run);
             //
             return paragraph;
@@ -351,6 +357,89 @@ namespace ElectionsProgram.Processors
             };
             //
             return tr;
+        }
+
+        /// <summary>
+        /// Создает таблицу на основе данных из <see cref="DataTable"/>.
+        /// </summary>
+        /// <param name="dataTable"></param>
+        /// <returns></returns>
+        public static Table CreateTable(DataTable dataTable, string textSize = "12")
+        {
+            // 
+            Table table = new Table();
+            //
+            TableProperties tblProp = new TableProperties();
+            TableBorders tblBorders = new TableBorders()
+            {
+                BottomBorder = new BottomBorder()
+                {
+                    Size = 4,
+                    Val = BorderValues.Single
+                },
+                TopBorder = new TopBorder()
+                {
+                    Size = 4,
+                    Val = BorderValues.Single
+                },
+                LeftBorder = new LeftBorder()
+                {
+                    Size = 4,
+                    Val = BorderValues.Single
+                },
+                RightBorder = new RightBorder()
+                {
+                    Size = 4,
+                    Val = BorderValues.Single
+                },
+                InsideHorizontalBorder = new InsideHorizontalBorder()
+                {
+                    Size = 4,
+                    Val = BorderValues.Single
+                },
+                InsideVerticalBorder = new InsideVerticalBorder()
+                {
+                    Size = 4,
+                    Val = BorderValues.Single
+                }
+            };
+            tblProp.Append(tblBorders);
+            table.Append(tblProp);
+            //
+            TableRow trHead = new TableRow();
+            foreach (DataColumn item in dataTable.Columns)
+            {
+                trHead.Append(new TableCell(CreateParagraph($"{item.Caption}", textSize)));
+                // Размер ячейки по содержимому
+                trHead.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+            }
+            // Добавляем строку заголовков
+            table.Append(trHead);
+            // По всем строкам таблицы данных
+            foreach (DataRow row in dataTable.Rows)
+            {
+                //
+                TableRow tr = new TableRow();
+                // По всем ячейкам строки
+                foreach(var item in row.ItemArray)
+                {
+                    if (item == null)
+                    {
+                        // Добавляем пустую ячейку
+                        tr.Append(new TableCell(CreateParagraph($"", textSize)));
+                    }
+                    else
+                    {
+                        tr.Append(new TableCell(CreateParagraph($"{item}", textSize)));
+                        // Размер ячейки по содержимому
+                        tr.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+                    }
+                }
+                //
+                table.Append(tr);
+            }
+            //
+            return table;
         }
 
     }

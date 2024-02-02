@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -92,6 +93,14 @@ namespace ElectionsProgram.Entities
                 _view.Протоколы_Настройки = value; 
                 OnPropertyChanged();
             } 
+        }
+
+        public string Протоколы_Шаблон_общий { get => _view.Протоколы_Шаблон_общий;
+        set
+            {
+                _view.Протоколы_Шаблон_общий = value;
+                OnPropertyChanged();
+            }
         }
 
         #endregion Протоколы

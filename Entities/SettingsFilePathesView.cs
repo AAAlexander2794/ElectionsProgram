@@ -29,6 +29,8 @@ namespace ElectionsProgram.Entities
 
         public string Протоколы_Настройки { get; set; } = @"\Протоколы\Протоколы.xlsx";
 
+        public string Протоколы_Шаблон_общий { get; set; } = @"\Протоколы\Шаблон протокола.dotx";
+
         #endregion Протоколы
 
         #region Договоры

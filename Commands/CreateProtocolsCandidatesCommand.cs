@@ -26,16 +26,29 @@ namespace ElectionsProgram.Commands
         {
             try
             {
+                ////
+                //string protocolFolder = $@"{_viewModel.SettingsFilePathes.Каталог_документов}{_viewModel.SettingsFilePathes.Протоколы_Выходной_каталог}";
+                //string templatePath = $@"{_viewModel.SettingsFilePathes.Каталог_настроек}{_viewModel.SettingsFilePathes.Протоколы_Шаблон_Кандидаты}";
+                //ProtocolCandidatesBuilder.BuildProtocolsCandidates(
+                //    _viewModel.Regions.ToList(),
+                //    _viewModel.ProtocolSettings,
+                //    protocolFolder,
+                //    templatePath);
+                ////
+                //Logger.Add("Протоколы кандидатов созданы.");
+
+                //
                 //
                 string protocolFolder = $@"{_viewModel.SettingsFilePathes.Каталог_документов}{_viewModel.SettingsFilePathes.Протоколы_Выходной_каталог}";
-                string templatePath = $@"{_viewModel.SettingsFilePathes.Каталог_настроек}{_viewModel.SettingsFilePathes.Протоколы_Шаблон_Кандидаты}";
-                ProtocolCandidatesBuilder.BuildProtocolsCandidates(
-                    _viewModel.Regions.ToList(),
+                string templatePath = $@"{_viewModel.SettingsFilePathes.Каталог_настроек}{_viewModel.SettingsFilePathes.Протоколы_Шаблон_общий}";
+                ProtocolPresident2024.BuildProtocols(
+                    _viewModel.Candidates.ToList(),
+                    _viewModel.Parties.ToList(),
                     _viewModel.ProtocolSettings,
                     protocolFolder,
                     templatePath);
                 //
-                Logger.Add("Протоколы кандидатов созданы.");
+                Logger.Add("Протоколы созданы.");
             }
             catch (Exception ex)
             {

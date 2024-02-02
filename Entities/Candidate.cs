@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocumentFormat.OpenXml.Wordprocessing;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace ElectionsProgram.Entities
     /// <summary>
     /// Кандидат на выборы
     /// </summary>
-    public class Candidate : INotifyPropertyChanged
+    public class Candidate : INotifyPropertyChanged, IComparable<Candidate>
     {
         private Talon? талон_Россия_1;
         private Talon? талон_Россия_24;
@@ -81,6 +82,12 @@ namespace ElectionsProgram.Entities
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public int CompareTo(Candidate? other)
+        {
+            if (other is Candidate candidate) return View.Фамилия.CompareTo(candidate.View.Фамилия);
+            else throw new ArgumentException("Некорректное значение параметра");
         }
     }
 }
