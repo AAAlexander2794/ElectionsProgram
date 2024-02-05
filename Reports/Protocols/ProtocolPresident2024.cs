@@ -97,12 +97,12 @@ namespace ElectionsProgram.Reports.Protocols
             // Вставляем таблицу c талонами кандидатов
             document.SetBookmarkText($"Таблица_кандидатов", "");
             var dtCandidates = CreateDataTableCandidates(candidates, mediaresource, settings);
-            var tableCandidates = WordDocument.CreateTable(dtCandidates, "8");
+            var tableCandidates = WordDocument.CreateTable(dtCandidates, "20");
             document.SetBookmarkTable($"Таблица_кандидатов", tableCandidates);
             // Вставляем таблицу с талонами партий
             document.SetBookmarkText($"Таблица_партий", "");
             var dtParties = CreateDataTableParties(parties, mediaresource, settings);
-            var tableParties = WordDocument.CreateTable(dtParties, "8");
+            var tableParties = WordDocument.CreateTable(dtParties, "20");
             document.SetBookmarkTable($"Таблица_партий", tableParties);
             // Сохраняем и закрываем документ
             document.Save(resultPath + $"{fileName}");
@@ -138,14 +138,16 @@ namespace ElectionsProgram.Reports.Protocols
             dt.Columns.Add($"Подпись зарегистрированного кандидата (его представителя), " +
                 $"участвовавшего в жеребьевке (члена соответствующей избирательной " +
                 $"комиссии с правом решающего голоса), и дата подписания");
-            // Добавляем строчку с нумерованием столбцов
-            dt.Rows.Add();
-            dt.Rows[dt.Rows.Count - 1][0] = "1";
-            dt.Rows[dt.Rows.Count - 1][1] = "2";
-            dt.Rows[dt.Rows.Count - 1][2] = "3";
-            dt.Rows[dt.Rows.Count - 1][3] = "4";
-            dt.Rows[dt.Rows.Count - 1][4] = "5";
-            dt.Rows[dt.Rows.Count - 1][5] = "6";
+            
+            //// Добавляем строчку с нумерованием столбцов
+            //dt.Rows.Add();
+            //dt.Rows[dt.Rows.Count - 1][0] = "1";
+            //dt.Rows[dt.Rows.Count - 1][1] = "2";
+            //dt.Rows[dt.Rows.Count - 1][2] = "3";
+            //dt.Rows[dt.Rows.Count - 1][3] = "4";
+            //dt.Rows[dt.Rows.Count - 1][4] = "5";
+            //dt.Rows[dt.Rows.Count - 1][5] = "6";
+
             // Для строки Итого со всех кандидатов длительность берем (талонов и общего вещания)
             TimeSpan duration = TimeSpan.Zero;
             TimeSpan durationCommonRecords = TimeSpan.Zero;
@@ -290,7 +292,7 @@ namespace ElectionsProgram.Reports.Protocols
                 }
             }
             // 
-            dataRow[0] = $"{i + 1}";
+            dataRow[0] = $"{i}";
             dataRow[1] = $"{candidate.View.Фамилия} {candidate.View.Имя} {candidate.View.Отчество}";
             dataRow[2] = $"{commonTalonText}";
             dataRow[3] = $"{talonText}";
@@ -323,14 +325,16 @@ namespace ElectionsProgram.Reports.Protocols
             dt.Columns.Add($"Подпись представителя политической партии, " +
                 $"участвовавшего в жеребьевке (члена соответствующей " +
                 $"избирательной комиссии с правом решающего голоса), и дата подписания");
-            // Добавляем строчку с нумерованием столбцов
-            dt.Rows.Add();
-            dt.Rows[dt.Rows.Count - 1][0] = "1";
-            dt.Rows[dt.Rows.Count - 1][1] = "2";
-            dt.Rows[dt.Rows.Count - 1][2] = "3";
-            dt.Rows[dt.Rows.Count - 1][3] = "4";
-            dt.Rows[dt.Rows.Count - 1][4] = "5";
-            dt.Rows[dt.Rows.Count - 1][5] = "6";
+            
+            //// Добавляем строчку с нумерованием столбцов
+            //dt.Rows.Add();
+            //dt.Rows[dt.Rows.Count - 1][0] = "1";
+            //dt.Rows[dt.Rows.Count - 1][1] = "2";
+            //dt.Rows[dt.Rows.Count - 1][2] = "3";
+            //dt.Rows[dt.Rows.Count - 1][3] = "4";
+            //dt.Rows[dt.Rows.Count - 1][4] = "5";
+            //dt.Rows[dt.Rows.Count - 1][5] = "6";
+
             // Для строки Итого со всех кандидатов длительность берем (талонов и общего вещания)
             TimeSpan duration = TimeSpan.Zero;
             TimeSpan durationCommonRecords = TimeSpan.Zero;
@@ -461,7 +465,7 @@ namespace ElectionsProgram.Reports.Protocols
                 }
             }
             // 
-            dataRow[0] = $"{i + 1}";
+            dataRow[0] = $"{i}";
             dataRow[1] = $"{party.View.Кандидат_Фамилия_Падеж_им} {party.View.Представитель_Имя_Падеж_им} {party.View.Представитель_Отчество_Падеж_им}";
             dataRow[2] = $"{commonTalonText}";
             dataRow[3] = $"{talonText}";

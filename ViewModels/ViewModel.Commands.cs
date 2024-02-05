@@ -15,6 +15,8 @@ namespace ElectionsProgram.ViewModels
         //
         public LoadProtocolSettingsCommand LoadProtocolSettingsCommand { get; }
 
+        public DrawPresidentCommand DrawPresidentCommand { get; }
+
 
 
         #region Команды для партий

@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace ElectionsProgram.Commands
 {
-    public class DrawCandidatesCommand(ViewModel viewModel) : ICommand
+    public class DrawPresidentCommand(ViewModel viewModel) : ICommand
     {
         public event EventHandler? CanExecuteChanged;
 
@@ -29,19 +29,28 @@ namespace ElectionsProgram.Commands
                 _vm.LoadCandidatesCommand.Execute(null);
                 // Загрузка талонов и общего вещания
                 _vm.LoadCandidatesTalonsCommand.Execute(null);
-                // Сопоставление талонов партиям
+                // Сопоставление талонов
                 _vm.MatchCandidatesAndTalonsCommand.Execute(null);
                 // Загрузка настроек протокола
                 _vm.LoadProtocolSettingsCommand.Execute(null);
+                
+
+                // Загрузка партий
+                _vm.LoadPartiesCommand.Execute(null);
+                // Загрузка талонов и общего вещания
+                _vm.LoadPartiesTalonsCommand.Execute(null);
+                // Сопоставление талонов партиям
+                _vm.MatchPartiesAndTalonsCommand.Execute(null);
+
                 // Создание протоколов
                 _vm.CreateProtocolsCandidatesCommand.Execute(null);
                 //
-                string message = $"Жеребьевка кандидатов проведена.\n" +
-                    $"Обработано кандидатов: {_vm.Candidates.Count}.";
+                string message = $"Жеребьевка проведена.\n" +
+                    $"";
                 Logger.Add(message);
                 MessageBox.Show(message);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }

@@ -264,7 +264,7 @@ namespace ElectionsProgram.Processors
         /// <param name="text"></param>
         /// <param name="style">Для выбора различных дополнений текста типа выравнивания по центру</param>
         /// <returns></returns>
-        public static Paragraph CreateParagraph(string text, string style = "default", string textSize = "12")
+        public static Paragraph CreateParagraph(string text, string textSize = "20", string style = "alignmentLeft")
         {
             List<string> lines = new List<string>();
             //
@@ -282,10 +282,19 @@ namespace ElectionsProgram.Processors
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
-        public static Paragraph CreateParagraph(List<string> lines, string textSize = "12", string style = "default")
+        public static Paragraph CreateParagraph(List<string> lines, string textSize = "20", string style = "alignmentLeft")
         {
             var paragraph = new Paragraph();
             var run = new Run();
+            // Настройки текста
+            RunProperties runProperties = new RunProperties();
+            // Размер текста
+            FontSize size = new FontSize();
+            size.Val = StringValue.FromString(textSize);
+            //size.Val = StringValue.FromString("20");
+            runProperties.Append(size);
+            // Перед самим текстом настройки добавляем
+            run.Append(runProperties);
             // Если список строк есть и не пустой
             if (lines != null && lines.Count > 0)
             {
@@ -298,22 +307,13 @@ namespace ElectionsProgram.Processors
                 run.AppendChild(new Text(lines[lines.Count - 1]));
             }
             //
-            RunProperties runProperties = new RunProperties();
-            FontSize size = new FontSize();
-            size.Val = StringValue.FromString(textSize);
-            runProperties.Append(size);
-            //
-            run.Append(runProperties);
-            //
             if (style == "alignmentCenter")
             {
-                Justification justification = new Justification()
-                {
-                    Val = JustificationValues.Center
-                };
-                var prProp = new ParagraphProperties();
-                prProp.Append(justification);
-                paragraph.Append(prProp);
+                paragraph.Append(new ParagraphProperties() { Justification = new Justification() { Val = JustificationValues.Center } });
+            }
+            if (style == "alignmentLeft")
+            {
+                paragraph.Append(new ParagraphProperties() { Justification = new Justification() { Val = JustificationValues.Left } });
             }
             paragraph.Append(run);
             //
@@ -336,7 +336,7 @@ namespace ElectionsProgram.Processors
                 Val = MergedCellValues.Restart,
             });
             // Делаем ячейку с текстом и добавляем ей свойство начала объединения
-            var tc = new TableCell(CreateParagraph($"{text}", "alignmentCenter"));
+            var tc = new TableCell(CreateParagraph($"{text}", "12", "alignmentCenter"));
             tc.Append(propStart);
             tr.Append(tc);
             // Цикл по количеству ячеек, которые надо объединить
@@ -364,10 +364,11 @@ namespace ElectionsProgram.Processors
         /// </summary>
         /// <param name="dataTable"></param>
         /// <returns></returns>
-        public static Table CreateTable(DataTable dataTable, string textSize = "12")
+        public static Table CreateTable(DataTable dataTable, string textSize = "20")
         {
             // 
             Table table = new Table();
+            
             //
             TableProperties tblProp = new TableProperties();
             TableBorders tblBorders = new TableBorders()
@@ -403,15 +404,25 @@ namespace ElectionsProgram.Processors
                     Val = BorderValues.Single
                 }
             };
+            ////
+            //TableWidth width = new TableWidth()
+            //{
+            //    Width = "5000",
+            //    Type = TableWidthUnitValues.Pct
+            //};
+            //tblProp.Append(width);
+            //
             tblProp.Append(tblBorders);
             table.Append(tblProp);
             //
             TableRow trHead = new TableRow();
             foreach (DataColumn item in dataTable.Columns)
             {
-                trHead.Append(new TableCell(CreateParagraph($"{item.Caption}", textSize)));
+                TableCell cell = new TableCell();
                 // Размер ячейки по содержимому
-                trHead.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+                //cell.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Dxa, Width = "50" }));
+                cell.Append(CreateParagraph($"{item.Caption}", textSize, "alignmentCenter"));
+                trHead.Append(cell);
             }
             // Добавляем строку заголовков
             table.Append(trHead);
@@ -420,20 +431,25 @@ namespace ElectionsProgram.Processors
             {
                 //
                 TableRow tr = new TableRow();
+                //// КОСТЫЛЬ устанавливаем ширину определенных ячеек
+                //int count = 0;
                 // По всем ячейкам строки
-                foreach(var item in row.ItemArray)
+                foreach (var item in row.ItemArray)
                 {
+                    TableCell cell = new TableCell();
+                    // Размер ячейки по содержимому
+                    //cell.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+                    //
                     if (item == null)
                     {
-                        // Добавляем пустую ячейку
-                        tr.Append(new TableCell(CreateParagraph($"", textSize)));
+                        cell.Append(new TableCell(CreateParagraph($"", textSize, "alignmentLeft")));
                     }
                     else
                     {
-                        tr.Append(new TableCell(CreateParagraph($"{item}", textSize)));
-                        // Размер ячейки по содержимому
-                        tr.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+                        cell.Append(CreateParagraph($"{item}", textSize, "alignmentLeft"));
                     }
+                    //
+                    tr.Append(cell);
                 }
                 //
                 table.Append(tr);

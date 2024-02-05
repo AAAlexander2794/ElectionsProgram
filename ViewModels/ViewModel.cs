@@ -459,6 +459,8 @@ namespace ElectionsProgram.ViewModels
             CreateProtocolsCandidatesCommand = new CreateProtocolsCandidatesCommand(this);
             DrawCandidatesCommand = new DrawCandidatesCommand(this);
             //
+            DrawPresidentCommand = new DrawPresidentCommand(this);
+            //
             SettingsPathesLoadCommand = new SettingsPathesLoadCommand(this);
             SettngsPathesSaveCommand = new SettngsPathesSaveCommand(this);
             // Договоры
