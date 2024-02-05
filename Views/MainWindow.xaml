@@ -20,7 +20,7 @@
                 <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Horizontal" Grid.ColumnSpan="2">
-                <Button Content="Создать договоры" Command="{Binding ContractCandidatesCreateCommand}" Margin="5"/>
+                <Button Content="Создать договоры" Command="{Binding PresidentContractsCreateCommand}" Margin="5"/>
                 <Button Content="Создать плейлист" Command="{Binding PlaylistCreateCommand}" Margin="5"/>
                 <Button Content="Создать итоговые отчеты" Command="{Binding TotalReportCreateCommand}" Margin="5"/>
             </StackPanel>

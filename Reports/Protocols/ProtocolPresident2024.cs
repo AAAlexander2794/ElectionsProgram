@@ -36,8 +36,8 @@ namespace ElectionsProgram.Reports.Protocols
             string templatePath)
         {
             // Сортируем в алфавитном порядке
-            candidates.OrderBy(c => c.View.Фамилия);
-            parties.OrderBy(p => p.View.Кандидат_Фамилия_Падеж_им);
+            candidates = candidates.OrderBy(c => c.View.Фамилия).ToList();
+            parties = parties.OrderBy(p => p.View.Кандидат_Фамилия_Падеж_им).ToList();
             // Дата и время для формирования одной папки протоколов
             var subfolder = DateTime.Now.ToString().Replace(":", "_");
             // Формируем путь к документу (с промежуточной папкой текущего времени)
@@ -466,7 +466,8 @@ namespace ElectionsProgram.Reports.Protocols
             }
             // 
             dataRow[0] = $"{i}";
-            dataRow[1] = $"{party.View.Кандидат_Фамилия_Падеж_им} {party.View.Представитель_Имя_Падеж_им} {party.View.Представитель_Отчество_Падеж_им}";
+            dataRow[1] = $"{party.View.Кандидат_Фамилия_Падеж_им} {party.View.Кандидат_Имя_Падеж_им} {party.View.Кандидат_Отчество_Падеж_им}\r\n" +
+                $"{party.View.Название_полное}";
             dataRow[2] = $"{commonTalonText}";
             dataRow[3] = $"{talonText}";
             dataRow[4] = $"{cell5Text}";

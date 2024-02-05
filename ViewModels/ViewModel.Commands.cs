@@ -17,6 +17,8 @@ namespace ElectionsProgram.ViewModels
 
         public DrawPresidentCommand DrawPresidentCommand { get; }
 
+        public PresidentContractsCreateCommand PresidentContractsCreateCommand { get; }
+
 
 
         #region Команды для партий

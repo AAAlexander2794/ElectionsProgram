@@ -466,6 +466,7 @@ namespace ElectionsProgram.ViewModels
             // Договоры
             ContractPartiesCreateCommand = new ContractPartiesCreateCommand(this);
             ContractCandidatesCreateCommand = new ContractCandidatesCreateCommand(this);
+            PresidentContractsCreateCommand = new PresidentContractsCreateCommand(this);
             //
             PlaylistCreateCommand = new PlaylistCreateCommand(this);
             //
