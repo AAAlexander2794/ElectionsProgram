@@ -19,11 +19,11 @@ namespace ElectionsProgram.Builders
             //
             string subCatalog = $"{DateTime.Now.ToShortDateString()} {DateTime.Now.Hour}.{DateTime.Now.Minute}.{DateTime.Now.Second}";
             //
-            WriteBroadcastRecordsToExcel(broadcastRecords, $@"{catalogPath}Рабочие\{subCatalog}\Маяк.xlsx", "Маяк");
-            WriteBroadcastRecordsToExcel(broadcastRecords, $@"{catalogPath}Рабочие\{subCatalog}\Радио России.xlsx", "Радио России");
-            WriteBroadcastRecordsToExcel(broadcastRecords, $@"{catalogPath}Рабочие\{subCatalog}\Вести ФМ.xlsx", "Вести ФМ");
-            WriteBroadcastRecordsToExcel(broadcastRecords, $@"{catalogPath}Рабочие\{subCatalog}\Россия 1.xlsx", "Россия-1");
-            WriteBroadcastRecordsToExcel(broadcastRecords, $@"{catalogPath}Рабочие\{subCatalog}\Россия 24.xlsx", "Россия-24");
+            WriteBroadcastRecordsToExcel(broadcastRecords, $@"{catalogPath}\Рабочие\{subCatalog}\Маяк.xlsx", "Маяк");
+            WriteBroadcastRecordsToExcel(broadcastRecords, $@"{catalogPath}\Рабочие\{subCatalog}\Радио России.xlsx", "Радио России");
+            WriteBroadcastRecordsToExcel(broadcastRecords, $@"{catalogPath}\Рабочие\{subCatalog}\Вести ФМ.xlsx", "Вести ФМ");
+            WriteBroadcastRecordsToExcel(broadcastRecords, $@"{catalogPath}\Рабочие\{subCatalog}\Россия 1.xlsx", "Россия-1");
+            WriteBroadcastRecordsToExcel(broadcastRecords, $@"{catalogPath}\Рабочие\{subCatalog}\Россия 24.xlsx", "Россия-24");
         }
 
         static DataTable WriteBroadcastRecordsToExcel(List<PlaylistRecord> records, string filePath, string mediaResource)

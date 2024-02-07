@@ -1,4 +1,5 @@
-﻿using DocumentFormat.OpenXml.Wordprocessing;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
+using DocumentFormat.OpenXml.Wordprocessing;
 using ElectionsProgram.Entities;
 using ElectionsProgram.Processors;
 using System;
@@ -275,10 +276,16 @@ namespace ElectionsProgram.Reports.Protocols
         {
             // Добавляем номер талона в текст для ячейки талона
             string talonText = $"Талон № {talon.Number}";
+            
             //
             foreach (var row in talon.TalonRecords)
             {
-                talonText += $"\r\n{row.Date} {row.Time} {row.Duration} {row.Description}";
+                //
+                talonText += $"\r\n" +
+                    $"{row.Date} " +
+                    $"{row.Time.ToString("HH:mm:ss")} " +
+                    $"{row.Duration} " +
+                    $"{row.Description}";
             }
             // Текст ячейки с общим вещанием
             string commonTalonText = "";
@@ -288,7 +295,11 @@ namespace ElectionsProgram.Reports.Protocols
                 //
                 foreach (var row in talon.CommonTalon.TalonRecords)
                 {
-                    commonTalonText += $"\r\n{row.Date} {row.Time} {row.Duration} {row.Description}";
+                    commonTalonText += $"\r\n" +
+                        $"{row.Date} " +
+                        $"{row.Time.ToString("HH:mm:ss")} " +
+                        $"{row.Duration} " +
+                        $"{row.Description}";
                 }
             }
             // 
@@ -451,7 +462,11 @@ namespace ElectionsProgram.Reports.Protocols
             //
             foreach (var row in talon.TalonRecords)
             {
-                talonText += $"\r\n{row.Date} {row.Time} {row.Duration} {row.Description}";
+                talonText += $"\r\n" +
+                    $"{row.Date} " +
+                    $"{row.Time.ToString("HH:mm:ss")} " +
+                    $"{row.Duration} " +
+                    $"{row.Description}";
             }
             // Текст ячейки с общим вещанием
             string commonTalonText = "";
@@ -461,7 +476,11 @@ namespace ElectionsProgram.Reports.Protocols
                 //
                 foreach (var row in talon.CommonTalon.TalonRecords)
                 {
-                    commonTalonText += $"\r\n{row.Date} {row.Time} {row.Duration} {row.Description}";
+                    commonTalonText += $"\r\n" +
+                        $"{row.Date} " +
+                        $"{row.Time.ToString("HH:mm:ss")} " +
+                        $"{row.Duration} " +
+                        $"{row.Description}";
                 }
             }
             // 

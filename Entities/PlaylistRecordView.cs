@@ -62,11 +62,13 @@ namespace ElectionsProgram.Entities
         /// <summary>
         /// Тариф в рублях за минуту
         /// </summary>
+        [DisplayName("Тариф")]
         public string Tariff { get; set; } = "";
 
         /// <summary>
         /// Итоговая стоимость в зависимости от хронометража
         /// </summary>
+        [DisplayName("Стоимость")]
         public string Price { get; set; } = "";
 
     }

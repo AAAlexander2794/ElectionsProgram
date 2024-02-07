@@ -31,7 +31,8 @@ namespace ElectionsProgram.Processors
 
         public void Save(string path)
         {
-            Document.SaveAs(path);
+            var doc = Document.SaveAs(path);
+            doc.Close();
         }
 
         public void Close()
@@ -457,6 +458,5 @@ namespace ElectionsProgram.Processors
             //
             return table;
         }
-
     }
 }
