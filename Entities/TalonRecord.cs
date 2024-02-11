@@ -50,31 +50,35 @@ namespace ElectionsProgram.Entities
 
         #region Конструкторы
 
-        public TalonRecord(TalonRecordView view)
+        public TalonRecord(TalonRecordView view, string mode = "text")
         {
             View = view;
             MediaresourceName = view.MediaresourceName;
             // Номер талона
             TalonNumber = view.TalonNumber;
-            // Если хронометраж в формате "0:00:00"
-            if (View.Duration.Length == 7)
+            // Костыль для выборов президента
+            if (mode == "parse")
             {
-                Duration = TimeOnly.FromDateTime(DateTime.Parse("0" + View.Duration.Replace('.', ','))).ToTimeSpan();
+                // Если хронометраж в формате "0:00:00"
+                if (View.Duration.Length == 7)
+                {
+                    Duration = TimeOnly.FromDateTime(DateTime.Parse("0" + View.Duration.Replace('.', ','))).ToTimeSpan();
+                }
+                // Если хронометраж в формате "00:00"
+                else if (View.Duration.Length == 5)
+                {
+                    Duration = TimeOnly.FromDateTime(DateTime.Parse("00:" + View.Duration.Replace('.', ','))).ToTimeSpan();
+                }
+                // Если хронометраж в формате "00:00:00" (ну или другой, тогда ошибка)
+                else
+                {
+                    Duration = TimeOnly.FromDateTime(DateTime.Parse(View.Duration.Replace('.', ','))).ToTimeSpan();
+                }
+                // Дата
+                Date = DateOnly.FromDateTime(DateTime.Parse(View.Date));
+                // Время (отрезок). Происходит замена точки на запятую (вот такая культура)
+                Time = TimeOnly.FromDateTime(DateTime.Parse(View.Time.Replace('.', ',')));
             }
-            // Если хронометраж в формате "00:00"
-            else if (View.Duration.Length == 5)
-            {
-                Duration = TimeOnly.FromDateTime(DateTime.Parse("00:" + View.Duration.Replace('.', ','))).ToTimeSpan();
-            }
-            // Если хронометраж в формате "00:00:00" (ну или другой, тогда ошибка)
-            else
-            {
-                Duration = TimeOnly.FromDateTime(DateTime.Parse(View.Duration.Replace('.', ','))).ToTimeSpan();
-            }
-            // Дата
-            Date = DateOnly.FromDateTime(DateTime.Parse(View.Date));
-            // Время (отрезок). Происходит замена точки на запятую (вот такая культура)
-            Time = TimeOnly.FromDateTime(DateTime.Parse(View.Time.Replace('.', ',')));
             // Примечание
             Description = View.Description;
         }

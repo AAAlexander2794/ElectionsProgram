@@ -24,8 +24,8 @@ namespace ElectionsProgram.Commands
 
         public void Execute(object? parameter)
         {
-            try
-            {
+            //try
+            //{
                 ////
                 //string protocolFolder = $@"{_viewModel.SettingsFilePathes.Каталог_документов}{_viewModel.SettingsFilePathes.Протоколы_Выходной_каталог}";
                 //string templatePath = $@"{_viewModel.SettingsFilePathes.Каталог_настроек}{_viewModel.SettingsFilePathes.Протоколы_Шаблон_Кандидаты}";
@@ -49,11 +49,11 @@ namespace ElectionsProgram.Commands
                     templatePath);
                 //
                 Logger.Add("Протоколы созданы.");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
     }
 }

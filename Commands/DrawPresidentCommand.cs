@@ -23,8 +23,8 @@ namespace ElectionsProgram.Commands
 
         public void Execute(object? parameter)
         {
-            try
-            {
+            //try
+            //{
                 // Загрузка кандидатов
                 _vm.LoadCandidatesCommand.Execute(null);
                 // Загрузка талонов и общего вещания
@@ -49,11 +49,11 @@ namespace ElectionsProgram.Commands
                     $"";
                 Logger.Add(message);
                 MessageBox.Show(message);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
     }
 }

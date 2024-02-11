@@ -50,12 +50,22 @@ namespace ElectionsProgram.Entities
         /// Возвращает хронометраж суммарный по всем записям талона (без общего вещания).
         /// </summary>
         /// <returns></returns>
-        public TimeSpan GetDurationTalonRecords()
+        public TimeSpan GetDurationTalonRecords(string mode = "digit")
         {
             TimeSpan duration = TimeSpan.Zero;
-            foreach (var record in TalonRecords)
+            if (mode == "digit")
             {
-                duration += record.Duration;
+                foreach (var record in TalonRecords)
+                {
+                    duration += record.Duration;
+                }
+            }
+            if (mode == "text")
+            {
+                foreach (var record in TalonRecords)
+                {
+                    duration += TimeSpan.FromSeconds(double.Parse(record.View.Duration));
+                }
             }
             return duration;
         }
@@ -64,13 +74,24 @@ namespace ElectionsProgram.Entities
         /// Возвращает хронометраж суммарный по всем записям общего вещания (без записей талона).
         /// </summary>
         /// <returns></returns>
-        public TimeSpan GetDurationCommonRecords()
+        public TimeSpan GetDurationCommonRecords(string mode = "digit")
         {
             TimeSpan duration = TimeSpan.Zero;
             if (CommonTalon == null) { return TimeSpan.Zero; }
-            foreach (var record in CommonTalon.TalonRecords)
+            if (mode == "digit")
             {
-                duration += record.Duration;
+                foreach (var record in CommonTalon.TalonRecords)
+                {
+                    duration += record.Duration;
+                }
+            }
+            if (mode == "text")
+            {
+                foreach (var record in CommonTalon.TalonRecords)
+                {
+                    duration += TimeSpan.FromSeconds(double.Parse(record.View.Duration));
+                }
+
             }
             return duration;
         }

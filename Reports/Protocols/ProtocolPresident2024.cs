@@ -225,8 +225,8 @@ namespace ElectionsProgram.Reports.Protocols
                 // Для общей длительности в Итого
                 if (talon != null)
                 {
-                    duration += talon.GetDurationTalonRecords();
-                    durationCommonRecords += talon.GetDurationCommonRecords();
+                    duration += talon.GetDurationTalonRecords("text");
+                    durationCommonRecords += talon.GetDurationCommonRecords("text");
                 }
                 // Если у кандидата есть фамилия и этот талон (запасная проверка)
                 if (candidate.View.Фамилия != "" && talon != null)
@@ -282,10 +282,10 @@ namespace ElectionsProgram.Reports.Protocols
             {
                 //
                 talonText += $"\r\n" +
-                    $"{row.Date} " +
-                    $"{row.Time.ToString("HH:mm:ss")} " +
-                    $"{row.Duration} " +
-                    $"{row.Description}";
+                    $"{row.View.Date} " +
+                    $"{row.View.Time} " +
+                    $"{row.View.Duration} " +
+                    $"{row.View.Description}";
             }
             // Текст ячейки с общим вещанием
             string commonTalonText = "";
@@ -296,10 +296,10 @@ namespace ElectionsProgram.Reports.Protocols
                 foreach (var row in talon.CommonTalon.TalonRecords)
                 {
                     commonTalonText += $"\r\n" +
-                        $"{row.Date} " +
-                        $"{row.Time.ToString("HH:mm:ss")} " +
-                        $"{row.Duration} " +
-                        $"{row.Description}";
+                        $"{row.View.Date} " +
+                        $"{row.View.Time} " +
+                        $"{row.View.Duration} " +
+                        $"{row.View.Description}";
                 }
             }
             // 
@@ -408,13 +408,13 @@ namespace ElectionsProgram.Reports.Protocols
                 // Для общей длительности в Итого
                 if (talon != null)
                 {
-                    duration += talon.GetDurationTalonRecords();
-                    durationCommonRecords += talon.GetDurationCommonRecords();
+                    duration += talon.GetDurationTalonRecords("text");
+                    durationCommonRecords += talon.GetDurationCommonRecords("text");
                 }
                 // Если у кандидата есть фамилия и этот талон (запасная проверка)
                 if (party.View.Кандидат_Фамилия_Падеж_им != "" && talon != null)
                 {
-                    // Делаем строку кандидата
+                    // Делаем строку 
                     FillRowParty(dt.Rows[dt.Rows.Count - 1], party, talon, mediaresource, count, cell5Text, settings.View.Кандидаты_Дата);
                 }
             }
@@ -463,10 +463,10 @@ namespace ElectionsProgram.Reports.Protocols
             foreach (var row in talon.TalonRecords)
             {
                 talonText += $"\r\n" +
-                    $"{row.Date} " +
-                    $"{row.Time.ToString("HH:mm:ss")} " +
-                    $"{row.Duration} " +
-                    $"{row.Description}";
+                    $"{row.View.Date} " +
+                    $"{row.View.Time} " +
+                    $"{row.View.Duration} " +
+                    $"{row.View.Description}";
             }
             // Текст ячейки с общим вещанием
             string commonTalonText = "";
@@ -477,10 +477,10 @@ namespace ElectionsProgram.Reports.Protocols
                 foreach (var row in talon.CommonTalon.TalonRecords)
                 {
                     commonTalonText += $"\r\n" +
-                        $"{row.Date} " +
-                        $"{row.Time.ToString("HH:mm:ss")} " +
-                        $"{row.Duration} " +
-                        $"{row.Description}";
+                        $"{row.View.Date} " +
+                        $"{row.View.Time} " +
+                        $"{row.View.Duration} " +
+                        $"{row.View.Description}";
                 }
             }
             // 

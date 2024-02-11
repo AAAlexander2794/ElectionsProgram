@@ -35,8 +35,8 @@ namespace ElectionsProgram.Commands
 
         public void Execute(object? parameter)
         {
-            try
-            {
+            //try
+            //{
                 DataTable dt, dtCommon;
                 // Россия-1
                 dt = ExcelProcessor.LoadFromExcel(@$"{_viewModel.SettingsFilePathes.Каталог_настроек}{_viewModel.SettingsFilePathes.Кандидаты_Талоны_Россия_1}");
@@ -71,11 +71,11 @@ namespace ElectionsProgram.Commands
                     $"Вести ФМ: {_viewModel.CandidatesTalons_Вести_ФМ.Count}\n" +
                     $"Радио России: {_viewModel.CandidatesTalons_Радио_России.Count}";
                 Logger.Add(message);
-            }
-            catch(Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            //}
+            //catch(Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
     }
 }

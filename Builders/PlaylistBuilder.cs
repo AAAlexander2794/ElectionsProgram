@@ -50,9 +50,9 @@ namespace ElectionsProgram.Builders
             {
                 dt.Rows.Add();
                 dt.Rows[dt.Rows.Count - 1][0] = record.View.MediaresourceName;
-                dt.Rows[dt.Rows.Count - 1][1] = record.View.Date;
-                dt.Rows[dt.Rows.Count - 1][2] = record.View.Time;
-                dt.Rows[dt.Rows.Count - 1][3] = record.View.DurationNominal;
+                dt.Rows[dt.Rows.Count - 1][1] = record.Date;
+                dt.Rows[dt.Rows.Count - 1][2] = record.Time;
+                dt.Rows[dt.Rows.Count - 1][3] = record.DurationNominal;
                 dt.Rows[dt.Rows.Count - 1][4] = record.View.RegionNumber;
                 dt.Rows[dt.Rows.Count - 1][5] = record.View.ClientType;
                 dt.Rows[dt.Rows.Count - 1][6] = record.View.ClientName;
@@ -66,9 +66,18 @@ namespace ElectionsProgram.Builders
             XLWorkbook wb = new XLWorkbook();
             var ws = wb.Worksheets.Add(dt, "Отчет");
             // Определяем формат столбцов
+            ///<remarks>
+            /// Чтобы корректно исопльзовать сортировку по столбцам даты и времени в 
+            /// Экселе 2007, надо сделать следующее:
+            /// One column of dates at a time, run Data > Text to Columns. 
+            /// Choose Delimited and click the Next button. 
+            /// Click the Next button again. 
+            /// In Step 3 of 3, select Date in the Column data format section, 
+            /// and select DMY in the drop-down list to the right of Date, and click Finish.
+            /// </remarks>
             ws.Column(2).Style.NumberFormat.Format = "dd.mm.yyyy";
-            ws.Column(3).Style.NumberFormat.Format = "hh:mm:ss";
-            ws.Column(4).Style.NumberFormat.Format = "hh:mm:ss";
+            ws.Column(3).Style.NumberFormat.Format = "HH:mm:ss";
+            ws.Column(4).Style.NumberFormat.Format = "HH:mm:ss";
             // Столбцы по ширине содержимого
             ws.Column(1).AdjustToContents();
             ws.Column(2).AdjustToContents();
