@@ -56,10 +56,10 @@ namespace ElectionsProgram.Entities
         [DisplayName("Талон Маяк")]
         public string Талон_Маяк { get; set; } = "";
 
-        [DisplayName("Талон Вести ФМ")]
+        [DisplayName("Талон Радио России")]
         public string Талон_Радио_России { get; set; } = "";
 
-        [DisplayName("Талон Радио России")]
+        [DisplayName("Талон Вести ФМ")]
         public string Талон_Вести_ФМ { get; set; } = "";
 
         #endregion Номера талонов

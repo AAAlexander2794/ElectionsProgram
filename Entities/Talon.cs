@@ -89,7 +89,9 @@ namespace ElectionsProgram.Entities
             {
                 foreach (var record in CommonTalon.TalonRecords)
                 {
-                    duration += TimeSpan.FromSeconds(double.Parse(record.View.Duration));
+                    double d = double.Parse(record.View.Duration);
+                    var time = TimeSpan.FromSeconds(d);
+                    duration += time;
                 }
 
             }
