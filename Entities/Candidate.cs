@@ -12,7 +12,7 @@ namespace ElectionsProgram.Entities
     /// <summary>
     /// Кандидат на выборы
     /// </summary>
-    public class Candidate : INotifyPropertyChanged, IComparable<Candidate>
+    public class Candidate : Client, INotifyPropertyChanged, IComparable<Candidate>
     {
         private Talon? талон_Россия_1;
         private Talon? талон_Россия_24;

@@ -50,9 +50,9 @@ namespace ElectionsProgram.Builders
             {
                 dt.Rows.Add();
                 dt.Rows[dt.Rows.Count - 1][0] = record.View.MediaresourceName;
-                dt.Rows[dt.Rows.Count - 1][1] = record.Date;
-                dt.Rows[dt.Rows.Count - 1][2] = record.Time;
-                dt.Rows[dt.Rows.Count - 1][3] = record.DurationNominal;
+                dt.Rows[dt.Rows.Count - 1][1] = record.View.Date;
+                dt.Rows[dt.Rows.Count - 1][2] = record.View.Time;
+                dt.Rows[dt.Rows.Count - 1][3] = record.View.DurationNominal;
                 dt.Rows[dt.Rows.Count - 1][4] = record.View.RegionNumber;
                 dt.Rows[dt.Rows.Count - 1][5] = record.View.ClientType;
                 dt.Rows[dt.Rows.Count - 1][6] = record.View.ClientName;
@@ -146,10 +146,10 @@ namespace ElectionsProgram.Builders
             {
                 PlaylistRecordView record = new PlaylistRecordView()
                 {
-                    MediaresourceName = talonRecord.MediaresourceName,
-                    Date = talonRecord.Date.ToString(),
-                    Time = talonRecord.Time.ToString(),
-                    DurationNominal = talonRecord.Duration.ToString(),
+                    MediaresourceName = talonRecord.View.MediaresourceName,
+                    Date = talonRecord.View.Date.ToString(),
+                    Time = talonRecord.View.Time.ToString(),
+                    DurationNominal = talonRecord.View.Duration.ToString(),
                     ClientType = "Партия",
                     ClientName = party.View.Название_условное
                 };
@@ -162,10 +162,10 @@ namespace ElectionsProgram.Builders
                 {
                     PlaylistRecordView record = new PlaylistRecordView()
                     {
-                        MediaresourceName = item.MediaresourceName,
-                        Date = item.Date.ToString(),
-                        Time = item.Time.ToString(),
-                        DurationNominal = item.Duration.ToString(),
+                        MediaresourceName = item.View.MediaresourceName,
+                        Date = item.View.Date.ToString(),
+                        Time = item.View.Time.ToString(),
+                        DurationNominal = item.View.Duration.ToString(),
                         ClientType = "Партия",
                         ClientName = party.View.Название_условное,
                         BroadcastForm = "Дебаты"
@@ -182,18 +182,22 @@ namespace ElectionsProgram.Builders
             if (talon == null) return broadcastRecords;
             foreach (var talonRecord in talon.TalonRecords)
             {
+                // Если округ есть, то пишем в скобках к ФИО
+                string region = "";
+                if (candidate.View.Округ_Номер.Length > 0) region = $"({candidate.View.Округ_Номер})";
+                //
                 PlaylistRecordView record = new PlaylistRecordView()
                 {
-                    MediaresourceName = talonRecord.MediaresourceName,
-                    Date = talonRecord.Date.ToString(),
-                    Time = talonRecord.Time.ToString(),
-                    DurationNominal = talonRecord.Duration.ToString(),
+                    MediaresourceName = talonRecord.View.MediaresourceName,
+                    Date = talonRecord.View.Date.ToString(),
+                    Time = talonRecord.View.Time.ToString(),
+                    DurationNominal = talonRecord.View.Duration.ToString(),
                     ClientType = "Кандидат",
                     RegionNumber = candidate.View.Округ_Номер,
                     ClientName = $"{candidate.View.Фамилия} " +
                         $"{candidate.View.Имя} " +
                         $"{candidate.View.Отчество} " +
-                        $"({candidate.View.Округ_Номер})"
+                        $"{region}"
                 };
                 broadcastRecords.Add(new PlaylistRecord(record));
             }
@@ -202,18 +206,22 @@ namespace ElectionsProgram.Builders
             {
                 foreach (var item in talon.CommonTalon.TalonRecords)
                 {
+                    // Если округ есть, то пишем в скобках к ФИО
+                    string region = "";
+                    if (candidate.View.Округ_Номер.Length > 0) region = $"({candidate.View.Округ_Номер})";
+                    //
                     PlaylistRecordView record = new PlaylistRecordView()
                     {
-                        MediaresourceName = item.MediaresourceName,
-                        Date = item.Date.ToString(),
-                        Time = item.Time.ToString(),
-                        DurationNominal = item.Duration.ToString(),
+                        MediaresourceName = item.View.MediaresourceName,
+                        Date = item.View.Date.ToString(),
+                        Time = item.View.Time.ToString(),
+                        DurationNominal = item.View.Duration.ToString(),
                         ClientType = "Кандидат",
                         RegionNumber = candidate.View.Округ_Номер,
                         ClientName = $"{candidate.View.Фамилия} " +
                             $"{candidate.View.Имя} " +
                             $"{candidate.View.Отчество} " +
-                            $"({candidate.View.Округ_Номер})",
+                            $"{region}",
                         BroadcastForm = "Дебаты"
                     };
                     broadcastRecords.Add(new PlaylistRecord(record));

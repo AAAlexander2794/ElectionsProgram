@@ -21,12 +21,12 @@ namespace ElectionsProgram.Entities
         /// <summary>
         /// Дата
         /// </summary>
-        public DateOnly Date { get; set; } = DateOnly.MinValue;
+        public DateOnly? Date { get; set; }
 
         /// <summary>
         /// Отрезок
         /// </summary>
-        public TimeOnly Time { get; set; } = TimeOnly.MinValue;
+        public TimeOnly? Time { get; set; }
 
         /// <summary>
         /// Хронометраж вещания номинальный
@@ -73,30 +73,41 @@ namespace ElectionsProgram.Entities
         /// </summary>
         public double Price { get; set; }
 
-        public PlaylistRecord(PlaylistRecordView view)
+        public PlaylistRecord(PlaylistRecordView view, string mode = "text")
         {
             View = view;
             //
-            MediaresourceName = View.MediaresourceName;
-            Date = DateOnly.FromDateTime(DateTime.Parse(View.Date));
-            Time = TimeOnly.FromDateTime(DateTime.Parse(View.Time));
-            // Хронометраж номинальный
-            var dateTime = ParseStringToDateTime(View.DurationNominal);
-            DurationNominal = dateTime != null ? ((DateTime)dateTime).TimeOfDay : null;
-            //
-            RegionNumber = View.RegionNumber;
-            ClientType = View.ClientType;
-            ClientName = View.ClientName;
-            // Хронометраж фактический
-            dateTime = ParseStringToDateTime(View.DurationActual);
-            DurationActual = dateTime != null ? ((DateTime)dateTime).TimeOfDay : null;
-            //
-            BroadcastForm = View.BroadcastForm;
-            BroadcastCaption = View.BroadcastCaption;
-            //
-            Tariff = ParseStringToDouble(View.Tariff);
-            //
-            Price = CalculatePrice(DurationActual, Tariff);
+            if (mode == "text") { }
+            else
+            {
+                MediaresourceName = View.MediaresourceName;
+                Date = DateOnly.FromDateTime(DateTime.Parse(View.Date));
+
+                double result;
+                bool success = double.TryParse(View.Time, out result);
+                if (success)
+                {
+                    Time = TimeOnly.FromDateTime(DateTime.FromOADate(result));
+                }
+                //Time = TimeOnly.FromDateTime(DateTime.Parse(View.Time));
+                // Хронометраж номинальный
+                var dateTime = ParseStringToDateTime(View.DurationNominal);
+                DurationNominal = dateTime != null ? ((DateTime)dateTime).TimeOfDay : null;
+                //
+                RegionNumber = View.RegionNumber;
+                ClientType = View.ClientType;
+                ClientName = View.ClientName;
+                // Хронометраж фактический
+                dateTime = ParseStringToDateTime(View.DurationActual);
+                DurationActual = dateTime != null ? ((DateTime)dateTime).TimeOfDay : null;
+                //
+                BroadcastForm = View.BroadcastForm;
+                BroadcastCaption = View.BroadcastCaption;
+                //
+                Tariff = ParseStringToDouble(View.Tariff);
+                //
+                Price = CalculatePrice(DurationActual, Tariff);
+            }
         }
 
         public static DateTime? ParseStringToDateTime(string str)

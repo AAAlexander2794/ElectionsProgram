@@ -11,7 +11,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace ElectionsProgram.Builders.TotalReport
+namespace ElectionsProgram.Builders.TotalReports
 {
     public static partial class TotalReportBuilder
     {
@@ -23,12 +23,12 @@ namespace ElectionsProgram.Builders.TotalReport
         /// <param name="catalogPath"></param>
         public static void BuildTotalReport(DataTable playlistDataTable, string mediarecourceName, string catalogPath)
         {
-            
+
             // Из таблицы плейлиста формируем список текстового представления записей
             var playlistRecordsView = playlistDataTable.ToList<PlaylistRecordView>();
             // 
-            Playlist playlist = new Playlist() 
-            { 
+            Playlist playlist = new Playlist()
+            {
                 MediaresourceName = mediarecourceName,
             };
             //
@@ -40,7 +40,7 @@ namespace ElectionsProgram.Builders.TotalReport
                     // Создаем строку плейлиста из текстового представления
                     PlaylistRecord newRecord = new PlaylistRecord(recordView);
                     // Передаем на добавление записи клиентам найденного плейлиста
-                    AddRecord(playlist.Clients, newRecord);
+                    ElectionsProgram.Reports.TotalReports.PlaylistBuilder.AddRecord(playlist.Clients, newRecord);
                 }
             }
             //
@@ -48,33 +48,18 @@ namespace ElectionsProgram.Builders.TotalReport
             ExcelProcessor.SaveToExcel(playlist.ToDataTable(), filePath);
         }
 
-        private static Client AddRecord(List<Client> clients, PlaylistRecord record)
+        
+
+        private static void CreateCertificates(Playlist playlist, string catalogPath)
         {
-            //
-            foreach (var client in clients)
+            foreach (var client in playlist.Clients)
             {
-                // Если клиент уже есть в списке
-                if (client.Name == record.View.ClientName)
-                {
-                    // Добавляем запись из плейлиста клиенту
-                    client.PlaylistRecords.Add(record);
-                    // Запись присвоена, прекращаем
-                    return client;
-                }
+                var dt = playlist.ToDataTable(client.Name);
+
             }
-            // Если всех клиентов проверили, но не прекратили, значит, клиента в списке нет - добавляем.
-            // Создаем нового клиента по данным записи из плейлиста
-            Client newClient = new Client()
-            {
-                Name = record.View.ClientName,
-                Type = record.View.ClientType
-            };
-            // Добавляем новому клиенту запись
-            newClient.PlaylistRecords.Add(record);
-            // Добавляем нового клиента в список клиентов
-            clients.Add(newClient);
-            // Возвращаем
-            return newClient;
+            // Справки и акт о фактическом времени для договоров
+            string dateTimeForCatalog = $"{DateTime.Now}";
+            CreateCertificates(playlist, $"{catalogPath}\\{dateTimeForCatalog}\\");
         }
 
     }

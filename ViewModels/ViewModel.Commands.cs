@@ -1,4 +1,6 @@
 ﻿using ElectionsProgram.Commands;
+using ElectionsProgram.Reports.TotalReports;
+using ElectionsProgram.Reports.TotalReports.Acts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,5 +74,8 @@ namespace ElectionsProgram.ViewModels
 
         //
         public TotalReportCreateCommand TotalReportCreateCommand { get; }
+        //
+        public ActsCreateCommand ActsCreateCommand { get; }
+        public PlaylistsLoadCommand PlaylistsLoadCommand { get; }
     }
 }

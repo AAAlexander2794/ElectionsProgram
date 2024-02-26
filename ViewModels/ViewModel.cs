@@ -3,6 +3,7 @@ using ElectionsProgram.Entities;
 using ElectionsProgram.Processors;
 using ElectionsProgram.Reports.Contracts;
 using ElectionsProgram.Reports.Protocols;
+using ElectionsProgram.Reports.TotalReports;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -401,6 +402,63 @@ namespace ElectionsProgram.ViewModels
 
         #endregion Коллекции кандидатов
 
+        #region Плейлисты
+
+        private Playlist _playlist_Россия_1;
+        public Playlist Playlist_Россия_1 { get => _playlist_Россия_1;
+        set
+            {
+                _playlist_Россия_1 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Playlist _playlist_Россия_24;
+        public Playlist Playlist_Россия_24
+        {
+            get => _playlist_Россия_24;
+            set
+            {
+                _playlist_Россия_24 = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Playlist _playlist_Маяк;
+        public Playlist Playlist_Маяк
+        {
+            get => _playlist_Маяк;
+            set
+            {
+                _playlist_Маяк = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Playlist _playlist_Вести_ФМ;
+        public Playlist Playlist_Вести_ФМ
+        {
+            get => _playlist_Вести_ФМ;
+            set
+            {
+                _playlist_Вести_ФМ = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Playlist _playlist_Радио_России;
+        public Playlist Playlist_Радио_России
+        {
+            get => _playlist_Радио_России;
+            set
+            {
+                _playlist_Радио_России = value;
+                OnPropertyChanged();
+            }
+        }
+
+        #endregion Плейлисты
+
         private SettingsForProtocols _protocolSettings = 
             new SettingsForProtocols(new SettingsForProtocolsView());
         /// <summary>
@@ -471,11 +529,15 @@ namespace ElectionsProgram.ViewModels
             PlaylistCreateCommand = new PlaylistCreateCommand(this);
             //
             TotalReportCreateCommand = new TotalReportCreateCommand(this);
+            //
+            ActsCreateCommand = new Reports.TotalReports.Acts.ActsCreateCommand(this);
+            PlaylistsLoadCommand = new PlaylistsLoadCommand(this);
 
             //
             SettingsPathesLoadCommand.Execute(this);
             //
             LoadDefaultDataCommand.Execute(this);
+
         }
 
         #endregion Конструкторы

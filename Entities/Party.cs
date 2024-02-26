@@ -11,7 +11,7 @@ namespace ElectionsProgram.Entities
     /// <summary>
     /// Политическая партия
     /// </summary>
-    public class Party : INotifyPropertyChanged
+    public class Party : Client, INotifyPropertyChanged, IComparable<Party>
     {
         private Talon? талон_Россия_1;
         private Talon? талон_Россия_24;
@@ -78,6 +78,12 @@ namespace ElectionsProgram.Entities
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public int CompareTo(Party? other)
+        {
+            if (other is Party party) return View.Кандидат_Фамилия_Падеж_им.CompareTo(party.View.Кандидат_Фамилия_Падеж_им);
+            else throw new ArgumentException("Некорректное значение параметра");
         }
     }
 }

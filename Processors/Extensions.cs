@@ -125,7 +125,15 @@ namespace ElectionsProgram.Processors
                     // Если есть такой столбец
                     if (row.Table.Columns.Contains(fieldName))
                     {
-                        property.SetValue(item, row[fieldName], null);
+                        // Если значение отсутствует
+                        if (row[fieldName] is DBNull)
+                        {
+                            property.SetValue(item, "", null);
+                        }
+                        else
+                        {
+                            property.SetValue(item, row[fieldName], null);
+                        }
                     }
                 }
                 else
