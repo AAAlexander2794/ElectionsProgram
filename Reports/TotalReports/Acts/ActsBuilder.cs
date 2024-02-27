@@ -43,6 +43,13 @@ namespace ElectionsProgram.Reports.TotalReports.Acts
                     playlist_Россия_24, 
                     templateCandidatesPath_ТВ, 
                     catalogPath);
+                CreateActCandidate_РВ(
+                    candidate,
+                    playlist_Маяк,
+                    playlist_Вести_ФМ,
+                    playlist_Радио_России,
+                    templateCandidatesPath_РВ,
+                    catalogPath);
             }
         }
 
@@ -75,6 +82,45 @@ namespace ElectionsProgram.Reports.TotalReports.Acts
             SetMergeFields(document, candidate, CreateDataTable(list));
             //
             document.Save(catalogPath + $"\\{candidate.View.Фамилия}_ТВ.docx");
+            document.Close();
+        }
+
+        private static void CreateActCandidate_РВ(
+            Candidate candidate,
+            Playlist playlist_Маяк,
+            Playlist playlist_Вести_ФМ,
+            Playlist playlist_Радио_России,
+            string templateCandidatesPath_РВ,
+            string catalogPath)
+        {
+            //
+            List<PlaylistRecord> list = new List<PlaylistRecord>();
+            // Ищем клиента по фамилии
+            var client = playlist_Маяк.Clients.First(c => c.Name.Contains(candidate.View.Фамилия));
+            foreach (var record in client.PlaylistRecords)
+            {
+                list.Add(record);
+            }
+            // Повторяем для другого плейлиста
+            client = playlist_Вести_ФМ.Clients.First(c => c.Name.Contains(candidate.View.Фамилия));
+            foreach (var record in client.PlaylistRecords)
+            {
+                list.Add(record);
+            }
+            // Повторяем для другого плейлиста
+            client = playlist_Радио_России.Clients.First(c => c.Name.Contains(candidate.View.Фамилия));
+            foreach (var record in client.PlaylistRecords)
+            {
+                list.Add(record);
+            }
+            // Создает подпапку 
+            Directory.CreateDirectory(catalogPath);
+            // Создаем договор по шаблону
+            var document = new WordDocument(templateCandidatesPath_РВ);
+            //
+            SetMergeFields(document, candidate, CreateDataTable(list));
+            //
+            document.Save(catalogPath + $"\\{candidate.View.Фамилия}_РВ.docx");
             document.Close();
         }
 
