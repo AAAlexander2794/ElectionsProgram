@@ -150,6 +150,11 @@ namespace ElectionsProgram.Entities
         [DisplayName("Кандидат: отчество (род.)")]
         public string Кандидат_Отчество_Падеж_род { get; set; } = "";
 
+        //
+
+        [DisplayName("Кандидат: Постановление")]
+        public string Кандидат_Постановление { get; set; } = "";
+
         #endregion Данные кандидата партии
 
         #region Нотариус

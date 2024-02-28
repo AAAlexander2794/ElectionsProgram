@@ -35,10 +35,8 @@ namespace ElectionsProgram.Reports.TotalReports.Acts
                     _viewModel.Playlist_Маяк,
                     _viewModel.Playlist_Вести_ФМ,
                     _viewModel.Playlist_Радио_России,
-                    $"{_viewModel.SettingsFilePathes.Каталог_настроек}\\Итоговый отчет\\Акты оказанных услуг\\Шаблон Кандидаты РВ бесплатные.dotx",
-                    $"{_viewModel.SettingsFilePathes.Каталог_настроек}\\Итоговый отчет\\Акты оказанных услуг\\Шаблон Кандидаты ТВ бесплатные.dotx",
-                    $"{_viewModel.SettingsFilePathes.Каталог_настроек}\\Итоговый отчет\\Акты оказанных услуг\\Шаблон Партии РВ бесплатные.dotx",
-                    $"{_viewModel.SettingsFilePathes.Каталог_настроек}\\Итоговый отчет\\Акты оказанных услуг\\Шаблон Партии ТВ бесплатные.dotx",
+                    $"{_viewModel.SettingsFilePathes.Каталог_настроек}\\Итоговый отчет\\Акты оказанных услуг\\Шаблон Кандидаты бесплатный.dotx",
+                    $"{_viewModel.SettingsFilePathes.Каталог_настроек}\\Итоговый отчет\\Акты оказанных услуг\\Шаблон Партии бесплатный.dotx",
                     $"{_viewModel.SettingsFilePathes.Каталог_документов}\\Отчеты\\Акты");
                 //
                 Logger.Add("Акты созданы.");
