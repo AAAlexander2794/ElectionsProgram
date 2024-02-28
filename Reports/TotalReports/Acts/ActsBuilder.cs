@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 using System.IO;
+using System.Windows.Controls;
 
 namespace ElectionsProgram.Reports.TotalReports.Acts
 {
@@ -72,43 +73,61 @@ namespace ElectionsProgram.Reports.TotalReports.Acts
             string catalogPath)
         {
             //
-            List<PlaylistRecord> list = new List<PlaylistRecord>();
+            List<PlaylistRecord> list_Россия_1 = new List<PlaylistRecord>();
+            List<PlaylistRecord> list_Россия_24 = new List<PlaylistRecord>();
+            List<PlaylistRecord> list_Маяк = new List<PlaylistRecord>();
+            List<PlaylistRecord> list_Вести_ФМ = new List<PlaylistRecord>();
+            List<PlaylistRecord> list_Радио_России = new List<PlaylistRecord>();
             // Россия-1
             var client = playlist_Россия_1.Clients.First(c => c.Name.Contains(candidate.View.Фамилия));
             foreach (var record in client.PlaylistRecords)
             {
-                list.Add(record);
+                list_Россия_1.Add(record);
             }
             // Россия-24
             client = playlist_Россия_24.Clients.First(c => c.Name.Contains(candidate.View.Фамилия));
             foreach (var record in client.PlaylistRecords)
             {
-                list.Add(record);
+                list_Россия_24.Add(record);
             }
             // Маяк
             client = playlist_Маяк.Clients.First(c => c.Name.Contains(candidate.View.Фамилия));
             foreach (var record in client.PlaylistRecords)
             {
-                list.Add(record);
+                list_Маяк.Add(record);
             }
             // Вести ФМ
             client = playlist_Вести_ФМ.Clients.First(c => c.Name.Contains(candidate.View.Фамилия));
             foreach (var record in client.PlaylistRecords)
             {
-                list.Add(record);
+                list_Вести_ФМ.Add(record);
             }
             // Радио России
             client = playlist_Радио_России.Clients.First(c => c.Name.Contains(candidate.View.Фамилия));
             foreach (var record in client.PlaylistRecords)
             {
-                list.Add(record);
+                list_Радио_России.Add(record);
             }
             // Создает подпапку 
             Directory.CreateDirectory(catalogPath);
             // Создаем договор по шаблону
             var document = new WordDocument(templateCandidatesPath);
             //
-            SetMergeFields(document, candidate, CreateDataTable(list));
+            SetMergeFields(document, candidate);
+            //
+            var dt_Россия_1 = CreateDataTable(list_Россия_1);
+            var dt_Россия_24 = CreateDataTable(list_Россия_24);
+            var dt_Маяк = CreateDataTable(list_Маяк);
+            var dt_Вести_ФМ = CreateDataTable(list_Вести_ФМ);
+            var dt_Радио_России = CreateDataTable(list_Радио_России);
+            //
+            SetTables(
+                document,
+                dt_Россия_1,
+                dt_Россия_24,
+                dt_Маяк,
+                dt_Вести_ФМ,
+                dt_Радио_России);
             //
             document.Save(catalogPath + $"\\{candidate.View.Фамилия}.docx");
             document.Close();
@@ -125,43 +144,61 @@ namespace ElectionsProgram.Reports.TotalReports.Acts
             string catalogPath)
         {
             //
-            List<PlaylistRecord> list = new List<PlaylistRecord>();
+            List<PlaylistRecord> list_Россия_1 = new List<PlaylistRecord>();
+            List<PlaylistRecord> list_Россия_24 = new List<PlaylistRecord>();
+            List<PlaylistRecord> list_Маяк = new List<PlaylistRecord>();
+            List<PlaylistRecord> list_Вести_ФМ = new List<PlaylistRecord>();
+            List<PlaylistRecord> list_Радио_России = new List<PlaylistRecord>();
             // Ищем клиента по фамилии
             var client = playlist_Россия_1.Clients.First(c => c.Name.Contains(party.View.Название_условное));
             foreach (var record in client.PlaylistRecords)
             {
-                list.Add(record);
+                list_Россия_1.Add(record);
             }
             // Повторяем для другого плейлиста
             client = playlist_Россия_24.Clients.First(c => c.Name.Contains(party.View.Название_условное));
             foreach (var record in client.PlaylistRecords)
             {
-                list.Add(record);
+                list_Россия_24.Add(record);
             }
             // Ищем клиента по фамилии
             client = playlist_Маяк.Clients.First(c => c.Name.Contains(party.View.Название_условное));
             foreach (var record in client.PlaylistRecords)
             {
-                list.Add(record);
+                list_Маяк.Add(record);
             }
             // Повторяем для другого плейлиста
             client = playlist_Вести_ФМ.Clients.First(c => c.Name.Contains(party.View.Название_условное));
             foreach (var record in client.PlaylistRecords)
             {
-                list.Add(record);
+                list_Вести_ФМ.Add(record);
             }
             // Повторяем для другого плейлиста
             client = playlist_Радио_России.Clients.First(c => c.Name.Contains(party.View.Название_условное));
             foreach (var record in client.PlaylistRecords)
             {
-                list.Add(record);
+                list_Радио_России.Add(record);
             }
             // Создает подпапку 
             Directory.CreateDirectory(catalogPath);
             // Создаем договор по шаблону
             var document = new WordDocument(templatePartiesPath);
             //
-            SetMergeFields(document, party, CreateDataTable(list));
+            SetMergeFields(document, party);
+            //
+            var dt_Россия_1 = CreateDataTable(list_Россия_1);
+            var dt_Россия_24 = CreateDataTable(list_Россия_24);
+            var dt_Маяк = CreateDataTable(list_Маяк);
+            var dt_Вести_ФМ = CreateDataTable(list_Вести_ФМ);
+            var dt_Радио_России = CreateDataTable(list_Радио_России);
+            //
+            SetTables(
+                document,
+                dt_Россия_1,
+                dt_Россия_24,
+                dt_Маяк,
+                dt_Вести_ФМ,
+                dt_Радио_России);
             //
             document.Save(catalogPath + $"\\{party.View.Название_условное}.docx");
             document.Close();
@@ -170,7 +207,7 @@ namespace ElectionsProgram.Reports.TotalReports.Acts
         /// <summary>
         /// Захардкоженное присваивание значений местам в документе.
         /// </summary>
-        private static void SetMergeFields(WordDocument doc, Candidate c, DataTable dt)
+        private static void SetMergeFields(WordDocument doc, Candidate c)
         {
             doc.SetMergeFieldText("Фамилия", $"{c.View.Фамилия}");
             doc.SetMergeFieldText("Имя", $"{c.View.Имя}");
@@ -188,9 +225,6 @@ namespace ElectionsProgram.Reports.TotalReports.Acts
             doc.SetMergeFieldText("Доверенность_на_представителя", $"{c.View.Представитель_Доверенность}");
             doc.SetMergeFieldText("ИНН", $"{c.View.ИНН}");
             doc.SetMergeFieldText("Спец_изб_счет", $"{c.View.Счет_банка}");
-            //
-            doc.SetBookmarkText($"Талон_1", "");
-            doc.SetBookmarkTable($"Талон_1", WordDocument.CreateTable(dt));
         }
 
         /// <summary>
@@ -198,7 +232,7 @@ namespace ElectionsProgram.Reports.TotalReports.Acts
         /// </summary>
         /// <param name="doc"></param>
         /// <param name="p"></param>
-        private static void SetMergeFields(WordDocument doc, Party p, DataTable dt)
+        private static void SetMergeFields(WordDocument doc, Party p)
         {
             //
             doc.SetMergeFieldText("Номер_договора", $"{p.View.Договор_Номер}");
@@ -229,9 +263,31 @@ namespace ElectionsProgram.Reports.TotalReports.Acts
             doc.SetMergeFieldText("ОГРН", $"{p.View.ОГРН}");
             doc.SetMergeFieldText("Счет", $"{p.View.Банк_счет}");
             doc.SetMergeFieldText("Место_нахождения", $"{p.View.Место_нахождения}");
+        }
+
+        private static void SetTables(
+            WordDocument doc,
+            DataTable dt_Россия_1, 
+            DataTable dt_Россия_24, 
+            DataTable dt_Маяк, 
+            DataTable dt_Вести_ФМ, 
+            DataTable dt_Радио_России)
+        {
             //
-            doc.SetBookmarkText($"Талон_1", "");
-            doc.SetBookmarkTable($"Талон_1", WordDocument.CreateTable(dt));
+            doc.SetBookmarkText($"Россия_1", "");
+            doc.SetBookmarkTable($"Россия_1", WordDocument.CreateTable(dt_Россия_1));
+            //
+            doc.SetBookmarkText($"Россия_24", "");
+            doc.SetBookmarkTable($"Россия_24", WordDocument.CreateTable(dt_Россия_24));
+            //
+            doc.SetBookmarkText($"Маяк", "");
+            doc.SetBookmarkTable($"Маяк", WordDocument.CreateTable(dt_Маяк));
+            //
+            doc.SetBookmarkText($"Вести_ФМ", "");
+            doc.SetBookmarkTable($"Вести_ФМ", WordDocument.CreateTable(dt_Вести_ФМ));
+            //
+            doc.SetBookmarkText($"Радио_России", "");
+            doc.SetBookmarkTable($"Радио_России", WordDocument.CreateTable(dt_Радио_России));
         }
 
         private static DataTable CreateDataTable(List<PlaylistRecord> playlistRecords)
