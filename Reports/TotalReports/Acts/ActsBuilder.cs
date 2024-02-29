@@ -222,6 +222,7 @@ namespace ElectionsProgram.Reports.TotalReports.Acts
             doc.SetMergeFieldText("Отчество_представителя_род_падеж", $"{c.View.Представитель_Отчество}");
             doc.SetMergeFieldText("ИО_Фамилия", $"{c.ИО_Фамилия}");
             doc.SetMergeFieldText("ИО_Фамилия_предст", $"{c.Представитель_ИО_Фамилия}");
+            doc.SetMergeFieldText("Фамилия_ИО_предст", $"{c.Представитель_Фамилия_ИО}");
             doc.SetMergeFieldText("Доверенность_на_представителя", $"{c.View.Представитель_Доверенность}");
             doc.SetMergeFieldText("ИНН", $"{c.View.ИНН}");
             doc.SetMergeFieldText("Спец_изб_счет", $"{c.View.Счет_банка}");
@@ -251,6 +252,7 @@ namespace ElectionsProgram.Reports.TotalReports.Acts
             doc.SetMergeFieldText("Представитель_Отчество", $"{p.View.Представитель_Отчество_Падеж_род}");
             doc.SetMergeFieldText("Представитель_Доверенность", $"{p.View.Представитель_Доверенность}");
             doc.SetMergeFieldText("Представитель_ИО_Фамилия", $"{p.Представитель_ИО_Фамилия}");
+            doc.SetMergeFieldText("Представитель_Фамилия_ИО", $"{p.Представитель_Фамилия_ИО}");
             //
             doc.SetMergeFieldText("Нотариус_Фамилия", $"{p.View.Нотариус_Фамилия}");
             doc.SetMergeFieldText("Нотариус_Имя", $"{p.View.Нотариус_Имя}");

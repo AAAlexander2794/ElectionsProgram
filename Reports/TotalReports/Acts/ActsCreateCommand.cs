@@ -25,6 +25,15 @@ namespace ElectionsProgram.Reports.TotalReports.Acts
 
         public void Execute(object? parameter)
         {
+            // Предварительные команды
+            _viewModel.LoadPartiesCommand.Execute(parameter);
+            _viewModel.LoadPartiesTalonsCommand.Execute(parameter);
+            _viewModel.MatchPartiesAndTalonsCommand.Execute(parameter);
+            _viewModel.LoadCandidatesCommand.Execute(parameter);
+            _viewModel.LoadCandidatesTalonsCommand.Execute(parameter);
+            _viewModel.MatchCandidatesAndTalonsCommand.Execute(parameter);
+            _viewModel.PlaylistsLoadCommand.Execute(parameter);
+            //
             try
             {
                 ActsBuilder.CreateActs(

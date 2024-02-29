@@ -32,6 +32,7 @@ namespace ElectionsProgram.Entities
         }
         public string ИО_Фамилия { get; } = "";
         public string Представитель_ИО_Фамилия { get; } = "";
+        public string Представитель_Фамилия_ИО { get; } = "";
 
         //List<Talon> Talons { get; set; }
 
@@ -72,6 +73,7 @@ namespace ElectionsProgram.Entities
             if (View.Представитель_Имя.Length > 0 && View.Представитель_Отчество.Length > 0)
             {
                 Представитель_ИО_Фамилия = $"{View.Представитель_Имя[0]}.{View.Представитель_Отчество[0]}. {View.Представитель_Фамилия}";
+                Представитель_Фамилия_ИО = $"{View.Представитель_Фамилия} {View.Представитель_Имя[0]}.{View.Представитель_Отчество[0]}.";
             }
         }
 
