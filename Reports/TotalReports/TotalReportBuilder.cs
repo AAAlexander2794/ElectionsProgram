@@ -38,7 +38,7 @@ namespace ElectionsProgram.Builders.TotalReports
                 if (recordView.MediaresourceName.Trim() != "")
                 {
                     // Создаем строку плейлиста из текстового представления
-                    PlaylistRecord newRecord = new PlaylistRecord(recordView);
+                    PlaylistRecord newRecord = new PlaylistRecord(recordView, "digit");
                     // Передаем на добавление записи клиентам найденного плейлиста
                     ElectionsProgram.Reports.TotalReports.PlaylistBuilder.AddRecord(playlist.Clients, newRecord);
                 }

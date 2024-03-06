@@ -90,7 +90,14 @@ namespace ElectionsProgram.Entities
                     }
                     dt.Rows[dt.Rows.Count - 1][2] = $"{record.BroadcastForm}";
                     dt.Rows[dt.Rows.Count - 1][3] = $"{record.Date.Value.ToShortDateString()}";
-                    dt.Rows[dt.Rows.Count - 1][4] = $"{record.Time.Value.ToLongTimeString()}";
+                    if (record.Time != null)
+                    {
+                        dt.Rows[dt.Rows.Count - 1][4] = $"{record.Time.Value.ToLongTimeString()}";
+                    }
+                    else
+                    {
+                        dt.Rows[dt.Rows.Count - 1][4] = $"{record.View.Time}";
+                    }
                     dt.Rows[dt.Rows.Count - 1][5] = $"{record.DurationActual}";
                     // Стоимости
                     dt.Rows[dt.Rows.Count - 1][6] = $"{record.Tariff}";

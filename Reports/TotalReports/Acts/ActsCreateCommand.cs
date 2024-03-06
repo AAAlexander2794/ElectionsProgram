@@ -34,8 +34,8 @@ namespace ElectionsProgram.Reports.TotalReports.Acts
             _viewModel.MatchCandidatesAndTalonsCommand.Execute(parameter);
             _viewModel.PlaylistsLoadCommand.Execute(parameter);
             //
-            try
-            {
+            //try
+            //{
                 ActsBuilder.CreateActs(
                     _viewModel.Parties.ToList(),
                     _viewModel.Candidates.ToList(),
@@ -49,11 +49,11 @@ namespace ElectionsProgram.Reports.TotalReports.Acts
                     $"{_viewModel.SettingsFilePathes.Каталог_документов}\\Отчеты\\Акты");
                 //
                 Logger.Add("Акты созданы.");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
 
         }
     }
