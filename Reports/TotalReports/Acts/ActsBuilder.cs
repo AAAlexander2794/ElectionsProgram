@@ -33,6 +33,9 @@ namespace ElectionsProgram.Reports.TotalReports.Acts
             string templatePartiesPath,
             string catalogPath)
         {
+            // Группируем строки по временным отрезкам "утро, день, вечер", чтобы как в протоколах
+            ClientPlaylistRecordBuilder.GroupClientRecords(playlist_Россия_1);
+            ClientPlaylistRecordBuilder.GroupClientRecords(playlist_Россия_24);
             // По каждому кандидату
             foreach (var candidate in candidates)
             {
@@ -310,13 +313,22 @@ namespace ElectionsProgram.Reports.TotalReports.Acts
                 dt.Rows[dt.Rows.Count - 1][1] = record.Date;
                 if (record.Time != null)
                 {
-                    dt.Rows[dt.Rows.Count - 1][2] = record.Time;
+                    // dt.Rows[dt.Rows.Count - 1][2] = record.Time;
+                    // Для выборов президента 2024
+                    dt.Rows[dt.Rows.Count - 1][2] = record.View.Time;
                 }
                 else
                 {
                     dt.Rows[dt.Rows.Count - 1][2] = record.View.Time;
                 }
-                dt.Rows[dt.Rows.Count - 1][3] = record.DurationActual;
+                if (record.DurationActual != null)
+                {
+                    dt.Rows[dt.Rows.Count - 1][3] = record.DurationActual.Value.TotalSeconds;
+                }
+                else
+                {
+                    dt.Rows[dt.Rows.Count - 1][3] = "";
+                }
                 dt.Rows[dt.Rows.Count - 1][4] = record.View.BroadcastForm;
             }
             //

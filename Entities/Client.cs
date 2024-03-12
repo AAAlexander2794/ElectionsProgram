@@ -38,6 +38,6 @@ namespace ElectionsProgram.Entities
         /// <summary>
         /// Строки плейлиста данного клиента.
         /// </summary>
-        public List<PlaylistRecord> PlaylistRecords { get; } = new List<PlaylistRecord>();
+        public List<PlaylistRecord> PlaylistRecords { get; set; } = new List<PlaylistRecord>();
     }
 }

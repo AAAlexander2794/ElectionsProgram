@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using ElectionsProgram.Reports.TotalReports;
 
 namespace ElectionsProgram.Builders.TotalReports
 {
@@ -43,6 +44,8 @@ namespace ElectionsProgram.Builders.TotalReports
                     ElectionsProgram.Reports.TotalReports.PlaylistBuilder.AddRecord(playlist.Clients, newRecord);
                 }
             }
+            // Группируем строки по временным отрезкам "утро, день, вечер", чтобы как в протоколах
+            ClientPlaylistRecordBuilder.GroupClientRecords(playlist);
             //
             string filePath = catalogPath + $"\\{playlist.MediaresourceName.Trim()}.xlsx";
             ExcelProcessor.SaveToExcel(playlist.ToDataTable(), filePath);
@@ -61,6 +64,8 @@ namespace ElectionsProgram.Builders.TotalReports
             string dateTimeForCatalog = $"{DateTime.Now}";
             CreateCertificates(playlist, $"{catalogPath}\\{dateTimeForCatalog}\\");
         }
+
+        
 
     }
 }

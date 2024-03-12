@@ -92,13 +92,15 @@ namespace ElectionsProgram.Entities
                     dt.Rows[dt.Rows.Count - 1][3] = $"{record.Date.Value.ToShortDateString()}";
                     if (record.Time != null)
                     {
-                        dt.Rows[dt.Rows.Count - 1][4] = $"{record.Time.Value.ToLongTimeString()}";
+                        //dt.Rows[dt.Rows.Count - 1][4] = $"{record.Time.Value.ToLongTimeString()}";
+                        // Для выборов президента
+                        dt.Rows[dt.Rows.Count - 1][4] = $"{record.View.Time}";
                     }
                     else
                     {
                         dt.Rows[dt.Rows.Count - 1][4] = $"{record.View.Time}";
                     }
-                    dt.Rows[dt.Rows.Count - 1][5] = $"{record.DurationActual}";
+                    dt.Rows[dt.Rows.Count - 1][5] = $"{record.DurationActual.Value.TotalSeconds}";
                     // Стоимости
                     dt.Rows[dt.Rows.Count - 1][6] = $"{record.Tariff}";
                     dt.Rows[dt.Rows.Count - 1][7] = $"{record.Price}";
