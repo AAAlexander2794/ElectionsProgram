@@ -64,6 +64,8 @@ namespace ElectionsProgram.Reports.TotalReports
                 {
                     // Добавляем время вещания в этом отрезке
                     sameRecord.DurationActual += record.DurationActual;
+                    // Прибавляем сумму
+                    sameRecord.Price += record.Price;
                 }
             }
         }

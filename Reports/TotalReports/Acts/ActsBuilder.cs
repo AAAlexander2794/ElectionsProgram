@@ -299,7 +299,7 @@ namespace ElectionsProgram.Reports.TotalReports.Acts
         {
             DataTable dt = new DataTable();
             //
-            dt.Columns.Add("Название радиоканала");
+            dt.Columns.Add("Название канала");
             dt.Columns.Add("Дата выхода в эфир");
             dt.Columns.Add("Время выхода в эфир");
             dt.Columns.Add("Хронометраж");
