@@ -55,17 +55,25 @@ namespace ElectionsProgram.Reports.TotalReports
                 // Если записи с такими датой и временем еще не было
                 if (sameRecord == null)
                 {
-                    newRecords.Add(record);
-                    //
-                    record.View.Time = $"{timeStart}-{timeEnd}";
+                    // Проверяем на null, иначе превратит в null предыдущее значение
+                    if (record.DurationActual != null)
+                    {
+                        newRecords.Add(record);
+                        //
+                        record.View.Time = $"{timeStart}-{timeEnd}";
+                    }
                 }
                 //
                 else
                 {
-                    // Добавляем время вещания в этом отрезке
-                    sameRecord.DurationActual += record.DurationActual;
-                    // Прибавляем сумму
-                    sameRecord.Price += record.Price;
+                    // Проверяем на null, иначе превратит в null предыдущее значение
+                    if (record.DurationActual != null)
+                    {
+                        // Добавляем время вещания в этом отрезке
+                        sameRecord.DurationActual += record.DurationActual;
+                        // Прибавляем сумму
+                        sameRecord.Price += record.Price;
+                    }
                 }
             }
         }
